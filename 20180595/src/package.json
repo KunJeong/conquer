@@ -17,6 +17,7 @@
     "next": "latest",
     "nodejs": "^0.0.0",
     "react": "^16.13.1",
+    "react-animejs-wrapper": "^1.0.35",
     "react-dom": "^16.13.1",
     "react-isometric-grid": "^0.0.3",
     "react-no-ssr": "^1.1.0"

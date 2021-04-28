@@ -16,9 +16,9 @@ const useStyles = makeStyles({
 		bottom: '50%',
 		marginLeft: props.width * sqrt1over2 * -0.5 + 'px',
 		marginBottom: props.width * sqrt1over2 * -0.5 + 'px',
-    transform: `scale(1, ${sqrt1over3}) rotate(45deg)`,
     width: props.width * sqrt1over2 + 'px',
     height: props.width * sqrt1over2 + 'px',
+    transform: `scale(1, ${sqrt1over3}) rotate(45deg)`,
     borderStyle: 'solid',
     borderWidth: props.borderWidth * sqrt3 * sqrt1over2 + 'px'
   })
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 
 function Rhombus(props) {
   const classes = useStyles(props);
-  return <div className={classes.rhombus}/>
+  return <div className={classes.rhombus}></div>
 }
 
 Rhombus.defaultProps = {

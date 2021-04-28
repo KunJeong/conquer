@@ -11,15 +11,15 @@ const sqrt1over3 = 0.57735;
 const useStyles = makeStyles({
   cell: props => ({
     boxSizing: 'border-box',
-    borderStyle: 'solid',
-    borderWidth: '3px',
+    // borderStyle: 'solid',
+    // borderWidth: '3px',
     position: 'absolute',
     left: '50%',
     bottom: '50%',
     width: props.width + 'px',
     height: props.width * sqrt1over3 + 'px',
-    marginLeft: props.width * (props.x - 1) * 0.5 + props.x * props.marginX + 'px',
-	  marginBottom: (props.width * (props.y - 1) * 0.5 + props.y * props.marginX) * sqrt1over3 +'px',
+    marginLeft: props.width * (props.x + 1) * -0.5 - props.x * props.marginX + 'px',
+	  marginBottom: (props.width * (props.y + 1) * -0.5 - props.y * props.marginX) * sqrt1over3 +'px',
   })
 })
 
@@ -29,7 +29,6 @@ function Cell(props) {
     <Rhombus
       width={props.width}
       backgroundColor={props.backgroundColor}
-      
     ></Rhombus>
   </div>
 }
