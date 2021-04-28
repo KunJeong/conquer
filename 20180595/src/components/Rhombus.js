@@ -12,21 +12,27 @@ const useStyles = makeStyles({
 		backgroundColor: props.backgroundColor,
     boxSizing: 'border-box',
     position: 'absolute',
-		// left: 50%,
-		// bottom: 50%,
+		left: '50%',
+		bottom: '50%',
 		marginLeft: props.width * sqrt1over2 * -0.5 + 'px',
 		marginBottom: props.width * sqrt1over2 * -0.5 + 'px',
-    transform: `scale(1, ${sqrt1over2}) rotate(45deg)`,
+    transform: `scale(1, ${sqrt1over3}) rotate(45deg)`,
     width: props.width * sqrt1over2 + 'px',
     height: props.width * sqrt1over2 + 'px',
-    border: 'solid',
-    borderWidth: props.borderWidth * sqrt3 * sqrt1over2,
+    borderStyle: 'solid',
+    borderWidth: props.borderWidth * sqrt3 * sqrt1over2 + 'px'
   })
 })
 
 function Rhombus(props) {
   const classes = useStyles(props);
   return <div className={classes.rhombus}/>
+}
+
+Rhombus.defaultProps = {
+  width: 160,
+  borderWidth: 3,
+  backgroundColor: '#af1234'
 }
 
 export default Rhombus

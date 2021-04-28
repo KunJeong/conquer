@@ -1,0 +1,72 @@
+//@ts-check
+import Rhombus from '../components/Rhombus';
+import Cell from '../components/Cell';
+export default function Isometric() {
+  return (
+    <div style={{width: 500, height: 400, backgroundColor: '#af23ef', position: 'relative'}}>
+      <Cell
+        width={120}
+        i={0}
+        j={0}
+        backgroundColor='#af1234'
+        borderWidth={4}>
+      </Cell>
+      <Cell
+        width={120}
+        i={1}
+        j={0}
+        backgroundColor='#123456'
+        borderWidth={4}>
+      </Cell>
+      <Cell
+        width={120}
+        i={2}
+        j={0}
+        backgroundColor='#444444'
+        borderWidth={4}>
+      </Cell>
+      <Cell
+        width={120}
+        i={0}
+        j={1}
+        backgroundColor='#afafaf'
+        borderWidth={4}>
+      </Cell>
+      <Cell
+        width={120}
+        i={1}
+        j={1}
+        backgroundColor='#afafaf'
+        borderWidth={4}>
+      </Cell>
+      <Cell
+        width={120}
+        i={2}
+        j={1}
+        backgroundColor='#afafaf'
+        borderWidth={4}>
+      </Cell>
+      <Cell
+        width={120}
+        i={0}
+        j={2}
+        backgroundColor='#afafaf'
+        borderWidth={4}>
+      </Cell>
+      <Cell
+        width={120}
+        i={1}
+        j={2}
+        backgroundColor='#afafaf'
+        borderWidth={4}>
+      </Cell>
+      <Cell
+        width={120}
+        i={2}
+        j={2}
+        backgroundColor='#afafaf'
+        borderWidth={4}>
+      </Cell>
+    </div>
+  )
+}
