@@ -1,21 +1,9 @@
 import Page from '../components/Page'
-import dynamic from 'next/dynamic'
-import NoSSR from 'react-no-ssr';
-// import IsometricGrid from 'react-isometric-grid'
-import { Container, Box, Grid, Paper, Typography } from '@material-ui/core';
+import { Container, Box, Grid, Paper, Typography, TextField, Card, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles'
-import { get } from 'mobx';
-
-const IsometricGrid = dynamic(() => import('react-isometric-grid'), {
-  ssr: false
-})
-const Cell = dynamic(import('react-isometric-grid').then(module => {
-  const {Cell} = module
-  return Cell
-}), {
-  ssr: false
-});
-
+import IsometricGrid from '../components/IsometricGrid';
+import axios from 'axios'
+// import useSWR from 'swr'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,89 +28,83 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function Index() {
+// const getter = url => axios.get(url).then(res => res.data)
+
+function AddTodo(props) {
   const classes = useStyles();
 
-  const defaultCell = {todo: false, title: "none"}
-
-  const [cells, setCells] = React.useState([
-    defaultCell, defaultCell, defaultCell,
-    defaultCell, defaultCell, defaultCell,
-    defaultCell, defaultCell, defaultCell,
-    defaultCell, defaultCell, defaultCell,
-    defaultCell, defaultCell, defaultCell,
-    defaultCell
-  ])
-
-  const addTodo = (index) => {
-    console.log("add");
-    console.log(cells)
-    console.log(index)
-    const newCells = cells.map((cell, i) => {
-      if(index==i) return {todo: true, title: "todo"}
-      else return cell
-    })
-    console.log(newCells)
-    setCells(newCells)
-  }
-  const removeTodo = (index) => {
-    console.log("add");
-    console.log(cells)
-    console.log(index)
-    const newCells = cells.map((cell, i) => {
-      if(index==i) return {todo: false, title: "none"}
-      else return cell
-    })
-    console.log(newCells)
-    setCells(newCells)
+  const [title, setTitle] = React.useState("")
+  const editTitle = (event) => {
+    setTitle(event.target.value)
   }
   
   return (
+    <Paper className={classes.paper} elevation={3} margin={4}>
+      <Box>
+        <TextField
+          label="Title"
+          value={title}
+          onChange={editTitle}
+          margin="normal"
+        ></TextField>
+        <Button onClick={props.addTodo(title)}>Create</Button>
+      </Box>
+    </Paper>
+  )
+}
+
+export default function Index() {
+  const classes = useStyles();
+  const [todos, setTodos] = React.useState([])
+  const [addingTodo, setAddingTodo] = React.useState(false)
+  const [selectedI, setSelectedI] = React.useState(0)
+  const [selectedJ, setSelectedJ] = React.useState(0)
+
+  const addTodo = (i, j) => {
+    // const newTodos = todos.push({i, j, title: "something"})
+    // setTodos(newTodos)
+    setAddingTodo(true);
+    setSelectedI(i);
+    setSelectedJ(j);
+  }
+
+  const createTodo = (title) => () => {
+    console.log(`title: ${title}, i: ${selectedI}, j: ${selectedJ}`)
+
+    axios.post('http://localhost:3000/todos', {
+      title: title,
+      i: selectedI,
+      j: selectedJ
+    }).then(function (response) {
+      
+    })
+  }
+  return (
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          { typeof window !== 'undefined' && 
           <IsometricGrid
-            shadow
-            perspective={0}
-            transform="rotateX(45deg) rotateZ(45deg)"
-            style={{ height: '600px', width: '600px', position: 'absolute', left: 0, top: 0 }}
-          >
-            {cells.map((cell, index) => (
-                <Cell
-                key={index}
-                onClick={cell.todo ? () => removeTodo(index) : () => addTodo(index)}
-                title={cell.title}
-                layers={cell.todo ? [
-                  '#1aff43',
-                  '#c322a3',
-                  '#9eb5c2',
-                ] : [
-                  
-                  '#ffffff',
-                  '#a1a1a1',
-                  '#ffffff',
-                ]}
-              />
-            ))}
-          </IsometricGrid>
-          }
+            width={300}
+            height={600}
+            childWidth={160}
+            spacing={10}
+            onClickCell={addTodo}
+          />
         </Grid>
         <Grid item xs={3}>
-        <Paper className={classes.paper} elevation={3}>
-            <Typography className={classes.title} color="textSecondary" gutterBottom>
-              My Todo List
-            </Typography>
-            {cells.map((cell, index) => {
-            if(cell.todo) return (
-              <Typography>
-                {"Todo: " + cell.title}
+        { addingTodo ? <AddTodo addTodo={createTodo}/> : (
+          <Paper className={classes.paper} elevation={3} margin={4}>
+            <Box>
+              <Typography className={classes.title} color="textSecondary" gutterBottom>
+                My Todo List
               </Typography>
-            )
-            else return (
-              <Box></Box>
-            )
-          })}
-        </Paper>
+              {/* {todos.map((todo) => {
+                <Typography>
+                  {"Todo: " + todo.title}
+                </Typography>
+              })} */}
+            </Box>
+          </Paper>
+        )}
         </Grid>
       </Grid>
   )

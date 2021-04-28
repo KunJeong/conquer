@@ -21,10 +21,11 @@ function IsometricGrid(props) {
   console.log(`half: ${halfSpan}, total: ${totalSpan}`)
 
   const onClick = (i, j) => {
-    console.log(`${i}, ${j}`)
+    animationRef.current.restart();
+    if(props.onClickCell) props.onClickCell(i, j);
+    // console.log(`${i}, ${j}`)
     setClickedI(i);
     setClickedJ(j);
-    animationRef.current.restart();
   }
   var cells = [];
 

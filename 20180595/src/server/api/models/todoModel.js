@@ -7,7 +7,9 @@ var TodoSchema = new Schema ({
     type: String,
     default: '제목이 없습니다.'
   },
-  completed: Boolean
+  i: Number,
+  j: Number
+  // completed: Boolean
 });
 
 module.exports = mongoose.model('Todos', TodoSchema);
