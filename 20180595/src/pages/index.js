@@ -5,6 +5,7 @@ import NoSSR from 'react-no-ssr';
 import { Container, Box, Grid, Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles'
 import { get } from 'mobx';
+import Rhombus from '../components/Rhombus';
 
 const IsometricGrid = dynamic(() => import('react-isometric-grid'), {
   ssr: false
@@ -47,12 +48,11 @@ export default function Index() {
 
   const [cells, setCells] = React.useState([
     defaultCell, defaultCell, defaultCell,
+    defaultCell, defaultCell, defaultCell,
+    defaultCell, defaultCell, defaultCell,
+    defaultCell, defaultCell, defaultCell,
+    defaultCell, defaultCell, defaultCell,
     defaultCell
-    // , defaultCell, defaultCell,
-    // defaultCell, defaultCell, defaultCell,
-    // defaultCell, defaultCell, defaultCell,
-    // defaultCell, defaultCell, defaultCell,
-    // defaultCell
   ])
 
   const addTodo = (index) => {
@@ -78,11 +78,10 @@ export default function Index() {
     setCells(newCells)
   }
   
-
-  
   return (
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Rhombus width={160} backgroundColor='#af1234' borderWidth={3}></Rhombus>
+        {/* <Grid item xs={6}>
           { typeof window !== 'undefined' && 
           <IsometricGrid
             shadow
@@ -126,7 +125,7 @@ export default function Index() {
             )
           })}
         </Paper>
-        </Grid>
+        </Grid> */}
       </Grid>
   )
   

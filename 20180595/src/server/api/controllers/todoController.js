@@ -11,7 +11,7 @@ var mongoose = require('mongoose'),
         res.json({result: 0});
         return;
       }
-      console.log("created tdo")
+      console.log("created todo")
       res.json({result: 1});
     });
   }
