@@ -4,8 +4,41 @@ import Cell from '../components/Cell';
 import Anime, { anime } from 'react-animejs-wrapper';
 
 export default function Isometric() {
+  const [clickedI, setClickedI] = React.useState(0);
+  const [clickedJ, setClickedJ] = React.useState(0);
+
+  const animationRef = React.useRef(null)
+
+  const onClick = (i, j) => {
+    console.log(`${i}, ${j}`)
+    setClickedI(i);
+    setClickedJ(j);
+    animationRef.current.restart();
+  }
+  var cells = [];
+
+  for(var i=-5;i<=5;i++) {
+    for (var j=-5;j<=5;j++) {
+      const curI = i;
+      const curJ = j;
+      cells.push(
+        <Cell
+          key={i*11 + j}
+          classes={{ cell: 'cell'}}
+          width={120}
+          i={curI}
+          j={curJ}
+          onClick={()=>onClick(curI, curJ)}
+          backgroundColor='#7ec850'
+          borderWidth={0}
+          marginX={10}>
+      </Cell>
+      )
+    }
+  }
   return (
     <Anime
+      ref={animationRef}
       style={{
         width: 500, height: 400,
         backgroundColor: '#dddddd',
@@ -14,87 +47,18 @@ export default function Isometric() {
       }}
       config={{
         targets: ".cell",
-        scale: [
-          {value: .8, easing: 'easeOutSine', duration: 500},
-          {value: 1, easing: 'easeInOutQuad', duration: 1200}
+        translateY: [
+          {value: -10, easing: 'easeOutExpo', duration: 500},
+          {value: 0, easing: 'easeInOutQuad', duration: 700}
         ],
-        loop: true,
-        delay: anime.stagger(100, {grid: [3, 3], from: 'last'}),
-        duration: 1000
+        // loop: true,
+        // direction: 'alternate',
+        delay: anime.stagger(150, {grid: [11, 11], start: 0, from: (clickedI+5)*11 + (clickedJ+5)}),
+        duration: 1000,
+        easing: 'spring(1, 80, 10, 0)'
       }}
     >
-      <Cell
-        classes={{ cell: 'cell'}}
-        width={120}
-        i={0}
-        j={0}
-        backgroundColor='#af1234'
-        borderWidth={4}>
-      </Cell>
-      <Cell
-        classes={{ cell: 'cell'}}
-        width={120}
-        i={1}
-        j={0}
-        backgroundColor='#123456'
-        borderWidth={4}>
-      </Cell>
-      <Cell
-        classes={{ cell: 'cell'}}
-        width={120}
-        i={2}
-        j={0}
-        backgroundColor='#444444'
-        borderWidth={4}>
-      </Cell>
-      <Cell
-        classes={{ cell: 'cell'}}
-        width={120}
-        i={0}
-        j={1}
-        backgroundColor='#afafaf'
-        borderWidth={4}>
-      </Cell>
-      <Cell
-        classes={{ cell: 'cell'}}
-        width={120}
-        i={1}
-        j={1}
-        backgroundColor='#afafaf'
-        borderWidth={4}>
-      </Cell>
-      <Cell
-        classes={{ cell: 'cell'}}
-        width={120}
-        i={2}
-        j={1}
-        backgroundColor='#afafaf'
-        borderWidth={4}>
-      </Cell>
-      <Cell
-        classes={{ cell: 'cell'}}
-        width={120}
-        i={0}
-        j={2}
-        backgroundColor='#afafaf'
-        borderWidth={4}>
-      </Cell>
-      <Cell
-        classes={{ cell: 'cell'}}
-        width={120}
-        i={1}
-        j={2}
-        backgroundColor='#afafaf'
-        borderWidth={4}>
-      </Cell>
-      <Cell
-        classes={{ cell: 'cell'}}
-        width={120}
-        i={2}
-        j={2}
-        backgroundColor='#afafaf'
-        borderWidth={4}>
-      </Cell>
+      {cells}
     </Anime>
   )
 }

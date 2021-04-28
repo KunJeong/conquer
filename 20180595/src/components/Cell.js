@@ -10,7 +10,7 @@ const sqrt1over3 = 0.57735;
 
 const useStyles = makeStyles({
   cell: props => ({
-    boxSizing: 'border-box',
+    // boxSizing: 'border-box',
     // borderStyle: 'solid',
     // borderWidth: '3px',
     position: 'absolute',
@@ -25,10 +25,11 @@ const useStyles = makeStyles({
 
 function Cell(props) {
   const classes = useStyles({x: props.i - props.j, y: props.i + props.j, ...props});
-  return <div className={classes.cell}>
+  return <div onClick={props.onClick} className={classes.cell}>
     <Rhombus
       width={props.width}
       backgroundColor={props.backgroundColor}
+      borderWidth={props.borderWidth}
     ></Rhombus>
   </div>
 }
