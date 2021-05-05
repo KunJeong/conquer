@@ -34,6 +34,9 @@ function Cell(props) {
         width={props.width}
         backgroundColor={props.backgroundColor}
         borderWidth={props.borderWidth}
+        i={props.i}
+        j={props.j}
+        store={props.store}
       ></AddCell>
     </div>
   )
@@ -45,6 +48,9 @@ function Cell(props) {
         width={props.width}
         backgroundColor={props.backgroundColor}
         borderWidth={props.borderWidth}
+        i={props.i}
+        j={props.j}
+        cells={props.cells}
       ></GrassCell>
     </div>
   )
