@@ -1,6 +1,7 @@
 'use strict';
 var mongoose = require('mongoose'),
-  Todo = mongoose.model('Todos')
+  Todo = mongoose.model('Todo'),
+  Cell = mongoose.model('Cell')
 
   exports.createTodo = function(req, res) {
     var todo = new Todo();
