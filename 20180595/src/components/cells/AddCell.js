@@ -25,10 +25,10 @@ const useStyles = makeStyles({
   }),
   rhombus: {
     '&:hover': {
-      borderStyle: 'dashed',
+      // borderStyle: 'dashed',
       borderColor: '#777777',
       borderRadius: '10px',
-      backgroundColor: '#eeeeee'
+      backgroundColor: '#f3f3f3'
     },
     '&:hover + $plus': {
       display: 'block'

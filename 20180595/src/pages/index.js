@@ -1,4 +1,3 @@
-import Page from '../components/Page'
 import { Container, Box, Grid, Paper, Typography, TextField, Card, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles'
 import IsometricGrid from '../components/IsometricGrid';
@@ -46,6 +45,7 @@ function AddTodo(props) {
           value={title}
           onChange={editTitle}
           margin="normal"
+          
         ></TextField>
         <Button onClick={props.addTodo(title)}>Create</Button>
       </Box>
@@ -88,6 +88,12 @@ export default function Index() {
             childWidth={160}
             spacing={10}
             onClickCell={addTodo}
+            cells={[
+              {_id: '1', type: 'grass', i: 0, j: 0},
+              {_id: '2', type: 'grass', i: 0, j: 1},
+              {_id: '3', type: 'add', i: 1, j: 0},
+              {_id: '4', type: 'add', i: 1, j: 1},
+            ]}
           />
         </Grid>
         <Grid item xs={3}>

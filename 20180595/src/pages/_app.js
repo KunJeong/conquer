@@ -1,5 +1,3 @@
-import { Provider } from 'mobx-react'
-import { todoStore } from '../store'
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
@@ -9,16 +7,16 @@ const theme = createMuiTheme();
 export default function App(props) {
   const { Component, pageProps } = props;
 
-  React.useEffect(() => {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   // Remove the server-side injected CSS.
+  //   const jssStyles = document.querySelector('#jss-server-side');
+  //   if (jssStyles) {
+  //     jssStyles.parentElement.removeChild(jssStyles);
+  //   }
+  // }, []);
 
   return (
-    <Provider store={todoStore}>
+    <div>
       <Head>
         <title>My page</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
@@ -28,7 +26,7 @@ export default function App(props) {
         <CssBaseline />
         <Component {...pageProps} />
       </ThemeProvider>
-    </Provider>
+    </div>
   );
 }
 

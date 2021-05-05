@@ -27,28 +27,6 @@ function IsometricGrid(props) {
     setClickedI(i);
     setClickedJ(j);
   }
-  // var cells = [];
-
-  // for(var i=-halfSpan;i<=halfSpan;i++) {
-  //   for (var j=-halfSpan;j<=halfSpan;j++) {
-  //     const curI = i;
-  //     const curJ = j;
-  //     cells.push(
-  //       <Cell
-  //         key={i*11 + j}
-  //         classes={{ cell: 'cell'}}
-  //         width={120}
-  //         i={curI}
-  //         j={curJ}
-  //         onClick={()=>onClick(curI, curJ)}
-  //         backgroundColor='#ddef77'
-  //         borderWidth={0}
-  //         marginX={props.spacing}>
-  //     </Cell>
-  //     )
-  //   }
-  // }
-      
       
   return (
     <Anime
