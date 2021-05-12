@@ -28,6 +28,7 @@ const useStyles = makeStyles({
 
 function _Cell(props) {
   const { ui } = useStores();
+  const { selectionI, selectionJ } = ui.selectionPos
   console.log(`selected: ${ui.selection}, index: ${props.index}`)
   const classes = useStyles({x: props.i - props.j, y: props.i + props.j, ...props});
   if(props.type === 'add') return (
@@ -36,7 +37,7 @@ function _Cell(props) {
         style={props.style}
         onClick={props.onClick}
         width={props.width}
-        selected={props.index === ui.selection}
+        selected={props.i == selectionI && props.j == selectionJ}
         backgroundColor={props.backgroundColor}
         borderWidth={props.borderWidth}
         i={props.i}
@@ -50,7 +51,7 @@ function _Cell(props) {
         style={props.style}
         onClick={props.onClick}
         width={props.width}
-        selected={props.index == ui.selection}
+        selected={props.i == selectionI && props.j == selectionJ}
         backgroundColor={props.backgroundColor}
         borderWidth={props.borderWidth}
         i={props.i}
@@ -65,7 +66,7 @@ function _Cell(props) {
         style={props.style}
         onClick={props.onClick}
         width={props.width}
-        selected={props.index == ui.selection}
+        selected={props.i == selectionI && props.j == selectionJ}
         backgroundColor={props.backgroundColor}
         borderWidth={props.borderWidth}
         i={props.i}

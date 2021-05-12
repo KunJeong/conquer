@@ -20,9 +20,9 @@ function _IsometricGrid(props) {
 
   console.log(`half: ${halfSpan}, total: ${totalSpan}`)
 
-  const onClick = (index) => {
+  const onClick = (index, i, j) => {
     animationRef.current.restart();
-    ui.select(index)
+    ui.select(index, i, j)
     // if(props.onClickCell) props.onClickCell(i, j);
   }
 
@@ -58,19 +58,21 @@ function _IsometricGrid(props) {
       }}
     >
       {props.cells.map((cell, index) => {
-        return (<Cell
-          key={cell.i * 2 + cell.j}
-          classes={{ cell: 'cell'}}
-          width={120}
-          type={cell.type}
-          index={index}
-          i={cell.i}
-          j={cell.j}
-          onClick={()=>onClick(index)}
-          backgroundColor='#ddef77'
-          borderWidth={0}
-          marginX={props.spacing}>
-        </Cell>)
+        return (
+          <Cell
+            key={cell.i * 2 + cell.j}
+            classes={{ cell: 'cell'}}
+            width={120}
+            type={cell.type}
+            index={index}
+            i={cell.i}
+            j={cell.j}
+            onClick={()=>onClick(index, cell.i, cell.j)}
+            backgroundColor='#ddef77'
+            borderWidth={0}
+            marginX={props.spacing}>
+          </Cell>
+        )
       })}
     </Anime>
   )

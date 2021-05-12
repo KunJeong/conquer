@@ -6,12 +6,17 @@ enableStaticRendering(typeof window === 'undefined')
 
 export class UIStore {
   @observable selection = -1;
+  @observable selectionPos = {
+    selectionI: -10000,
+    selectionJ: -10000
+  }
 
   constructor() {
     makeObservable(this);
   }
 
-  @action select(index) {
+  @action select(index, selectionI, selectionJ) {
     this.selection = index;
+    this.selectionPos = { selectionI, selectionJ}
   }
 }
