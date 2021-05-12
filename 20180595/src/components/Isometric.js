@@ -10,7 +10,7 @@ const Isometric = observer(function Isometric({ store }) {
       height={600}
       childWidth={160}
       spacing={5}
-      cells={cells.allCells}/>
+      cells={cells.cells}/>
   )
 })
 
