@@ -3,9 +3,9 @@ import Head from 'next/head';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 const theme = createMuiTheme();
+import { StoreProvider } from '../components/StoreProvider'
 
-export default function App(props) {
-  const { Component, pageProps } = props;
+export default function App({ Component, pageProps }) {
 
   // React.useEffect(() => {
   //   // Remove the server-side injected CSS.
@@ -24,7 +24,9 @@ export default function App(props) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Component {...pageProps} />
+        <StoreProvider {...pageProps}>
+          <Component {...pageProps} />
+        </StoreProvider>
       </ThemeProvider>
     </div>
   );

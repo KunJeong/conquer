@@ -1,16 +1,15 @@
 //@ts-check
 import { action, observable, computed, runInAction, makeObservable, autorun } from 'mobx'
 import { enableStaticRendering } from 'mobx-react-lite'
-import _ from 'lodash';
 // eslint-disable-next-line react-hooks/rules-of-hooks
 enableStaticRendering(typeof window === 'undefined')
 
-class CellStore {
+export class CellStore {
   @observable cells = [
-    // {type: 'add', i: 0, j: 0, layer: 0},
+    {type: 'grass', i: 0, j: 0, layer: 0},
     {type: 'grass', i: 0, j: 1, layer: 1},
     {type: 'grass', i: 1, j: 0, layer: 1},
-    // {type: 'add', i: 1, j: 1, layer: 2},
+    {type: 'timer', i: 1, j: 1, layer: 2},
   ];
 
   constructor() {
@@ -72,7 +71,6 @@ class CellStore {
       if(a.i > b.i) return 1;
       if(a.i < b.i) return -1;
     })
-
   }
 
   @computed get mapSize() {
@@ -80,13 +78,13 @@ class CellStore {
     let minJ=10000;
     let maxI=-10000;
     let maxJ=-10000;
-    this.cells.forEach((e) => {
+    this.allCells.forEach((e) => {
       if(e.i < minI) minI = e.i
       if(e.i > maxI) maxI = e.i
       if(e.j < minJ) minJ = e.j
       if(e.j > maxJ) maxJ = e.j
     })
-    return { minI: minI-1, minJ: minJ-1, maxI: maxI+1, maxJ: maxJ+1}
+    return { minI: minI, minJ: minJ, maxI: maxI, maxJ: maxJ}
   }
 
   @computed get cellCount() {
@@ -112,7 +110,3 @@ class CellStore {
     })
   }
 }
-
-const cellStore = new CellStore();
-
-export default cellStore

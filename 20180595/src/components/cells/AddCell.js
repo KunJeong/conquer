@@ -5,9 +5,8 @@ import { Icon } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add'
 import Rhombus from '../Rhombus';
 import { observer } from 'mobx-react-lite';
-import cellStore from '../../stores/cellStore'
 import { action } from 'mobx'
-import { AddAlarm } from '@material-ui/icons';
+import { useStores } from '../../hooks/useStores';
 
 const useStyles = makeStyles({
   plus: props => ({
@@ -28,9 +27,10 @@ const useStyles = makeStyles({
     display: 'none',
   }),
   rhombus: {
+    // backgroundColor: '#f3f3f3',
     '&:hover': {
       // borderStyle: 'dashed',
-      borderColor: '#777777',
+      // borderColor: '#777777',
       borderRadius: '10px',
       backgroundColor: '#f3f3f3'
     },
@@ -40,15 +40,16 @@ const useStyles = makeStyles({
   }
 })
 
-const AddCell = observer(function AddCell({store, ...props}) {
+const AddCell = observer(function AddCell(props) {
+  const { cells } = useStores();
   const classes = useStyles();
-  console.log(`cells: ${store}`)
+  console.log(`cells: ${cells}`)
   return (
     <div>
       <Rhombus
         className={classes.rhombus}
         onClick={() => {
-          store.addCell(props.i, props.j)
+          cells.addCell(props.i, props.j)
         }}
         width={props.width}
         borderWidth={props.borderWidth}
