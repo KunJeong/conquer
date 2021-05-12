@@ -46,6 +46,18 @@ export class CellStore {
     return this.cells.length
   }
 
+  @action startTimer(i, j) {
+    let cellIndex = this.cells.findIndex(e => {
+      return e.i == i && e.j == j
+    })
+    this.cells[cellIndex] = {
+        type: 'timer',
+        i: i,
+        j: j,
+        layer: i + j
+    }
+  }
+
   @action addCell(i, j) {
     let cellIndex = this.cells.findIndex(e => {
       return e.i == i && e.j == j

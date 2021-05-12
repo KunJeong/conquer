@@ -10,7 +10,7 @@ import { useStores } from '../../hooks/useStores';
 
 const useStyles = makeStyles({
   plus: props => ({
-    ...props.style,
+    // ...props.style,
     position: 'absolute',
     // fontWeight: 'bold',
     fontSize: '20pt',
@@ -50,7 +50,7 @@ const AddCell = observer(function AddCell(props) {
         className={classes.rhombus}
         onClick={() => {
           props.onClick();
-          cells.addCell(props.i, props.j)
+          cells.startTimer(props.i, props.j)
         }}
         width={props.width}
         borderWidth={props.borderWidth}
