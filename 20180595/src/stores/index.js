@@ -1,3 +1,3 @@
 import { CellStore } from "./CellStore"
-
-export { CellStore };
+import { UIStore } from "./UIStore"
+export { CellStore, UIStore };

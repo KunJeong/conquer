@@ -2,16 +2,13 @@
 import PropTypes from 'prop-types';
 import Cell from './Cell';
 import Anime, { anime } from 'react-animejs-wrapper';
-import {observer} from 'mobx-react-lite';
+import { observer } from 'mobx-react-lite';
 import { useStores } from '../hooks/useStores';
 
 const sqrt3 = 1.73205;
 
 function _IsometricGrid(props) {
-  const { cells } = useStores()
-  const [clickedI, setClickedI] = React.useState(0);
-  const [clickedJ, setClickedJ] = React.useState(0);
-  const [index, setIndex] = React.useState(0);
+  const { cells, ui } = useStores()
   const animationRef = React.useRef(null)
 
   const halfSpan = Math.max(
@@ -23,13 +20,10 @@ function _IsometricGrid(props) {
 
   console.log(`half: ${halfSpan}, total: ${totalSpan}`)
 
-  const onClick = (i, j, index) => {
+  const onClick = (index) => {
     animationRef.current.restart();
+    ui.select(index)
     // if(props.onClickCell) props.onClickCell(i, j);
-    console.log(`clicked: ${i}, ${j}, ${index}`)
-    setClickedI(i);
-    setClickedJ(j);
-    setIndex(index)
   }
 
   const {minI, minJ, maxI, maxJ} = cells.mapSize
@@ -58,22 +52,21 @@ function _IsometricGrid(props) {
         // loop: true,
         // direction: 'alternate',
         // autoplay: false,
-        delay: anime.stagger(100, {grid: [4, 4], start: 0, from: index}),
+        delay: anime.stagger(100, {grid: [4, 4], start: 0, from: ui.selection}),
         duration: 1000,
         easing: 'spring(1, 80, 10, 0)'
       }}
     >
       {props.cells.map((cell, index) => {
-        // console.log(`inmap index: ${index}`);
-        // const newi = index;
         return (<Cell
           key={cell.i * 2 + cell.j}
           classes={{ cell: 'cell'}}
           width={120}
           type={cell.type}
+          index={index}
           i={cell.i}
           j={cell.j}
-          onClick={()=>onClick(cell.i, cell.j, index)}
+          onClick={()=>onClick(index)}
           backgroundColor='#ddef77'
           borderWidth={0}
           marginX={props.spacing}>

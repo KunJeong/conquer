@@ -49,6 +49,7 @@ const AddCell = observer(function AddCell(props) {
       <Rhombus
         className={classes.rhombus}
         onClick={() => {
+          props.onClick();
           cells.addCell(props.i, props.j)
         }}
         width={props.width}

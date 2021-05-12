@@ -1,4 +1,5 @@
 import React from 'react'
 export const StoresContext = React.createContext({
-  cells: undefined
+  cells: undefined,
+  ui: undefined
 })

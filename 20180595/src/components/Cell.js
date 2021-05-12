@@ -5,6 +5,8 @@ import Rhombus from '../components/Rhombus';
 import AddCell from './cells/AddCell';
 import GrassCell from './cells/GrassCell'
 import TimerCell from './cells/TimerCell'
+import { observer } from 'mobx-react-lite'
+import { useStores } from '../hooks/useStores';
 
 const sqrt2 = 1.41421;
 const sqrt1over2= 0.70711;
@@ -24,7 +26,9 @@ const useStyles = makeStyles({
   })
 })
 
-function Cell(props) {
+function _Cell(props) {
+  const { ui } = useStores();
+  console.log(`selected: ${ui.selection}, index: ${props.index}`)
   const classes = useStyles({x: props.i - props.j, y: props.i + props.j, ...props});
   if(props.type === 'add') return (
     <div className={classes.cell}>
@@ -32,6 +36,7 @@ function Cell(props) {
         style={props.style}
         onClick={props.onClick}
         width={props.width}
+        selected={props.index === ui.selection}
         backgroundColor={props.backgroundColor}
         borderWidth={props.borderWidth}
         i={props.i}
@@ -45,6 +50,7 @@ function Cell(props) {
         style={props.style}
         onClick={props.onClick}
         width={props.width}
+        selected={props.index == ui.selection}
         backgroundColor={props.backgroundColor}
         borderWidth={props.borderWidth}
         i={props.i}
@@ -59,6 +65,7 @@ function Cell(props) {
         style={props.style}
         onClick={props.onClick}
         width={props.width}
+        selected={props.index == ui.selection}
         backgroundColor={props.backgroundColor}
         borderWidth={props.borderWidth}
         i={props.i}
@@ -70,14 +77,14 @@ function Cell(props) {
     
 }
 
-Cell.propTypes = {
+_Cell.propTypes = {
   i: PropTypes.number,
   j: PropTypes.number,
   cell: PropTypes.objectOf(PropTypes.string),
   width: PropTypes.number,
 }
 
-Cell.defaultProps = {
+_Cell.defaultProps = {
   i: 0,
   j: 0,
   type: 'empty',
@@ -85,4 +92,5 @@ Cell.defaultProps = {
   marginX: 20,
 }
 
+const Cell = observer(_Cell)
 export default Cell
