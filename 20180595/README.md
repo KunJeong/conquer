@@ -30,7 +30,12 @@
 ## Credits
 
 - Did you get help from anyone? Who?
-- Did you use online reources? Whic one?
+- Did you use online reources? Which one?
+
+I looked at many of the official documentation for each of the libraries I used: Mobx, Nextjs, Animejs, react-animejs-wrapper, Reactjs, MaterialUI, mongodb, mongoose.
+I also saw many Q&As in Stack Overflow, which are too numerous to list but I didn't copy & paste code from there.
+I incorporated some boilerplate code from [create-next-app with mobx-react-lite](https://github.com/umarmw/nextjs-with-mobx-lite).
+I also looked at [mobx + react example project](https://byseop.netlify.app/mobx-tutorial01/) for examples about Mobx being used with Axios.
 
 ## License
 
@@ -39,6 +44,6 @@
 ## Before the final submission
 
 - [o] I changed the name of the folder YOUR_ID to my numerical ID
-- [x] My code is included inside the src folder
+- [o] My code is included inside the src folder
 - [x] The video of my project is included in this file as a link to an external visible resource (e.g., a public video)
 - [x] I indicated in this file whether and from where I got help
