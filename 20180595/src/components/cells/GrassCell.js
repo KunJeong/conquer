@@ -8,7 +8,7 @@ function GrassCell(props) {
     <Rhombus
       style={{
         borderRadius: '0px',
-        backgroundColor: props.selected ? '#ff0000' : '#ddef77'
+        backgroundColor: props.selected ? '#eeff99' : '#ddef77'
       }}
       onClick={props.onClick}
       width={props.width}
