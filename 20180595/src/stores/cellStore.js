@@ -6,7 +6,11 @@ enableStaticRendering(typeof window === 'undefined')
 
 export class CellStore {
   @observable cells = [
-    {type: 'add', i: 0, j: 0, layer: 0},
+    {type: 'grass', i: 0, j: 0, layer: 0},
+    {type: 'add', i: -1, j: 0, layer: -1},
+    {type: 'add', i: 1, j: 0, layer: 1},
+    {type: 'add', i: 0, j: -1, layer: -1},
+    {type: 'add', i: 0, j: 1, layer: 1},
   ];
 
   constructor() {
@@ -14,7 +18,7 @@ export class CellStore {
     // autorun(() => console.log(this.report));
   }
 
-  @computed get groundCells() {
+  @computed get sortedCells() {
     return this.cells.slice().sort((a, b) => {
       if(a.layer > b.layer) return 1;
       if(a.layer < b.layer) return -1;
