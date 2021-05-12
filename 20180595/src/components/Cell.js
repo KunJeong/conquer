@@ -16,6 +16,7 @@ const sqrt1over3 = 0.57735;
 const useStyles = makeStyles({
   cell: props => ({
     // backgroundColor: "#dddddd",
+    // borderStyle: 'solid',
     pointerEvents: 'none',
     position: 'absolute',
     willChange: 'transform',
@@ -31,7 +32,11 @@ function _Cell(props) {
   const { selectionI, selectionJ } = ui.selectionPos
   console.log(`selected: ${ui.selection}, index: ${props.index}`)
   const classes = useStyles({x: props.i - props.j, y: props.i + props.j, ...props});
-  if(props.type === 'add') return (
+  if(props.type === 'add' && ui.timerMode) return (
+    <div className={classes.cell}>
+    </div>
+  )
+  else if (props.type === 'add') return (
     <div className={classes.cell}>
       <AddCell
         style={props.style}

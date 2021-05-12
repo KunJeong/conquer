@@ -11,12 +11,35 @@ export class UIStore {
     selectionJ: -10000
   }
 
+  //timer
+  @observable secondsTotal = 30
+  @observable secondsRemaining = 30
+  @observable timerMode = false
+
   constructor() {
     makeObservable(this);
   }
 
   @action select(index, selectionI, selectionJ) {
     this.selection = index;
-    this.selectionPos = { selectionI, selectionJ}
+    this.selectionPos = { selectionI, selectionJ }
+  }
+
+  //timer
+  @action startTimer() {
+    this.secondsRemaining = 30
+    this.secondsTotal = 30
+    this.timerMode = true
+  }
+
+  @action decreaseTimer() {
+    this.secondsRemaining -=1
+    if(this.secondsRemaining === 0){ 
+      this.timerMode = false
+    }
+  }
+
+  @computed get percentage() {
+    return 100 - this.secondsRemaining / this.secondsTotal * 100
   }
 }

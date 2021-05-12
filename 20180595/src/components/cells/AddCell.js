@@ -41,7 +41,7 @@ const useStyles = makeStyles({
 })
 
 const AddCell = observer(function AddCell(props) {
-  const { cells } = useStores();
+  const { cells, ui } = useStores();
   const classes = useStyles();
   console.log(`cells: ${cells}`)
   return (
@@ -51,6 +51,15 @@ const AddCell = observer(function AddCell(props) {
         onClick={() => {
           props.onClick();
           cells.startTimer(props.i, props.j)
+          ui.startTimer()
+
+          const interval = setInterval(() => {
+            if(ui.timerMode) ui.decreaseTimer()
+            else { 
+              cells.addCell(props.i, props.j)
+              clearInterval(interval)
+            }
+          }, 1000)
         }}
         width={props.width}
         borderWidth={props.borderWidth}

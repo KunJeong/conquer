@@ -15,7 +15,6 @@ export class CellStore {
 
   constructor() {
     makeObservable(this);
-    // autorun(() => console.log(this.report));
   }
 
   @computed get sortedCells() {

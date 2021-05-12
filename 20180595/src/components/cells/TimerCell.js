@@ -5,11 +5,13 @@ import { Icon } from '@material-ui/core';
 import HourglassIcon from '@material-ui/icons/HourglassEmptyRounded'
 import Rhombus from '../Rhombus';
 import Anime, { anime } from 'react-animejs-wrapper';
+import { observer } from 'mobx-react-lite'
+import { useStores } from '../../hooks/useStores';
 // import { useStores } from '../../hooks/useStores';
 
 
 const useStyles = makeStyles({
-  plus: props => ({
+  hourglass: props => ({
     ...props.style,
     position: 'absolute',
     // fontWeight: 'bold',
@@ -25,32 +27,37 @@ const useStyles = makeStyles({
     marginBottom: '-15px',
   }),
   rhombus: {
-    background: `linear-gradient(45deg, #ddef77, 40%, #ddef77, 40%, #f3f3f3)`,
+    // background: `linear-gradient(45deg, #ddef77, 40%, #ddef77, 40%, #f3f3f3)`,
     borderWidth: '0px'
   }
 })
-function TimerCell(props) {
+const TimerCell = observer(function TimerCell(props) {
   const classes = useStyles();
+  const { ui } = useStores();
+  console.log(`percentage: ${ui.percentage}`)
   return (
     <div>
       <Rhombus
         onClick={props.onClick}
         className={classes.rhombus}
+        style={{
+          background: `linear-gradient(45deg, #ddef77, ${ui.percentage}%, #ddef77, ${ui.percentage}%, #f3f3f3)`,
+        }}
         width={props.width}
         borderWidth={props.borderWidth}
       ></Rhombus>
       <Anime
-    config={{
-      rotate: '1turn',
-      duration: 800,
-      easing: 'spring(1, 80, 11, 0)',
-      loop: true,
-    }}
-    >
-      <HourglassIcon className={classes.plus}/>
+        config={{
+        rotate: '1turn',
+        duration: 800,
+        easing: 'spring(1, 80, 11, 0)',
+        loop: true,
+      }}
+      >
+        <HourglassIcon className={classes.hourglass}/>
       </Anime>
     </div>
   )
-}
+})
 
 export default TimerCell

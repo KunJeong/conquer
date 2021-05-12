@@ -1,64 +1,70 @@
 import { Container, Box, Grid, Paper, Typography, TextField, Card, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles'
-import IsometricGrid from '../components/IsometricGrid';
+import Isometric from '../components/Isometric';
 import axios from 'axios'
+import { observer } from 'mobx-react-lite'
+import { useStores } from '../hooks/useStores';
 // import useSWR from 'swr'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
+const useStyles = makeStyles({
+  // bullet: {
+  //   display: 'inline-block',
+  //   margin: '0 2px',
+  //   transform: 'scale(0.8)',
+  // },
+  title: props => ({
+    ...props.style,
+    fontSize: 30,
+  }),
+  body: props => ({
+    ...props.style,
+    fontSize: 20,
+  }),
+  // pos: {
+  //   marginBottom: 12,
+  // },
   paper: {
-    padding: theme.spacing(2),
+    padding: '20px',
     textAlign: 'center',
-    color: theme.palette.text.secondary,
   },
 
-}));
+});
 
 // const getter = url => axios.get(url).then(res => res.data)
 
-function AddTodo(props) {
-  const classes = useStyles();
+// function AddTodo(props) {
+//   const classes = useStyles();
 
-  const [title, setTitle] = React.useState("")
-  const editTitle = (event) => {
-    setTitle(event.target.value)
-  }
+//   const [title, setTitle] = React.useState("")
+//   const editTitle = (event) => {
+//     setTitle(event.target.value)
+//   }
   
-  return (
-    <Paper className={classes.paper} elevation={3} margin={4}>
-      <Box>
-        <TextField
-          label="Title"
-          value={title}
-          onChange={editTitle}
-          margin="normal"
+//   return (
+//     <Paper className={classes.paper} elevation={3} margin={4}>
+//       <Box>
+//         <TextField
+//           label="Title"
+//           value={title}
+//           onChange={editTitle}
+//           margin="normal"
           
-        ></TextField>
-        <Button onClick={props.addTodo(title)}>Create</Button>
-      </Box>
-    </Paper>
-  )
-}
+//         ></TextField>
+//         <Button onClick={props.addTodo(title)}>Create</Button>
+//       </Box>
+//     </Paper>
+//   )
+// }
 
-export default function Index() {
+const Index = observer(function Index() {
   const classes = useStyles();
+  const { ui } = useStores();
   const [todos, setTodos] = React.useState([])
   const [addingTodo, setAddingTodo] = React.useState(false)
   const [selectedI, setSelectedI] = React.useState(0)
   const [selectedJ, setSelectedJ] = React.useState(0)
+
+  const seconds = new Date(ui.secondsRemaining * 1000).toISOString().substr(11, 8);
 
   const addTodo = (i, j) => {
     // const newTodos = todos.push({i, j, title: "something"})
@@ -81,38 +87,36 @@ export default function Index() {
   }
   return (
       <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <IsometricGrid
-            width={300}
-            height={600}
-            childWidth={160}
-            spacing={10}
-            onClickCell={addTodo}
-            cells={[
-              {_id: '1', type: 'grass', i: 0, j: 0},
-              {_id: '2', type: 'grass', i: 0, j: 1},
-              {_id: '3', type: 'add', i: 1, j: 0},
-              {_id: '4', type: 'add', i: 1, j: 1},
-            ]}
-          />
-        </Grid>
-        <Grid item xs={3}>
-        { addingTodo ? <AddTodo addTodo={createTodo}/> : (
+        <Grid item xs={4}>
+          {ui.timerMode
+          ? (
           <Paper className={classes.paper} elevation={3} margin={4}>
             <Box>
               <Typography className={classes.title} color="textSecondary" gutterBottom>
-                My Todo List
+                Focus on a task for {ui.secondsTotal} seconds!
               </Typography>
-              {/* {todos.map((todo) => {
-                <Typography>
-                  {"Todo: " + todo.title}
-                </Typography>
-              })} */}
+              <Typography className={classes.seconds} color="textSecondary" gutterBottom>
+                {seconds}
+              </Typography>
             </Box>
           </Paper>
-        )}
+          ) : (
+            <Paper className={classes.paper} elevation={3} margin={4}>
+              <Box>
+                <Typography className={classes.title} color="textSecondary" gutterBottom>
+                  no selection
+                </Typography>
+              </Box>
+            </Paper>
+          )}
         </Grid>
+        <Grid item xs={6}>
+          <Isometric/>
+        </Grid>
+        
       </Grid>
   )
   
-}
+})
+
+export default Index
