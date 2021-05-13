@@ -4,6 +4,7 @@ import Isometric from '../components/Isometric';
 import axios from 'axios'
 import { observer } from 'mobx-react-lite'
 import { useStores } from '../hooks/useStores';
+import { useEffect } from 'react';
 // import useSWR from 'swr'
 
 const useStyles = makeStyles({
@@ -14,7 +15,7 @@ const useStyles = makeStyles({
   // },
   title: props => ({
     ...props.style,
-    fontSize: 30,
+    fontSize: 24,
   }),
   body: props => ({
     ...props.style,
@@ -58,33 +59,37 @@ const useStyles = makeStyles({
 
 const Index = observer(function Index() {
   const classes = useStyles();
-  const { ui } = useStores();
-  const [todos, setTodos] = React.useState([])
-  const [addingTodo, setAddingTodo] = React.useState(false)
-  const [selectedI, setSelectedI] = React.useState(0)
-  const [selectedJ, setSelectedJ] = React.useState(0)
+  const { cells, ui } = useStores();
+  // const [todos, setTodos] = React.useState([])
+  // const [addingTodo, setAddingTodo] = React.useState(false)
+  // const [selectedI, setSelectedI] = React.useState(0)
+  // const [selectedJ, setSelectedJ] = React.useState(0)
 
   const seconds = new Date(ui.secondsRemaining * 1000).toISOString().substr(11, 8);
 
-  const addTodo = (i, j) => {
-    // const newTodos = todos.push({i, j, title: "something"})
-    // setTodos(newTodos)
-    setAddingTodo(true);
-    setSelectedI(i);
-    setSelectedJ(j);
-  }
+  useEffect(() => {
+    // cells.initStore()
+    cells.getCells()
+  }, [])
+  // const addTodo = (i, j) => {
+  //   // const newTodos = todos.push({i, j, title: "something"})
+  //   // setTodos(newTodos)
+  //   setAddingTodo(true);
+  //   setSelectedI(i);
+  //   setSelectedJ(j);
+  // }
 
-  const createTodo = (title) => () => {
-    console.log(`title: ${title}, i: ${selectedI}, j: ${selectedJ}`)
+  // const createTodo = (title) => () => {
+  //   console.log(`title: ${title}, i: ${selectedI}, j: ${selectedJ}`)
 
-    axios.post('http://localhost:3000/todos', {
-      title: title,
-      i: selectedI,
-      j: selectedJ
-    }).then(function (response) {
+  //   axios.post('http://localhost:3000/todos', {
+  //     title: title,
+  //     i: selectedI,
+  //     j: selectedJ
+  //   }).then(function (response) {
       
-    })
-  }
+  //   })
+  // }
   return (
       <Grid container spacing={2}>
         <Grid item xs={4}>
@@ -108,7 +113,10 @@ const Index = observer(function Index() {
                 </Typography>
               </Box>
             </Paper>
+
           )}
+          <Button onClick={()=> {cells.initStore()}}> Reset </Button>
+
         </Grid>
         <Grid item xs={6}>
           <Isometric/>

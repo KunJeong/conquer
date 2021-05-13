@@ -7,7 +7,7 @@ const TodoSchema = Schema ({
   cell: {
     type: Schema.Types.ObjectId,
     ref: Cell
-  }
+  },
   title: {
     type: String,
     default: '제목이 없습니다.'

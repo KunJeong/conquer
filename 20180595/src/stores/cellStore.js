@@ -1,8 +1,11 @@
 //@ts-check
-import { action, observable, computed, runInAction, makeObservable, autorun } from 'mobx'
+import { action, observable, computed, makeObservable, configure } from 'mobx'
 import { enableStaticRendering } from 'mobx-react-lite'
+import axios from 'axios'
 // eslint-disable-next-line react-hooks/rules-of-hooks
 enableStaticRendering(typeof window === 'undefined')
+
+configure({ enforceActions: true })
 
 export class CellStore {
   @observable cells = [
@@ -16,6 +19,36 @@ export class CellStore {
   constructor() {
     makeObservable(this);
   }
+
+  @action getCells() {
+    axios
+    .get('http://localhost:3000/cells')
+    .then((response) => {
+      console.log(response)
+      this.cells = response.data.cells
+    })
+  }
+
+  @action initStore() {
+    axios.delete('http://localhost:3000/cells').then((response) => {
+      axios.post('http://localhost:3000/cells', { type: 'grass', i: 0, j: 0})
+      axios.post('http://localhost:3000/cells', { type: 'add', i: 0, j: 1})
+      axios.post('http://localhost:3000/cells', { type: 'add', i: 0, j: -1})
+      axios.post('http://localhost:3000/cells', { type: 'add', i: 1, j: 0})
+      axios.post('http://localhost:3000/cells', { type: 'add', i: -1, j: 0})
+    }).then(this.getCells())
+    
+    // axios
+    // .post('http://localhost:3000/cells', {
+    //   type: 'grass', i: 0, j: 0, layer: 0
+    // })
+    // .then((response) => {
+    //   console.log(response.cells)
+    //   this.cells = response.cells
+    // })
+  }
+
+  
 
   @computed get sortedCells() {
     return this.cells.slice().sort((a, b) => {
@@ -71,40 +104,67 @@ export class CellStore {
         j: j,
         layer: i + j
     }
+    axios.patch('http://localhost:3000/cells', {
+      type: 'grass',
+      i: i,
+      j: j
+    })
     if(!this.cells.some(e => {
       return e.i == i-1 && e.j == j
-    })) { this.cells.push({
+    })) {
+      const cell = {
         type: 'add',
         i: i - 1,
         j: j,
         layer: i + j - 1
-    })}
+      }
+      this.cells.push(cell);
+      axios
+      .post('http://localhost:3000/cells', cell)
+      .then((response) => {})
+    }
     if(!this.cells.some(e => {
       return e.i == i && e.j == j-1
     })) {
-      this.cells.push({
+      const cell = {
         type: 'add',
         i: i,
         j: j-1,
         layer: i + j - 1
-    })}
+      }
+      this.cells.push(cell);
+      axios
+      .post('http://localhost:3000/cells', cell)
+      .then((response) => {})
+    }
     if(!this.cells.some(e => {
       return e.i == i+1 && e.j == j
     })) {
-      this.cells.push({
+      const cell = {
         type: 'add',
-        i: i +1,
+        i: i + 1,
         j: j,
         layer: i + j + 1
-    })}
+      }
+      this.cells.push(cell);
+      axios
+      .post('http://localhost:3000/cells', cell)
+      .then((response) => {})
+    }
     if(!this.cells.some(e => {
       return e.i == i && e.j == j+1
     })) {
-      this.cells.push({
+      const cell = {
         type: 'add',
         i: i,
-        j: j+1,
-        layer: i + j+ 1
-    })}
+        j: j + 1,
+        layer: i + j + 1
+      }
+      this.cells.push(cell);
+      axios
+      .post('http://localhost:3000/cells', cell)
+      .then((response) => {})
+  }
+
   }
 }

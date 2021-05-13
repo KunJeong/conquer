@@ -6,7 +6,6 @@ const theme = createMuiTheme();
 import { StoreProvider } from '../components/StoreProvider'
 
 export default function App({ Component, pageProps }) {
-
   React.useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');

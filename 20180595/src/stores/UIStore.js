@@ -27,8 +27,8 @@ export class UIStore {
 
   //timer
   @action startTimer() {
-    this.secondsRemaining = 30
-    this.secondsTotal = 30
+    this.secondsRemaining = 10
+    this.secondsTotal = 10
     this.timerMode = true
   }
 

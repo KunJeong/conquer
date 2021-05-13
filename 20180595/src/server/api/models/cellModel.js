@@ -11,13 +11,13 @@ const CellSchema = Schema ({
       return this.i + this.j
     }
   },
-  item: {
-    type: Schema.Types.ObjectId,
-    refPath: 'ofType'
-  },
-  ofType: {
+  // item: {
+  //   type: Schema.Types.ObjectId,
+  //   refPath: 'ofType'
+  // },
+  type: {
     type: String,
-    enum: ['Todo, Habit, Timer']
+    enum: ['grass', 'add', 'timer']
   }
 })
 

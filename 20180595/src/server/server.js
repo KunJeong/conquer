@@ -4,6 +4,7 @@ var express = require('express'),
   port = process.env.PORT || 3000,
   mongoose = require('mongoose'),
   Todo = require('./api/models/todoModel')
+  Cell = require('./api/models/cellModel')
   bodyParser = require('body-parser');
   
 // mongoose instance connection url connection
@@ -14,13 +15,14 @@ mongoose.connect('mongodb://localhost/Userdb');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-const { request } = require('express');
-const cors = require('cors');
 var todoRouter = require('./api/routers/todoRouter');
+var cellRouter = require('./api/routers/cellRouter');
+var cors = require('cors');
+app.use(cors({credentials: true, origin: true}));
+cellRouter(app);
 todoRouter(app);
 
-app.use(cors());
+
 app.listen(port);
 
 console.log('RESTful API server started on: ' + port);
