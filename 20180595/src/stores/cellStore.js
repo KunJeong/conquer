@@ -29,6 +29,7 @@ export class CellStore {
     })
   }
 
+  //DEMO
   @action initStore() {
     axios.delete('http://localhost:3000/cells').then((response) => {
       axios.post('http://localhost:3000/cells', { type: 'grass', i: 0, j: 0})
@@ -37,19 +38,8 @@ export class CellStore {
       axios.post('http://localhost:3000/cells', { type: 'add', i: 1, j: 0})
       axios.post('http://localhost:3000/cells', { type: 'add', i: -1, j: 0})
     }).then(this.getCells())
-    
-    // axios
-    // .post('http://localhost:3000/cells', {
-    //   type: 'grass', i: 0, j: 0, layer: 0
-    // })
-    // .then((response) => {
-    //   console.log(response.cells)
-    //   this.cells = response.cells
-    // })
   }
-
   
-
   @computed get sortedCells() {
     return this.cells.slice().sort((a, b) => {
       if(a.layer > b.layer) return 1;
@@ -73,11 +63,6 @@ export class CellStore {
     return { minI, minJ, maxI, maxJ }
   }
 
-  // @computed get allCells() {
-  //   const { minI, minJ, maxI, maxJ } = this.mapSize
-
-  // }
-
   @computed get cellCount() {
     return this.cells.length
   }
@@ -94,77 +79,34 @@ export class CellStore {
     }
   }
 
-  @action addCell(i, j) {
+  @action _addSingleCell({type, i, j}) {
+    const cell = { type, i, j, layer: i + j }
+    this.cells.push(cell);
+    axios.post('http://localhost:3000/cells', cell)
+  }
+
+  @action _modifyCell({type, i, j}) {
     let cellIndex = this.cells.findIndex(e => {
       return e.i == i && e.j == j
     })
-    this.cells[cellIndex] = {
-        type: 'grass',
-        i: i,
-        j: j,
-        layer: i + j
-    }
-    axios.patch('http://localhost:3000/cells', {
-      type: 'grass',
-      i: i,
-      j: j
-    })
-    if(!this.cells.some(e => {
-      return e.i == i-1 && e.j == j
-    })) {
-      const cell = {
-        type: 'add',
-        i: i - 1,
-        j: j,
-        layer: i + j - 1
-      }
-      this.cells.push(cell);
-      axios
-      .post('http://localhost:3000/cells', cell)
-      .then((response) => {})
-    }
-    if(!this.cells.some(e => {
-      return e.i == i && e.j == j-1
-    })) {
-      const cell = {
-        type: 'add',
-        i: i,
-        j: j-1,
-        layer: i + j - 1
-      }
-      this.cells.push(cell);
-      axios
-      .post('http://localhost:3000/cells', cell)
-      .then((response) => {})
-    }
-    if(!this.cells.some(e => {
-      return e.i == i+1 && e.j == j
-    })) {
-      const cell = {
-        type: 'add',
-        i: i + 1,
-        j: j,
-        layer: i + j + 1
-      }
-      this.cells.push(cell);
-      axios
-      .post('http://localhost:3000/cells', cell)
-      .then((response) => {})
-    }
-    if(!this.cells.some(e => {
-      return e.i == i && e.j == j+1
-    })) {
-      const cell = {
-        type: 'add',
-        i: i,
-        j: j + 1,
-        layer: i + j + 1
-      }
-      this.cells.push(cell);
-      axios
-      .post('http://localhost:3000/cells', cell)
-      .then((response) => {})
+    this.cells[cellIndex] = { type, i, j, layer: i + j }
+    axios.patch('http://localhost:3000/cells', { type, i, j })
   }
 
+  @action _checkAndAddSingleCell({type, i, j}) {
+    if(!this.cells.some(e => {
+      return e.i == i && e.j == j
+    }))
+    {
+      this._addSingleCell({type, i, j})
+    }
+  }
+
+  @action addCell(i, j) {
+    this._modifyCell({type: 'grass', i, j})
+    this._checkAndAddSingleCell({type: 'add', i: i-1, j})
+    this._checkAndAddSingleCell({type: 'add', i: i+1, j})
+    this._checkAndAddSingleCell({type: 'add', i, j: j-1})
+    this._checkAndAddSingleCell({type: 'add', i, j: j+1})
   }
 }
