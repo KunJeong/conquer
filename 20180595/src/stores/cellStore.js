@@ -73,15 +73,7 @@ export class CellStore {
   }
 
   @action startTimer(i, j) {
-    let cellIndex = this.cells.findIndex((e) => {
-      return e.i == i && e.j == j;
-    });
-    this.cells[cellIndex] = {
-      type: "timer",
-      i: i,
-      j: j,
-      layer: i + j,
-    };
+    this._modifyCell({ type: "timer", i, j });
   }
 
   @action _addSingleCell({ type, i, j }) {
