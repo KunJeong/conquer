@@ -1,24 +1,24 @@
-'use strict';
-const mongoose = require('mongoose');
+"use strict";
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const Cell = require('./cellModel')
+const Cell = require("./cellModel");
 
-const TodoSchema = Schema ({
+const TodoSchema = Schema({
   cell: {
     type: Schema.Types.ObjectId,
-    ref: Cell
+    ref: Cell,
   },
   title: {
     type: String,
-    default: '제목이 없습니다.'
+    default: "제목이 없습니다.",
   },
   completed: Boolean,
   imageName: {
     type: String,
-    enum: ['Tower']
-  }
+    enum: ["Tower"],
+  },
 });
 
-const Todo = mongoose.model('Todo', TodoSchema);
+const Todo = mongoose.model("Todo", TodoSchema);
 
-module.exports = Todo
+module.exports = Todo;

@@ -1,47 +1,47 @@
 //@ts-check
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Rhombus from '../Rhombus';
-import { observer } from 'mobx-react-lite';
-import { action } from 'mobx'
-import { useStores } from '../../hooks/useStores';
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import Rhombus from "../Rhombus";
+import { observer } from "mobx-react-lite";
+import { action } from "mobx";
+import { useStores } from "../../hooks/useStores";
 
 const useStyles = makeStyles({
-  text: props => ({
+  text: (props) => ({
     ...props.style,
-    position: 'absolute',
+    position: "absolute",
     // fontWeight: 'bold',
-    fontSize: '20pt',
-    color: '#777777',
-    left: '50%',
-		bottom: '50%',
-    width: '30px',
-    height: '30px',
+    fontSize: "20pt",
+    color: "#777777",
+    left: "50%",
+    bottom: "50%",
+    width: "30px",
+    height: "30px",
     // pointerEvents: 'none',
-		textAlign: 'center',
-    lineHeight: '30px',
-    marginLeft: '-15px',
-    marginBottom: '-15px',
-    display: 'none',
+    textAlign: "center",
+    lineHeight: "30px",
+    marginLeft: "-15px",
+    marginBottom: "-15px",
+    display: "none",
   }),
   rhombus: {
     // backgroundColor: '#f3f3f3',
-    '&:hover': {
+    "&:hover": {
       // borderStyle: 'dashed',
       // borderColor: '#777777',
-      borderRadius: '10px',
-      backgroundColor: '#f3f3f3'
+      borderRadius: "10px",
+      backgroundColor: "#f3f3f3",
     },
-    '&:hover + $plus': {
-      display: 'block'
-    }
-  }
-})
+    "&:hover + $plus": {
+      display: "block",
+    },
+  },
+});
 
 const TodoCell = observer(function AddCell(props) {
   const { cells } = useStores();
   const classes = useStyles();
-  console.log(`cells: ${cells}`)
+  console.log(`cells: ${cells}`);
   return (
     <div>
       <Rhombus
@@ -52,10 +52,9 @@ const TodoCell = observer(function AddCell(props) {
         width={props.width}
         borderWidth={props.borderWidth}
       ></Rhombus>
-      <AddIcon className={classes.plus}/>
+      <AddIcon className={classes.plus} />
     </div>
+  );
+});
 
-  )
-})
-
-export default TodoCell
+export default TodoCell;
