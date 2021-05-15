@@ -56,6 +56,7 @@ const AddCell = observer(function AddCell(props) {
           const interval = setInterval(() => {
             if (ui.timerMode) ui.decreaseTimer();
             else {
+              ui.select(props.index, props.i, props.j);
               cells.addCell(props.i, props.j);
               clearInterval(interval);
             }

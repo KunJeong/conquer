@@ -55,6 +55,7 @@ function _Cell(props) {
           selected={props.i == selectionI && props.j == selectionJ}
           backgroundColor={props.backgroundColor}
           borderWidth={props.borderWidth}
+          index={props.index}
           i={props.i}
           j={props.j}
         ></AddCell>
@@ -70,6 +71,7 @@ function _Cell(props) {
           selected={props.i == selectionI && props.j == selectionJ}
           backgroundColor={props.backgroundColor}
           borderWidth={props.borderWidth}
+          index={props.index}
           i={props.i}
           j={props.j}
           cells={props.cells}
@@ -86,6 +88,7 @@ function _Cell(props) {
           selected={props.i == selectionI && props.j == selectionJ}
           backgroundColor={props.backgroundColor}
           borderWidth={props.borderWidth}
+          index={props.index}
           i={props.i}
           j={props.j}
           cells={props.cells}
