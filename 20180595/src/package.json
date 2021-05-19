@@ -23,7 +23,8 @@
     "react-dom": "^16.13.1",
     "react-draggable": "^4.4.3",
     "react-isometric-grid": "^0.0.3",
-    "react-no-ssr": "^1.1.0"
+    "react-no-ssr": "^1.1.0",
+    "uuid": "^8.3.2"
   },
   "license": "MIT",
   "devDependencies": {

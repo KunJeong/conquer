@@ -1,3 +1,4 @@
 import { CellStore } from "./CellStore";
 import { UIStore } from "./UIStore";
-export { CellStore, UIStore };
+import { TodoStore } from "./todoStore";
+export { CellStore, UIStore, TodoStore };

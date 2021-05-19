@@ -4,7 +4,11 @@ import { StoresContext } from "../contexts";
 
 export function useStores() {
   const context = useContext(StoresContext);
-  if (context.cells === undefined || context.ui === undefined) {
+  if (
+    context.cells === undefined ||
+    context.ui === undefined ||
+    context.todos == undefined
+  ) {
     throw new Error("useStore must be used within StoreProvider");
   }
 
