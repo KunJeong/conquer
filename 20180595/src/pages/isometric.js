@@ -1,5 +1,5 @@
-import Isometric from "../components/Isometric";
+import Isometric from "../components/Map";
 
 export default function IsometricPage() {
-  return <Isometric />;
+  return <Map />;
 }
