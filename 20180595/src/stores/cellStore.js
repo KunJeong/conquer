@@ -76,7 +76,7 @@ export class CellStore {
     this._modifyCell({ type: "timer", i, j });
   }
 
-  @action _addSingleCell({ type, i, j }) {
+  @action _addCellAndSave({ type, i, j }) {
     const cell = { type, i, j, layer: i + j };
     this.cells.push(cell);
     axios.post("http://localhost:3000/cells", cell);
@@ -87,24 +87,28 @@ export class CellStore {
       return e.i == i && e.j == j;
     });
     this.cells[cellIndex] = { type, i, j, layer: i + j };
+  }
+
+  @action _modifyCellAndSave({ type, i, j }) {
+    this._modifyCell({ type, i, j });
     axios.patch("http://localhost:3000/cells", { type, i, j });
   }
 
-  @action _checkAndAddSingleCell({ type, i, j }) {
+  @action _checkAndAddCellAndSave({ type, i, j }) {
     if (
       !this.cells.some((e) => {
         return e.i == i && e.j == j;
       })
     ) {
-      this._addSingleCell({ type, i, j });
+      this._addCellAndSave({ type, i, j });
     }
   }
 
   @action addCell(i, j) {
-    this._modifyCell({ type: "grass", i, j });
-    this._checkAndAddSingleCell({ type: "add", i: i - 1, j });
-    this._checkAndAddSingleCell({ type: "add", i: i + 1, j });
-    this._checkAndAddSingleCell({ type: "add", i, j: j - 1 });
-    this._checkAndAddSingleCell({ type: "add", i, j: j + 1 });
+    this._modifyCellAndSave({ type: "grass", i, j });
+    this._checkAndAddCellAndSave({ type: "add", i: i - 1, j });
+    this._checkAndAddCellAndSave({ type: "add", i: i + 1, j });
+    this._checkAndAddCellAndSave({ type: "add", i, j: j - 1 });
+    this._checkAndAddCellAndSave({ type: "add", i, j: j + 1 });
   }
 }
