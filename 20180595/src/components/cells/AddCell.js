@@ -43,7 +43,6 @@ const useStyles = makeStyles({
 const AddCell = observer(function AddCell(props) {
   const { cells, ui } = useStores();
   const classes = useStyles();
-  console.log(`cells: ${cells}`);
   return (
     <div>
       <Rhombus

@@ -37,7 +37,7 @@ const useStyles = makeStyles({
 function _Cell(props) {
   const { ui } = useStores();
   const { selectionI, selectionJ } = ui.selectionPos;
-  console.log(`selected: ${ui.selection}, index: ${props.index}`);
+  // console.log(`selected: ${ui.selection}, index: ${props.index}`);
   const classes = useStyles({
     x: props.i - props.j,
     y: props.i + props.j,

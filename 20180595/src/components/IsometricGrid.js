@@ -20,27 +20,28 @@ function _IsometricGrid(props) {
 
   console.log(`half: ${halfSpan}, total: ${totalSpan}`);
 
-  const onClick = (index, i, j) => {
-    animationRef.current.restart();
-    ui.select(index, i, j);
-    // if(props.onClickCell) props.onClickCell(i, j);
-  };
-
   const { minI, minJ, maxI, maxJ } = cells.mapSize;
   const iSize = maxI - minI + 1;
   const jSize = maxJ - minJ + 1;
   console.log(`size: ${iSize}, ${jSize}`);
-  console.log(`selected 0, 0: ${(0 - minI) * iSize + 0 - minJ + 1}`);
+  const onClick = (index, i, j) => {
+    console.log("clicked");
+
+    ui.select(index, i, j);
+    console.log(
+      `selected from ${i}, ${j}: ${(i - minI) * jSize + j - minJ + 1}`
+    );
+    animationRef.current.play();
+    // if(props.onClickCell) props.onClickCell(i, j);
+  };
 
   return (
     <Anime
       ref={animationRef}
       style={{
-        width: props.width,
-        height: props.height,
-        backgroundColor: "#ffffff",
+        // width: props.width,
+        // height: props.height,
         position: "relative",
-        overflow: "hidden",
         willChange: "transform",
       }}
       config={{
@@ -52,7 +53,7 @@ function _IsometricGrid(props) {
         scale: [1, 0.5, 1],
         // loop: true,
         // direction: 'alternate',
-        // autoplay: false,
+        autoplay: true,
         delay: anime.stagger(100, {
           grid: [4, 4],
           start: 0,
@@ -67,6 +68,7 @@ function _IsometricGrid(props) {
           <Cell
             key={cell.i * 2 + cell.j}
             classes={{ cell: "cell" }}
+            style={{ width: props.width, height: props.height }}
             width={120}
             type={cell.type}
             index={index}
