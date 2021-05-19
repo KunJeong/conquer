@@ -1,3 +1,4 @@
+//@ts-check
 import {
   Container,
   Box,
@@ -14,6 +15,8 @@ import axios from "axios";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks/useStores";
 import { useEffect } from "react";
+import AddIcon from "@material-ui/icons/Add";
+import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles({
   title: (props) => ({
@@ -94,13 +97,21 @@ const Index = observer(function Index() {
           ) : (
             <Paper className={classes.paper} elevation={3} margin={4}>
               <Box>
-                <Typography
+                <Button
+                  startIcon={<AddIcon />}
+                  onClick={() => {
+                    let id = uuidv4();
+                    cells.addTodo(ui.selection, id);
+                  }}
+                >
+                  Add Todo
+                </Button>
+                {/* <Typography
                   className={classes.title}
                   color="textSecondary"
                   gutterBottom
                 >
-                  {`${cells.cells[ui.selection].name}`}
-                </Typography>
+                </Typography> */}
               </Box>
             </Paper>
           )}

@@ -95,6 +95,23 @@ function _Cell(props) {
         ></TimerCell>
       </div>
     );
+  else if (props.type === "todo")
+    return (
+      <div className={classes.cell}>
+        <AddCell
+          style={props.style}
+          onClick={props.onClick}
+          width={props.width}
+          selected={props.i == selectionI && props.j == selectionJ}
+          backgroundColor={props.backgroundColor}
+          borderWidth={props.borderWidth}
+          index={props.index}
+          i={props.i}
+          j={props.j}
+          cells={props.cells}
+        ></AddCell>
+      </div>
+    );
 }
 
 _Cell.propTypes = {

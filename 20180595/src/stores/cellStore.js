@@ -27,7 +27,18 @@ export class CellStore {
     });
   }
 
-  //DEMO
+  //PROTOTYPE
+  @action addTodo(selection, id) {
+    let { type, i, j } = this.sortedCells[selection];
+
+    let cellIndex = this.cells.findIndex((e) => {
+      return e.i == i && e.j == j;
+    });
+
+    this.cells[cellIndex] = { type: "todo", i, j, layer: i + j, id };
+  }
+
+  //TESTING
   @action initStore() {
     axios
       .delete("http://localhost:3000/cells")
@@ -82,11 +93,11 @@ export class CellStore {
     axios.post("http://localhost:3000/cells", cell);
   }
 
-  @action _modifyCell({ type, i, j }) {
+  @action _modifyCell({ type, i, j, ...rest }) {
     let cellIndex = this.cells.findIndex((e) => {
       return e.i == i && e.j == j;
     });
-    this.cells[cellIndex] = { type, i, j, layer: i + j };
+    this.cells[cellIndex] = { type, i, j, layer: i + j, ...rest };
   }
 
   @action _modifyCellAndSave({ type, i, j }) {
