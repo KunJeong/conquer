@@ -10,12 +10,12 @@ import {
   Button,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import Map from "../components/Map";
 import axios from "axios";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks/useStores";
 import { useEffect } from "react";
 import AddIcon from "@material-ui/icons/Add";
-import { Inspector, Map } from "../components";
 import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles({
@@ -60,7 +60,7 @@ function AddTodo(props) {
   );
 }
 
-const Index = observer(function Index() {
+const Inspector = observer(function Inspector() {
   const classes = useStyles();
   const { cells, ui } = useStores();
   const seconds = new Date(ui.secondsRemaining * 1000)
@@ -70,19 +70,57 @@ const Index = observer(function Index() {
   useEffect(() => {
     cells.getCells();
   }, []);
-
   return (
-    <Box mx={2}>
-      <Grid container spacing={6}>
-        <Grid item xs={4}>
-          <Inspector />
-        </Grid>
-        <Grid item xs={8}>
-          <Map />
-        </Grid>
-      </Grid>
+    <Box>
+      {ui.timerMode ? (
+        <Paper className={classes.paper} elevation={3} margin={4}>
+          <Box>
+            <Typography
+              className={classes.title}
+              color="textSecondary"
+              gutterBottom
+            >
+              Focus on a task for {ui.secondsTotal} seconds!
+            </Typography>
+            <Typography
+              className={classes.seconds}
+              color="textSecondary"
+              gutterBottom
+            >
+              {seconds}
+            </Typography>
+          </Box>
+        </Paper>
+      ) : (
+        <Paper className={classes.paper} elevation={3} margin={4}>
+          <Box>
+            <Button
+              startIcon={<AddIcon />}
+              onClick={() => {
+                let id = uuidv4();
+                cells.addTodo(ui.selection, id);
+              }}
+            >
+              Add Todo
+            </Button>
+            {/* <Typography
+            className={classes.title}
+            color="textSecondary"
+            gutterBottom
+          >
+          </Typography> */}
+          </Box>
+        </Paper>
+      )}
+      <Button
+        onClick={() => {
+          cells.initStore();
+        }}
+      >
+        Reset
+      </Button>
     </Box>
   );
 });
 
-export default Index;
+export default Inspector;
