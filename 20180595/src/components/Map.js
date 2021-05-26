@@ -9,29 +9,38 @@ import IsometricGrid from "./IsometricGrid";
 const sqrt3 = 1.73205;
 
 function _Map(props) {
-  const { cells } = useStores();
+  const { cells, ui } = useStores();
   return (
     <Box
       style={{
-        // width: 600,
+        width: 600,
         height: 800,
         backgroundColor: "#ffffff",
         position: "relative",
         overflow: "hidden",
         willChange: "transform",
       }}
+      onClick={() => {
+        ui.deselect();
+      }}
     >
-      <Draggable>
-        <Box>
-          <IsometricGrid
-            // width={600}
-            // height={600}
-            childWidth={160}
-            spacing={5}
-            cells={cells.sortedCells}
-          />
-        </Box>
-      </Draggable>
+      <Box
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        <Draggable>
+          <Box>
+            <IsometricGrid
+              // width={600}
+              // height={600}
+              childWidth={160}
+              spacing={5}
+              cells={cells.sortedCells}
+            />
+          </Box>
+        </Draggable>
+      </Box>
     </Box>
   );
 }

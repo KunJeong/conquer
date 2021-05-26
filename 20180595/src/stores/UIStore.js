@@ -12,10 +12,11 @@ import { enableStaticRendering } from "mobx-react-lite";
 enableStaticRendering(typeof window === "undefined");
 
 export class UIStore {
-  @observable selection = -1;
+  //selection
+  @observable selection = null;
   @observable selectionPos = {
-    selectionI: -10000,
-    selectionJ: -10000,
+    selectionI: null,
+    selectionJ: null,
   };
 
   //timer
@@ -25,6 +26,11 @@ export class UIStore {
 
   constructor() {
     makeObservable(this);
+  }
+
+  @action deselect() {
+    // this.selection = null;
+    this.selectionPos = { selectionI: null, selectionJ: null };
   }
 
   @action select(index, selectionI, selectionJ) {
