@@ -2,12 +2,35 @@
 import { action, observable, computed, makeObservable, configure } from "mobx";
 import { enableStaticRendering } from "mobx-react-lite";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 enableStaticRendering(typeof window === "undefined");
 
 configure({ enforceActions: "always" });
 
+// export enum CellType {
+//   Grass,
+//   Todo,
+//   Timer,
+//   Add,
+// }
+
+// export class Cell {
+//   id: string = null;
+//   type: CellType = CellType.Grass;
+//   store: CellStore;
+
+//   constructor(store: CellStore, id = uuidv4()) {
+//     this.store = store;
+//     this.id = id;
+//     makeObservable(this);
+//   }
+
+//   @action editName(newName: string) {
+//     this.name = newName;
+//   }
+// }
 export class CellStore {
   @observable cells = [
     { type: "grass", i: 0, j: 0, layer: 0 },
