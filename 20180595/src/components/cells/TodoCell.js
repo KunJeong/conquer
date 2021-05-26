@@ -29,12 +29,6 @@ const useStyles = makeStyles({
   }),
   rhombus: (props) => ({
     backgroundColor: props.selected ? "#e174ff" : "#ad14da",
-    "&:hover": {
-      // borderStyle: 'dashed',
-      // borderColor: '#777777',
-      // borderRadius: "10px",
-      // backgroundColor: "#f3f3f3",
-    },
     "&:hover + $text": {
       display: "block",
     },
