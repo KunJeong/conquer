@@ -1,46 +1,49 @@
 //@ts-check
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
 import Rhombus from "../Rhombus";
 import { observer } from "mobx-react-lite";
 import { action } from "mobx";
 import { useStores } from "../../hooks/useStores";
 
+const sqrt1over3 = 0.57735;
+
 const useStyles = makeStyles({
   text: (props) => ({
     ...props.style,
     position: "absolute",
-    // fontWeight: 'bold',
-    fontSize: "20pt",
+    fontSize: "12pt",
     color: "#777777",
-    left: "50%",
-    bottom: "50%",
-    width: "30px",
+    left: "35%",
+    bottom: "35%",
+    width: "60px",
     height: "30px",
-    // pointerEvents: 'none',
     textAlign: "center",
     lineHeight: "30px",
-    marginLeft: "-15px",
+    marginLeft: "-30px",
     marginBottom: "-15px",
-    display: "none",
+    display: props.selected ? "block" : "none",
+    transform: `scale(1, ${sqrt1over3}) rotate(45deg)`,
+    color: "#ffffff",
   }),
-  rhombus: {
-    // backgroundColor: '#f3f3f3',
+  rhombus: (props) => ({
+    backgroundColor: props.selected ? "#e174ff" : "#ad14da",
     "&:hover": {
       // borderStyle: 'dashed',
       // borderColor: '#777777',
-      borderRadius: "10px",
-      backgroundColor: "#f3f3f3",
+      // borderRadius: "10px",
+      // backgroundColor: "#f3f3f3",
     },
-    "&:hover + $plus": {
+    "&:hover + $text": {
       display: "block",
     },
-  },
+  }),
 });
 
 const TodoCell = observer(function AddCell(props) {
   const { cells } = useStores();
-  const classes = useStyles();
+  const classes = useStyles(props);
   console.log(`cells: ${cells}`);
   return (
     <div>
@@ -52,7 +55,7 @@ const TodoCell = observer(function AddCell(props) {
         width={props.width}
         borderWidth={props.borderWidth}
       ></Rhombus>
-      <AddIcon className={classes.plus} />
+      <Typography className={classes.text}>name</Typography>
     </div>
   );
 });

@@ -2,9 +2,7 @@
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Rhombus from "../components/Rhombus";
-import AddCell from "./cells/AddCell";
-import GrassCell from "./cells/GrassCell";
-import TimerCell from "./cells/TimerCell";
+import { AddCell, TodoCell, GrassCell, TimerCell } from "./cells";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks/useStores";
 
@@ -98,7 +96,7 @@ function _Cell(props) {
   else if (props.type === "todo")
     return (
       <div className={classes.cell}>
-        <AddCell
+        <TodoCell
           style={props.style}
           onClick={props.onClick}
           width={props.width}
@@ -109,7 +107,7 @@ function _Cell(props) {
           i={props.i}
           j={props.j}
           cells={props.cells}
-        ></AddCell>
+        ></TodoCell>
       </div>
     );
 }
