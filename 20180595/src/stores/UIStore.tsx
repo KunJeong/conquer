@@ -8,21 +8,22 @@ export enum Mode {
   List,
   Selected,
   Focus,
+  AddingTodo,
 }
 
 export class UIStore {
   @observable mode: Mode = Mode.List;
 
   //selection
-  @observable selection = null;
+  @observable selection: number = null;
   @observable selectionPos = {
     selectionI: null,
     selectionJ: null,
   };
 
   //timer
-  @observable secondsTotal = 30;
-  @observable secondsRemaining = 30;
+  @observable secondsTotal: number = 30;
+  @observable secondsRemaining: number = 30;
 
   constructor() {
     makeObservable(this);
@@ -33,7 +34,7 @@ export class UIStore {
     this.selectionPos = { selectionI: null, selectionJ: null };
   }
 
-  @action select(index, selectionI, selectionJ) {
+  @action select(index: number, selectionI: number, selectionJ: number) {
     this.selection = index;
     this.selectionPos = { selectionI, selectionJ };
   }
