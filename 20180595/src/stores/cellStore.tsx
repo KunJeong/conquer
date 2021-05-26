@@ -2,10 +2,11 @@
 import { action, observable, computed, makeObservable, configure } from "mobx";
 import { enableStaticRendering } from "mobx-react-lite";
 import axios from "axios";
+
 // eslint-disable-next-line react-hooks/rules-of-hooks
 enableStaticRendering(typeof window === "undefined");
 
-configure({ enforceActions: true });
+configure({ enforceActions: "always" });
 
 export class CellStore {
   @observable cells = [
@@ -28,8 +29,8 @@ export class CellStore {
   }
 
   //PROTOTYPE
-  @action addTodo(selection, id) {
-    let { type, i, j } = this.sortedCells[selection];
+  @action addTodo(selection: number, id) {
+    let { i, j } = this.sortedCells[selection];
 
     let cellIndex = this.cells.findIndex((e) => {
       return e.i == i && e.j == j;
@@ -42,7 +43,7 @@ export class CellStore {
   @action initStore() {
     axios
       .delete("http://localhost:3000/cells")
-      .then((response) => {
+      .then(() => {
         axios.post("http://localhost:3000/cells", {
           type: "grass",
           i: 0,
@@ -53,7 +54,9 @@ export class CellStore {
         axios.post("http://localhost:3000/cells", { type: "add", i: 1, j: 0 });
         axios.post("http://localhost:3000/cells", { type: "add", i: -1, j: 0 });
       })
-      .then(this.getCells());
+      .then(() => {
+        this.getCells();
+      });
   }
 
   @computed get sortedCells() {
@@ -83,7 +86,7 @@ export class CellStore {
     return this.cells.length;
   }
 
-  @action startTimer(i, j) {
+  @action startTimer(i: number, j: number) {
     this._modifyCell({ type: "timer", i, j });
   }
 
@@ -115,7 +118,7 @@ export class CellStore {
     }
   }
 
-  @action addCell(i, j) {
+  @action addCell(i: number, j: number) {
     this._modifyCellAndSave({ type: "grass", i, j });
     this._checkAndAddCellAndSave({ type: "add", i: i - 1, j });
     this._checkAndAddCellAndSave({ type: "add", i: i + 1, j });

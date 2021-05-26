@@ -1,14 +1,10 @@
 //@ts-check
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import Rhombus from "../components/Rhombus";
 import { AddCell, TodoCell, GrassCell, TimerCell } from "./cells";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks/useStores";
 
-const sqrt2 = 1.41421;
-const sqrt1over2 = 0.70711;
-const sqrt3 = 1.73205;
 const sqrt1over3 = 0.57735;
 
 const useStyles = makeStyles({

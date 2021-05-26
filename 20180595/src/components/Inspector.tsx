@@ -1,20 +1,9 @@
 //@ts-check
-import {
-  Container,
-  Box,
-  Grid,
-  Paper,
-  Typography,
-  TextField,
-  Card,
-  Button,
-} from "@material-ui/core";
+import { Box, Paper, Typography, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Map from "../components/Map";
-import axios from "axios";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks/useStores";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import { v4 as uuidv4 } from "uuid";
 
@@ -40,13 +29,13 @@ const useStyles = makeStyles({
 function AddTodo(props) {
   const classes = useStyles();
 
-  const [title, setTitle] = React.useState("");
+  const [title, setTitle] = useState("");
   const editTitle = (event) => {
     setTitle(event.target.value);
   };
 
   return (
-    <Paper className={classes.paper} elevation={3} margin={4}>
+    <Paper className={classes.paper} elevation={3}>
       <Box>
         <TextField
           label="Title"
@@ -73,7 +62,7 @@ const Inspector = observer(function Inspector() {
   return (
     <Box>
       {ui.timerMode ? (
-        <Paper className={classes.paper} elevation={3} margin={4}>
+        <Paper className={classes.paper} elevation={3}>
           <Box>
             <Typography
               className={classes.title}
@@ -92,7 +81,7 @@ const Inspector = observer(function Inspector() {
           </Box>
         </Paper>
       ) : (
-        <Paper className={classes.paper} elevation={3} margin={4}>
+        <Paper className={classes.paper} elevation={3}>
           <Box>
             <Button
               startIcon={<AddIcon />}
