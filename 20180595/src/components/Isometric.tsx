@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks/useStores";
-import IsometricGrid from "../components/IsometricGrid";
+import IsometricGrid from "./IsometricGrid";
 
-const Isometric = observer(function Isometric({ store }) {
+const Isometric = observer(function Isometric() {
   const { cells } = useStores();
   return (
     <IsometricGrid

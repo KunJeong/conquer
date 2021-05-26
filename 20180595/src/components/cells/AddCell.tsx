@@ -1,12 +1,10 @@
 //@ts-check
-import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Icon } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import Rhombus from "../Rhombus";
 import { observer } from "mobx-react-lite";
-import { action } from "mobx";
 import { useStores } from "../../hooks/useStores";
+import { Mode } from "../../stores/UIStore";
 
 const useStyles = makeStyles({
   plus: (props) => ({
@@ -53,7 +51,7 @@ const AddCell = observer(function AddCell(props) {
           ui.startTimer();
 
           const interval = setInterval(() => {
-            if (ui.timerMode) ui.decreaseTimer();
+            if (ui.mode == Mode.Focus) ui.decreaseTimer();
             else {
               ui.select(props.index, props.i, props.j);
               cells.addCell(props.i, props.j);

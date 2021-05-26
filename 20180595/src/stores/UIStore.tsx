@@ -1,17 +1,18 @@
 //@ts-check
-import {
-  action,
-  observable,
-  computed,
-  runInAction,
-  makeObservable,
-  autorun,
-} from "mobx";
+import { action, observable, computed, makeObservable } from "mobx";
 import { enableStaticRendering } from "mobx-react-lite";
 // eslint-disable-next-line react-hooks/rules-of-hooks
 enableStaticRendering(typeof window === "undefined");
 
+export enum Mode {
+  List,
+  Selected,
+  Focus,
+}
+
 export class UIStore {
+  @observable mode: Mode = Mode.List;
+
   //selection
   @observable selection = null;
   @observable selectionPos = {
@@ -22,7 +23,6 @@ export class UIStore {
   //timer
   @observable secondsTotal = 30;
   @observable secondsRemaining = 30;
-  @observable timerMode = false;
 
   constructor() {
     makeObservable(this);
@@ -42,13 +42,13 @@ export class UIStore {
   @action startTimer() {
     this.secondsRemaining = 10;
     this.secondsTotal = 10;
-    this.timerMode = true;
+    this.mode = Mode.Focus;
   }
 
   @action decreaseTimer() {
     this.secondsRemaining -= 1;
     if (this.secondsRemaining === 0) {
-      this.timerMode = false;
+      this.mode = Mode.Selected;
     }
   }
 
