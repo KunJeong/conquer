@@ -4,8 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks/useStores";
 import React, { useEffect, useState } from "react";
-import AddIcon from "@material-ui/icons/Add";
-import { v4 as uuidv4 } from "uuid";
+import { Mode } from "../stores/UIStore";
+import { FocusView, SelectedView } from "./views";
 
 const useStyles = makeStyles({
   title: (props) => ({
@@ -59,48 +59,24 @@ const Inspector = observer(function Inspector() {
   useEffect(() => {
     cells.getCells();
   }, []);
+  const view = (mode: Mode) => {
+    switch (mode) {
+      case Mode.Focus:
+        return <FocusView />;
+      case Mode.Selected:
+        return <SelectedView />;
+      case Mode.AddingTodo:
+        return <Box>Adding..</Box>;
+      case Mode.List:
+        return <Box>List</Box>;
+    }
+  };
   return (
     <Box>
-      {ui.timerMode ? (
-        <Paper className={classes.paper} elevation={3}>
-          <Box>
-            <Typography
-              className={classes.title}
-              color="textSecondary"
-              gutterBottom
-            >
-              Focus on a task for {ui.secondsTotal} seconds!
-            </Typography>
-            <Typography
-              className={classes.seconds}
-              color="textSecondary"
-              gutterBottom
-            >
-              {seconds}
-            </Typography>
-          </Box>
-        </Paper>
-      ) : (
-        <Paper className={classes.paper} elevation={3}>
-          <Box>
-            <Button
-              startIcon={<AddIcon />}
-              onClick={() => {
-                let id = uuidv4();
-                cells.addTodo(ui.selection, id);
-              }}
-            >
-              Add Todo
-            </Button>
-            {/* <Typography
-            className={classes.title}
-            color="textSecondary"
-            gutterBottom
-          >
-          </Typography> */}
-          </Box>
-        </Paper>
-      )}
+      <Paper className={classes.paper} elevation={3}>
+        {view(ui.mode)}
+      </Paper>
+
       <Button
         onClick={() => {
           cells.initStore();

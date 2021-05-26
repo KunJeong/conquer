@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { AddCell, TodoCell, GrassCell, TimerCell } from "./cells";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks/useStores";
+import { Mode } from "../stores/UIStore";
 
 const sqrt1over3 = 0.57735;
 
@@ -37,7 +38,7 @@ function _Cell(props) {
     y: props.i + props.j,
     ...props,
   });
-  if (props.type === "add" && ui.timerMode)
+  if (props.type === "add" && ui.mode == Mode.Focus)
     return <div className={classes.cell}></div>;
   else if (props.type === "add")
     return (
