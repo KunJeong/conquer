@@ -30,12 +30,13 @@ export class UIStore {
   }
 
   @action deselect() {
-    // this.selection = null;
+    this.mode = Mode.List;
     this.selectionPos = { selectionI: null, selectionJ: null };
   }
 
   @action select(index: number, selectionI: number, selectionJ: number) {
     this.selection = index;
+    if (this.mode != Mode.Focus) this.mode = Mode.Selected;
     this.selectionPos = { selectionI, selectionJ };
   }
 
