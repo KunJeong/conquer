@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks/useStores";
 import React, { useEffect, useState } from "react";
 import { Mode } from "../stores/UIStore";
-import { FocusView, SelectedView } from "./views";
+import { FocusView, ListView, SelectedView } from "./views";
 
 const useStyles = makeStyles({
   title: (props) => ({
@@ -68,7 +68,7 @@ const Inspector = observer(function Inspector() {
       case Mode.AddingTodo:
         return <Box>Adding..</Box>;
       case Mode.List:
-        return <Box>List</Box>;
+        return <ListView />;
     }
   };
   return (

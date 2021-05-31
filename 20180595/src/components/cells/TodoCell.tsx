@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 });
 
 const TodoCell = observer(function AddCell(props) {
-  const { cells } = useStores();
+  const { cells, todos } = useStores();
   const classes = useStyles(props);
   console.log(`cells: ${cells}`);
   return (
@@ -49,7 +49,9 @@ const TodoCell = observer(function AddCell(props) {
         width={props.width}
         borderWidth={props.borderWidth}
       ></Rhombus>
-      <Typography className={classes.text}>name</Typography>
+      <Typography className={classes.text}>
+        {todos.todoById(props.cell.id).name}
+      </Typography>
     </div>
   );
 });

@@ -1,8 +1,7 @@
 import { StoresContext } from "../contexts";
-import { useLocalStore } from "mobx-react-lite";
 import { CellStore, UIStore, TodoStore } from "../stores";
 
-export function StoreProvider({ children, initialState }) {
+export function StoreProvider({ children }) {
   let cells = new CellStore();
   let ui = new UIStore();
   let todos = new TodoStore();

@@ -97,6 +97,7 @@ function _Cell(props) {
           style={props.style}
           onClick={props.onClick}
           width={props.width}
+          cell={props.cell}
           selected={props.i == selectionI && props.j == selectionJ}
           backgroundColor={props.backgroundColor}
           borderWidth={props.borderWidth}
@@ -112,7 +113,7 @@ function _Cell(props) {
 _Cell.propTypes = {
   i: PropTypes.number,
   j: PropTypes.number,
-  cell: PropTypes.objectOf(PropTypes.string),
+  // cell: PropTypes.objectOf(PropTypes.string),
   width: PropTypes.number,
 };
 

@@ -24,25 +24,20 @@ const useStyles = makeStyles({
   },
 });
 
-const SelectedView = observer(function SelectedView() {
+const ListView = observer(function ListView() {
   const classes = useStyles();
   const { cells, ui, todos } = useStores();
 
   return (
     <Box>
-      <Button
-        startIcon={<AddIcon />}
-        onClick={() => {
-          let id = uuidv4();
-          let name = "item" + todos.count;
-          cells.addTodo(ui.selection, id, name);
-          todos.addTodo(id, name);
-        }}
-      >
-        Add Todo
-      </Button>
+      <Typography className={classes.title} color="textSecondary" gutterBottom>
+        Todo Items
+      </Typography>
+      {todos.todos.map((todo) => {
+        return <Box>{`name: ${todo.name}, id: ${todo.id}`}</Box>;
+      })}
     </Box>
   );
 });
 
-export default SelectedView;
+export default ListView;

@@ -74,6 +74,7 @@ function _IsometricGrid(props) {
             index={index}
             i={cell.i}
             j={cell.j}
+            cell={cell}
             onClick={() => onClick(index, cell.i, cell.j)}
             backgroundColor="#ddef77"
             borderWidth={0}

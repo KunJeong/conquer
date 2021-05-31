@@ -11,12 +11,13 @@ configure({ enforceActions: "always" });
 export class Todo {
   id: string = null;
   completed = false;
-  name = "New Todo";
+  name: string;
   store: TodoStore;
 
-  constructor(store: TodoStore, id = uuidv4()) {
+  constructor(store: TodoStore, id = uuidv4(), name: string = "New Todo") {
     this.store = store;
     this.id = id;
+    this.name = name;
     makeObservable(this);
   }
 
@@ -26,13 +27,20 @@ export class Todo {
 }
 
 export class TodoStore {
-  todos = [];
+  @observable todos: Todo[] = [];
   constructor() {
     makeObservable(this);
   }
 
-  @action addTodo(id: string) {
-    let todo = new Todo(this, id);
+  @action addTodo(id: string, name: string) {
+    let todo = new Todo(this, id, name);
     this.todos.push(todo);
+  }
+
+  todoById(id: string) {
+    return this.todos.find((todo) => todo.id == id);
+  }
+  @computed get count() {
+    return this.todos.length;
   }
 }

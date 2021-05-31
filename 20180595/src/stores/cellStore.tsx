@@ -141,7 +141,7 @@ export class CellStore {
     }
   }
 
-  @action addCell(i: number, j: number) {
+  @action addCell(i: number, j: number, name: string) {
     this._modifyCellAndSave({ type: "grass", i, j });
     this._checkAndAddCellAndSave({ type: "add", i: i - 1, j });
     this._checkAndAddCellAndSave({ type: "add", i: i + 1, j });

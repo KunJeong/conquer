@@ -1,5 +1,5 @@
 //@ts-check
-import { action, observable, computed, makeObservable } from "mobx";
+import { action, observable, computed, makeObservable, autorun } from "mobx";
 import { enableStaticRendering } from "mobx-react-lite";
 // eslint-disable-next-line react-hooks/rules-of-hooks
 enableStaticRendering(typeof window === "undefined");
@@ -27,10 +27,14 @@ export class UIStore {
 
   constructor() {
     makeObservable(this);
+
+    autorun(() => {
+      console.log(`Mode: ${this.mode}`);
+    });
   }
 
   @action deselect() {
-    this.mode = Mode.List;
+    if (this.mode != Mode.Focus) this.mode = Mode.List;
     this.selectionPos = { selectionI: null, selectionJ: null };
   }
 
