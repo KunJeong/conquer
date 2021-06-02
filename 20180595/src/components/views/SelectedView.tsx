@@ -35,7 +35,7 @@ const SelectedView = observer(function SelectedView() {
         onClick={() => {
           let id = uuidv4();
           let name = "item" + todos.count;
-          cells.addTodo(ui.selection, id, name);
+          cells.addTodo(ui.selection, id);
           todos.addTodo(id, name);
         }}
       >

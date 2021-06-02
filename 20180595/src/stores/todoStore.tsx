@@ -10,8 +10,8 @@ configure({ enforceActions: "always" });
 
 export class Todo {
   id: string = null;
-  completed = false;
-  name: string;
+  @observable completed = false;
+  @observable name: string;
   store: TodoStore;
 
   constructor(store: TodoStore, id = uuidv4(), name: string = "New Todo") {
@@ -23,6 +23,9 @@ export class Todo {
 
   @action editName(newName: string) {
     this.name = newName;
+  }
+  @action toggleComplete() {
+    this.completed = !this.completed;
   }
 }
 

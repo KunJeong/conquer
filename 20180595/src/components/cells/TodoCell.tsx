@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     ...props.style,
     position: "absolute",
     fontSize: "12pt",
-    color: "#777777",
+    // color: "#777777",
     left: "35%",
     bottom: "35%",
     width: "60px",
