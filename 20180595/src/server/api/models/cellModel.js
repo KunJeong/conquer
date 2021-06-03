@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const CellSchema = Schema({
+  _id: String,
   i: Number,
   j: Number,
   layer: {
@@ -11,13 +12,10 @@ const CellSchema = Schema({
       return this.i + this.j;
     },
   },
-  // item: {
-  //   type: Schema.Types.ObjectId,
-  //   refPath: 'ofType'
-  // },
   type: {
     type: String,
-    enum: ["grass", "add", "timer"],
+    enum: ["grass", "todo", "timer", "add"],
+    default: "grass",
   },
 });
 

@@ -9,16 +9,36 @@ enableStaticRendering(typeof window === "undefined");
 configure({ enforceActions: "always" });
 
 export class Todo {
+  store: TodoStore;
   id: string = null;
   @observable completed = false;
   @observable name: string;
-  store: TodoStore;
 
-  constructor(store: TodoStore, id = uuidv4(), name: string = "New Todo") {
+  constructor(
+    store: TodoStore,
+    name: string = "New Todo",
+    save: boolean = true,
+    id = uuidv4()
+  ) {
     this.store = store;
     this.id = id;
     this.name = name;
     makeObservable(this);
+    if (save)
+      axios
+        .post("http://localhost:3000/todos", { id, name })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch(function (error) {
+          if (error.response) {
+            console.log("error1");
+          } else if (error.request) {
+            console.log("error2");
+          } else {
+            console.log("error3");
+          }
+        });
   }
 
   @action editName(newName: string) {
@@ -35,8 +55,30 @@ export class TodoStore {
     makeObservable(this);
   }
 
+  @action getCells() {
+    axios
+      .get("http://localhost:3000/todos")
+      .then((response) => {
+        console.log(response);
+        let newTodos = response.data.todos.map((todo) => {
+          return new Todo(this, todo.name, false);
+        });
+        console.log(newTodos);
+        this.todos = newTodos;
+      })
+      .catch(function (error) {
+        if (error.response) {
+          console.log("error1");
+        } else if (error.request) {
+          console.log("error2");
+        } else {
+          console.log("error3");
+        }
+      });
+  }
+
   @action addTodo(id: string, name: string) {
-    let todo = new Todo(this, id, name);
+    let todo = new Todo(this, name, true, id);
     this.todos.push(todo);
   }
 

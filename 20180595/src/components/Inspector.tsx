@@ -56,9 +56,9 @@ const Inspector = observer(function Inspector() {
     .toISOString()
     .substr(11, 8);
 
-  useEffect(() => {
-    cells.getCells();
-  }, []);
+  // useEffect(() => {
+  //   cells.getCells();
+  // }, []);
   const view = (mode: Mode) => {
     switch (mode) {
       case Mode.Focus:

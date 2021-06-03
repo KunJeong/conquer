@@ -9,77 +9,147 @@ enableStaticRendering(typeof window === "undefined");
 
 configure({ enforceActions: "always" });
 
-// export enum CellType {
-//   Grass,
-//   Todo,
-//   Timer,
-//   Add,
-// }
+export enum CellType {
+  Grass = "grass",
+  Todo = "todo",
+  Timer = "timer",
+  Add = "add",
+}
 
-// export class Cell {
-//   id: string = null;
-//   type: CellType = CellType.Grass;
-//   store: CellStore;
+export class Cell {
+  store: CellStore;
+  id: string = null;
+  @observable type: CellType;
+  @observable name: string = "";
+  i: number;
+  j: number;
 
-//   constructor(store: CellStore, id = uuidv4()) {
-//     this.store = store;
-//     this.id = id;
-//     makeObservable(this);
-//   }
+  constructor(
+    store: CellStore,
+    i: number,
+    j: number,
+    type = CellType.Grass,
 
-//   @action editName(newName: string) {
-//     this.name = newName;
-//   }
-// }
-export class CellStore {
-  @observable cells = [
-    { type: "grass", i: 0, j: 0, layer: 0 },
-    { type: "add", i: -1, j: 0, layer: -1 },
-    { type: "add", i: 1, j: 0, layer: 1 },
-    { type: "add", i: 0, j: -1, layer: -1 },
-    { type: "add", i: 0, j: 1, layer: 1 },
-  ];
-
-  constructor() {
+    save: boolean = true,
+    id = uuidv4()
+  ) {
+    this.store = store;
+    this.id = id;
+    this.i = i;
+    this.j = j;
+    this.type = type;
+    console.log(`created cell: ${i}, ${j}, ${type.toString()}`);
+    if (save) {
+      this.save();
+    }
     makeObservable(this);
   }
 
+  @action editName(newName: string) {
+    this.name = newName;
+  }
+
+  @computed get layer() {
+    return this.i + this.j;
+  }
+
+  @action save() {
+    axios
+      .post("http://localhost:3000/cells", {
+        id: this.id,
+        type: this.type.toString(),
+        i: this.i,
+        j: this.j,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch(function (error) {
+        if (error.response) {
+          console.log("error1");
+        } else if (error.request) {
+          console.log("error2");
+        } else {
+          console.log("error3");
+        }
+      });
+  }
+}
+export class CellStore {
+  @observable cells = [];
+
+  constructor() {
+    // this.initStore();
+    makeObservable(this);
+  }
+
+  @action _deleteCells() {
+    this.cells = [];
+  }
+  @action async _deleteCellsAndSave() {
+    this._deleteCells();
+    return await axios
+      .delete("http://localhost:3000/cells")
+      .then((response) => {
+        console.log(response);
+      })
+      .catch(function (error) {
+        if (error.response) {
+          console.log("error1");
+        } else if (error.request) {
+          console.log("error2");
+        } else {
+          console.log("error3");
+        }
+      });
+  }
+
   @action getCells() {
-    axios.get("http://localhost:3000/cells").then((response) => {
-      console.log(response);
-      this.cells = response.data.cells;
-    });
+    axios
+      .get("http://localhost:3000/cells")
+      .then((response) => {
+        console.log(response);
+        let newCells = response.data.cells.map((cell) => {
+          return new Cell(this, cell.i, cell.j, cell.type, false);
+        });
+        console.log(newCells);
+        this.cells = newCells;
+      })
+      .catch(function (error) {
+        if (error.response) {
+          console.log("error1");
+        } else if (error.request) {
+          console.log("error2");
+        } else {
+          console.log("error3");
+        }
+      });
   }
 
   //PROTOTYPE
-  @action addTodo(selection: number, id) {
+  @action addTodo(selection: number, id: string = uuidv4()) {
     let { i, j } = this.sortedCells[selection];
 
     let cellIndex = this.cells.findIndex((e) => {
       return e.i == i && e.j == j;
     });
-
-    this.cells[cellIndex] = { type: "todo", i, j, layer: i + j, id };
+    this.cells[cellIndex] = new Cell(this, i, j, CellType.Todo, true, id);
   }
 
   //TESTING
   @action initStore() {
-    axios
-      .delete("http://localhost:3000/cells")
-      .then(() => {
-        axios.post("http://localhost:3000/cells", {
-          type: "grass",
-          i: 0,
-          j: 0,
-        });
-        axios.post("http://localhost:3000/cells", { type: "add", i: 0, j: 1 });
-        axios.post("http://localhost:3000/cells", { type: "add", i: 0, j: -1 });
-        axios.post("http://localhost:3000/cells", { type: "add", i: 1, j: 0 });
-        axios.post("http://localhost:3000/cells", { type: "add", i: -1, j: 0 });
-      })
-      .then(() => {
-        this.getCells();
-      });
+    this._deleteCellsAndSave()
+      .then(
+        () =>
+          (this.cells = [
+            new Cell(this, 0, 0, CellType.Grass),
+            new Cell(this, -1, 0, CellType.Add),
+            new Cell(this, 1, 0, CellType.Add),
+            new Cell(this, 0, -1, CellType.Add),
+            new Cell(this, 0, 1, CellType.Add),
+          ])
+      )
+      .then(() => this.getCells());
   }
 
   @computed get sortedCells() {
@@ -110,42 +180,42 @@ export class CellStore {
   }
 
   @action startTimer(i: number, j: number) {
-    this._modifyCell({ type: "timer", i, j });
+    this._modifyCell(i, j, CellType.Timer);
   }
 
-  @action _addCellAndSave({ type, i, j }) {
-    const cell = { type, i, j, layer: i + j };
+  @action _addCellAndSave(i: number, j: number, type: CellType) {
+    const cell = new Cell(this, i, j, type);
     this.cells.push(cell);
-    axios.post("http://localhost:3000/cells", cell);
+    // axios.post("http://localhost:3000/cells", { i, j, type });
   }
 
-  @action _modifyCell({ type, i, j, ...rest }) {
+  @action _modifyCell(i: number, j: number, type: CellType) {
     let cellIndex = this.cells.findIndex((e) => {
       return e.i == i && e.j == j;
     });
-    this.cells[cellIndex] = { type, i, j, layer: i + j, ...rest };
+    this.cells[cellIndex] = new Cell(this, i, j, type, false);
   }
 
-  @action _modifyCellAndSave({ type, i, j }) {
-    this._modifyCell({ type, i, j });
-    axios.patch("http://localhost:3000/cells", { type, i, j });
+  @action _modifyCellAndSave(i: number, j: number, type: CellType) {
+    this._modifyCell(i, j, type);
+    axios.patch("http://localhost:3000/cells", { i, j, type });
   }
 
-  @action _checkAndAddCellAndSave({ type, i, j }) {
+  @action _checkAndAddCellAndSave(i: number, j: number, type: CellType) {
     if (
       !this.cells.some((e) => {
         return e.i == i && e.j == j;
       })
     ) {
-      this._addCellAndSave({ type, i, j });
+      this._addCellAndSave(i, j, type);
     }
   }
 
-  @action addCell(i: number, j: number, name: string) {
-    this._modifyCellAndSave({ type: "grass", i, j });
-    this._checkAndAddCellAndSave({ type: "add", i: i - 1, j });
-    this._checkAndAddCellAndSave({ type: "add", i: i + 1, j });
-    this._checkAndAddCellAndSave({ type: "add", i, j: j - 1 });
-    this._checkAndAddCellAndSave({ type: "add", i, j: j + 1 });
+  @action addCell(i: number, j: number) {
+    this._modifyCellAndSave(i, j, CellType.Grass);
+    this._checkAndAddCellAndSave(i - 1, j, CellType.Add);
+    this._checkAndAddCellAndSave(i + 1, j, CellType.Add);
+    this._checkAndAddCellAndSave(i, j - 1, CellType.Add);
+    this._checkAndAddCellAndSave(i, j + 1, CellType.Add);
   }
 }

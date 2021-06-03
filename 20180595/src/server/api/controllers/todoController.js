@@ -3,12 +3,11 @@ var mongoose = require("mongoose"),
   Todo = mongoose.model("Todo"),
   Cell = mongoose.model("Cell");
 
-exports.createTodo = function (req, res) {
+exports.addTodo = function (req, res) {
   var todo = new Todo();
-  todo.title = req.body.title;
-  todo.i = req.body.i;
-  todo.j = req.body.j;
-  console.log(`title: ${todo.title}, i: ${todo.i}, j: ${todo.j}`);
+  todo.name = req.body.title;
+  todo._id = req.body.id;
+  console.log(`title: ${todo.name}, id: ${todo.id}`);
   todo.save(function (err) {
     if (err) {
       console.error(err);
@@ -17,5 +16,14 @@ exports.createTodo = function (req, res) {
     }
     console.log("created todo");
     res.json({ result: 1 });
+  });
+};
+
+exports.getTodos = function (req, res) {
+  Todo.find().exec(function (err, todos) {
+    if (err) return res.status(500).send({ error: "database failure" });
+    console.log(`got todos: ${todos}`);
+    res.status(200);
+    res.json({ todos });
   });
 };

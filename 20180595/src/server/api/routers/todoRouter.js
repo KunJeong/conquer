@@ -1,6 +1,7 @@
 "use strict";
 module.exports = function (app) {
-  var todo = require("../controllers/todoController");
+  const todo = require("../controllers/todoController");
+  const cors = require("cors");
 
-  app.route("/todos").post(todo.createTodo);
+  app.route("/todos", cors()).get(todo.getTodos).post(todo.addTodo);
 };

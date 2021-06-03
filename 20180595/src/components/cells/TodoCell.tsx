@@ -39,6 +39,7 @@ const TodoCell = observer(function AddCell(props) {
   const { cells, todos } = useStores();
   const classes = useStyles(props);
   console.log(`cells: ${cells}`);
+  console.log(`cell:${props.cell}`);
   return (
     <div>
       <Rhombus

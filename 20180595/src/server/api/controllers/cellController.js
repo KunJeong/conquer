@@ -9,6 +9,7 @@ exports.addCell = function (req, res) {
   cell.j = req.body.j;
   cell.layer = req.body.i + req.body.j;
   cell.type = req.body.type;
+  cell._id = req.body.id;
   cell.save(function (err) {
     if (err) {
       console.error(err);
@@ -16,7 +17,7 @@ exports.addCell = function (req, res) {
       return;
     }
     console.log(`created cell: ${cell}`);
-    res.json({ result: 1 });
+    res.status(200).json({ result: 1 });
   });
 };
 
@@ -32,7 +33,7 @@ exports.editCell = function (req, res) {
         return;
       }
       console.log(`edited cell: ${cell}`);
-      res.json({ result: 1 });
+      res.status(200).json({ result: 1 });
     });
   });
 };
@@ -43,6 +44,7 @@ exports.getCells = function (req, res) {
     .exec(function (err, cells) {
       if (err) return res.status(500).send({ error: "database failure" });
       console.log(`got cells: ${cells}`);
+      res.status(200);
       res.json({ cells });
     });
 };
@@ -50,6 +52,7 @@ exports.getCells = function (req, res) {
 exports.deleteAllCells = function (req, res) {
   Cell.remove({}).exec(function (err) {
     if (err) return res.status(500).send({ error: "database failure" });
+    res.status(200);
     res.json({ result: 1 });
   });
 };
