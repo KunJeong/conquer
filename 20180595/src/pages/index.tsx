@@ -6,9 +6,10 @@ import { useEffect } from "react";
 import { Inspector, Map } from "../components";
 
 const Index = observer(function Index() {
-  const { cells, ui } = useStores();
+  const { todos, cells, ui } = useStores();
   useEffect(() => {
     cells.getCells();
+    todos.getTodos();
   }, []);
 
   return (

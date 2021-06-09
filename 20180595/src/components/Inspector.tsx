@@ -51,13 +51,13 @@ function AddTodo(props) {
 
 const Inspector = observer(function Inspector() {
   const classes = useStyles();
-  const { cells, ui } = useStores();
+  const { todos, cells, ui } = useStores();
   const seconds = new Date(ui.secondsRemaining * 1000)
     .toISOString()
     .substr(11, 8);
 
   // useEffect(() => {
-  //   cells.getCells();
+  //   todos.getTodos();
   // }, []);
   const view = (mode: Mode) => {
     switch (mode) {
@@ -80,9 +80,18 @@ const Inspector = observer(function Inspector() {
       <Button
         onClick={() => {
           cells.initStore();
+          todos.initStore();
         }}
       >
         Reset
+      </Button>
+      <Button
+        onClick={() => {
+          cells.getCells();
+          todos.getTodos();
+        }}
+      >
+        Get
       </Button>
     </Box>
   );

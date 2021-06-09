@@ -5,7 +5,7 @@ var mongoose = require("mongoose"),
 
 exports.addTodo = function (req, res) {
   var todo = new Todo();
-  todo.name = req.body.title;
+  todo.name = req.body.name;
   todo._id = req.body.id;
   console.log(`title: ${todo.name}, id: ${todo.id}`);
   todo.save(function (err) {
@@ -15,7 +15,7 @@ exports.addTodo = function (req, res) {
       return;
     }
     console.log("created todo");
-    res.json({ result: 1 });
+    res.json({ todo });
   });
 };
 
@@ -25,5 +25,13 @@ exports.getTodos = function (req, res) {
     console.log(`got todos: ${todos}`);
     res.status(200);
     res.json({ todos });
+  });
+};
+
+exports.deleteAllTodos = function (req, res) {
+  Todo.remove({}).exec(function (err) {
+    if (err) return res.status(500).send({ error: "database failure" });
+    res.status(200);
+    res.json({ result: 1 });
   });
 };

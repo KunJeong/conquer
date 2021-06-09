@@ -24,11 +24,12 @@ export class Todo {
     this.id = id;
     this.name = name;
     makeObservable(this);
+    console.log(`id:${id}`);
     if (save)
       axios
         .post("http://localhost:3000/todos", { id, name })
         .then((response) => {
-          console.log(response);
+          console.log(response.data.todo);
         })
         .catch(function (error) {
           if (error.response) {
@@ -55,7 +56,32 @@ export class TodoStore {
     makeObservable(this);
   }
 
-  @action getCells() {
+  @action _deleteTodos() {
+    this.todos = [];
+  }
+  @action async _deleteTodosAndSave() {
+    this._deleteTodos();
+    return await axios
+      .delete("http://localhost:3000/todos")
+      .then((response) => {
+        console.log(response);
+      })
+      .catch(function (error) {
+        if (error.response) {
+          console.log("error1");
+        } else if (error.request) {
+          console.log("error2");
+        } else {
+          console.log("error3");
+        }
+      });
+  }
+
+  @action initStore() {
+    this._deleteTodosAndSave().then(() => this.getTodos());
+  }
+
+  @action getTodos() {
     axios
       .get("http://localhost:3000/todos")
       .then((response) => {
@@ -77,7 +103,7 @@ export class TodoStore {
       });
   }
 
-  @action addTodo(id: string, name: string) {
+  @action addTodo(name: string, id: string) {
     let todo = new Todo(this, name, true, id);
     this.todos.push(todo);
   }

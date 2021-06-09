@@ -33,13 +33,17 @@ const SelectedView = observer(function SelectedView() {
       <Button
         startIcon={<AddIcon />}
         onClick={() => {
-          let id = uuidv4();
+          // let id = uuidv4();
+          // console.log(`addingid:${id}`);
+          console.log("YYAYAYAYAYYA");
           let name = "item" + todos.count;
-          cells.addTodo(ui.selection, id);
-          todos.addTodo(id, name);
+          let id = cells.cells[ui.selection].id;
+          console.log(`found id: ${id}`);
+          cells.addTodo(ui.selection);
+          todos.addTodo(name, id);
         }}
       >
-        Add Todo
+        Add Todo Yay!!!
       </Button>
     </Box>
   );

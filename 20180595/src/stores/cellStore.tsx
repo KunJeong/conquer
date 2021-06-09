@@ -127,13 +127,14 @@ export class CellStore {
   }
 
   //PROTOTYPE
-  @action addTodo(selection: number, id: string = uuidv4()) {
-    let { i, j } = this.sortedCells[selection];
+  @action addTodo(selection: number) {
+    let { id, i, j } = this.sortedCells[selection];
 
     let cellIndex = this.cells.findIndex((e) => {
       return e.i == i && e.j == j;
     });
-    this.cells[cellIndex] = new Cell(this, i, j, CellType.Todo, true, id);
+    this.cells[cellIndex] = new Cell(this, i, j, CellType.Todo, false, id);
+    this._modifyCellAndSave(i, j, CellType.Todo);
   }
 
   //TESTING
