@@ -40,10 +40,16 @@ function _Map(props) {
           e.stopPropagation();
         }}
       >
-        <IconButton onClick={() => ui.zoom(false)}>
+        <IconButton
+          onClick={() => ui.zoom(false)}
+          disabled={ui.width >= ui.maxWidth}
+        >
           <Add />
         </IconButton>
-        <IconButton onClick={() => ui.zoom(true)}>
+        <IconButton
+          onClick={() => ui.zoom(true)}
+          disabled={ui.width <= ui.minWidth}
+        >
           <Remove />
         </IconButton>
 

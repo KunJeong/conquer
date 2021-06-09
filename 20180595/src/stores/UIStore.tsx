@@ -13,7 +13,9 @@ export enum Mode {
 
 export class UIStore {
   @observable mode: Mode = Mode.List;
-  @observable width: number = 120;
+  @observable width: number = 160;
+  minWidth = 40;
+  maxWidth = 240;
 
   //selection
   @observable selection: number = null;
