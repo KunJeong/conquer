@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import Head from "next/head";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-const theme = createMuiTheme();
+import theme from "../theme";
 import { StoreProvider } from "../components/StoreProvider";
 import React, { useEffect } from "react";
 

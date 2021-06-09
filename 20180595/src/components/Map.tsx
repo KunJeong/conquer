@@ -11,23 +11,25 @@ const sqrt3 = 1.73205;
 
 function _Map(props) {
   const { cells, ui } = useStores();
-  // const onStop = () => {
-  //   const wasPanning = ui.isPanning;
-  //   ui.endPan()
-  //   if (wasPanning) {
-  //     onDrop()
-  //   } else {
-
-  //   }
-  // }
+  const onStop = () => {
+    const wasPanning = ui.isPanning;
+    ui.endPan();
+    if (wasPanning) {
+      // onDrop()
+    } else {
+    }
+  };
   return (
     <Box
+      component="span"
+      display="block"
+      // height={1}
       style={{
-        width: 600,
-        height: 800,
-        backgroundColor: "#ffffff",
+        // width: "100%",
+        // width: 600,
+        height: "100%",
         // position: "relative",
-        // overflow: "hidden",
+        overflow: "hidden",
         willChange: "transform",
       }}
       onClick={() => {
@@ -35,34 +37,34 @@ function _Map(props) {
       }}
     >
       <Box
-        component="span"
-        width={1}
-        height={1}
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
-        {/* <Draggable
+        <Draggable
+          defaultPosition={{ x: 0, y: 400 }}
           onDrag={() => ui.startPan()}
           onStop={(e) => {
             e.stopPropagation();
             ui.endPan();
           }}
-        > */}
-        <MapInteractionCSS
-          showControls
-          defaultValue={{ scale: 1, translation: { x: 300, y: 400 } }}
         >
-          <IsometricGrid
-            // width={600}
-            // height={600}
-            childWidth={160}
-            spacing={5}
-            cells={cells.sortedCells}
-          />
-        </MapInteractionCSS>
-
-        {/* </Draggable> */}
+          {/* <MapInteractionCSS
+            showControls
+            disablePan
+            defaultValue={{ scale: 1, translation: { x: 300, y: 400 } }}
+          > */}
+          <Box>
+            <IsometricGrid
+              // width={600}
+              // height={600}
+              childWidth={160}
+              spacing={5}
+              cells={cells.sortedCells}
+            />
+          </Box>
+          {/* </MapInteractionCSS> */}
+        </Draggable>
       </Box>
     </Box>
   );

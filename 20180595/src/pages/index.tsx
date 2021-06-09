@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks/useStores";
 import { useEffect } from "react";
 import { Inspector, Map } from "../components";
+import { mapColors } from "../constants";
 
 const Index = observer(function Index() {
   const { todos, cells, ui } = useStores();
@@ -13,12 +14,18 @@ const Index = observer(function Index() {
   }, []);
 
   return (
-    <Box mx={2}>
-      <Grid container spacing={6}>
+    <Box p={2} height="100vh" overflow="hidden" bgcolor={mapColors.BACKGROUND}>
+      <Grid
+        container
+        spacing={2}
+        // alignItems="center"
+        justify="center"
+      >
         <Grid item xs={4}>
+          {/* <Box m={2}></Box> */}
           <Inspector />
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={8} style={{ height: "100vh" }}>
           <Map />
         </Grid>
       </Grid>
