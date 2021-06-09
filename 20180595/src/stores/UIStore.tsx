@@ -70,4 +70,8 @@ export class UIStore {
   @computed get percentage() {
     return 100 - (this.secondsRemaining / this.secondsTotal) * 100;
   }
+
+  @action setMode(mode: Mode) {
+    this.mode = mode;
+  }
 }
