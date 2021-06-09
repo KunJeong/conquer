@@ -76,7 +76,7 @@ function _IsometricGrid(props) {
               height: props.height,
               willChange: "transform",
             }}
-            width={120}
+            width={ui.width}
             type={cell.type}
             index={index}
             i={cell.i}

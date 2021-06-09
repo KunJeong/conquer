@@ -2,10 +2,11 @@
 import PropTypes from "prop-types";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks/useStores";
-import { Box } from "@material-ui/core";
+import { Box, Button, IconButton } from "@material-ui/core";
 import Draggable from "react-draggable";
 import IsometricGrid from "./IsometricGrid";
 import { MapInteractionCSS } from "react-map-interaction";
+import { Add, Remove } from "@material-ui/icons";
 
 const sqrt3 = 1.73205;
 
@@ -25,8 +26,6 @@ function _Map(props) {
       display="block"
       // height={1}
       style={{
-        // width: "100%",
-        // width: 600,
         height: "100%",
         // position: "relative",
         overflow: "hidden",
@@ -41,6 +40,13 @@ function _Map(props) {
           e.stopPropagation();
         }}
       >
+        <IconButton onClick={() => ui.zoom(false)}>
+          <Add />
+        </IconButton>
+        <IconButton onClick={() => ui.zoom(true)}>
+          <Remove />
+        </IconButton>
+
         <Draggable
           defaultPosition={{ x: 0, y: 400 }}
           onDrag={() => ui.startPan()}

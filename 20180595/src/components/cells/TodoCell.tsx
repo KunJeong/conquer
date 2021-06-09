@@ -51,7 +51,7 @@ const TodoCell = observer(function AddCell(props) {
       ></Rhombus>
       <Typography className={classes.text}>
         {/* {`todos:${todos.todos}`} */}
-        {todos.todoById(props.cell.hasElement).name}
+        {todos.todoById(props.cell.hasElement)?.name}
       </Typography>
     </div>
   );

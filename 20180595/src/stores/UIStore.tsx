@@ -13,6 +13,7 @@ export enum Mode {
 
 export class UIStore {
   @observable mode: Mode = Mode.List;
+  @observable width: number = 120;
 
   //selection
   @observable selection: number = null;
@@ -73,5 +74,10 @@ export class UIStore {
 
   @action setMode(mode: Mode) {
     this.mode = mode;
+  }
+
+  @action zoom(out: boolean) {
+    if (out) this.width -= 40;
+    else this.width += 40;
   }
 }
