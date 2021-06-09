@@ -26,6 +26,7 @@ function _IsometricGrid(props) {
   const jSize = maxJ - minJ + 1;
   console.log(`size: ${iSize}, ${jSize}`);
   const onClick = (index, i, j) => {
+    // if (!ui.isPanning) {
     console.log("clicked");
 
     ui.select(index, i, j);
@@ -34,6 +35,7 @@ function _IsometricGrid(props) {
     );
     animationRef.current.play();
     // if(props.onClickCell) props.onClickCell(i, j);
+    // }
   };
 
   return (
@@ -69,7 +71,11 @@ function _IsometricGrid(props) {
           <Cell
             key={cell.i * 2 + cell.j}
             classes={{ cell: "cell" }}
-            style={{ width: props.width, height: props.height }}
+            style={{
+              width: props.width,
+              height: props.height,
+              willChange: "transform",
+            }}
             width={120}
             type={cell.type}
             index={index}

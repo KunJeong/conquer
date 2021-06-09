@@ -5,19 +5,29 @@ import { useStores } from "../hooks/useStores";
 import { Box } from "@material-ui/core";
 import Draggable from "react-draggable";
 import IsometricGrid from "./IsometricGrid";
+import { MapInteractionCSS } from "react-map-interaction";
 
 const sqrt3 = 1.73205;
 
 function _Map(props) {
   const { cells, ui } = useStores();
+  // const onStop = () => {
+  //   const wasPanning = ui.isPanning;
+  //   ui.endPan()
+  //   if (wasPanning) {
+  //     onDrop()
+  //   } else {
+
+  //   }
+  // }
   return (
     <Box
       style={{
         width: 600,
         height: 800,
         backgroundColor: "#ffffff",
-        position: "relative",
-        overflow: "hidden",
+        // position: "relative",
+        // overflow: "hidden",
         willChange: "transform",
       }}
       onClick={() => {
@@ -25,21 +35,34 @@ function _Map(props) {
       }}
     >
       <Box
+        component="span"
+        width={1}
+        height={1}
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
-        <Draggable>
-          <Box>
-            <IsometricGrid
-              // width={600}
-              // height={600}
-              childWidth={160}
-              spacing={5}
-              cells={cells.sortedCells}
-            />
-          </Box>
-        </Draggable>
+        {/* <Draggable
+          onDrag={() => ui.startPan()}
+          onStop={(e) => {
+            e.stopPropagation();
+            ui.endPan();
+          }}
+        > */}
+        <MapInteractionCSS
+          showControls
+          defaultValue={{ scale: 1, translation: { x: 300, y: 400 } }}
+        >
+          <IsometricGrid
+            // width={600}
+            // height={600}
+            childWidth={160}
+            spacing={5}
+            cells={cells.sortedCells}
+          />
+        </MapInteractionCSS>
+
+        {/* </Draggable> */}
       </Box>
     </Box>
   );

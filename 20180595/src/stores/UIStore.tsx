@@ -21,6 +21,8 @@ export class UIStore {
     selectionJ: null,
   };
 
+  @observable isPanning: boolean = false;
+
   //timer
   @observable secondsTotal: number = 30;
   @observable secondsRemaining: number = 30;
@@ -38,6 +40,13 @@ export class UIStore {
     this.selectionPos = { selectionI: null, selectionJ: null };
   }
 
+  @action startPan() {
+    this.isPanning = true;
+  }
+
+  @action endPan() {
+    this.isPanning = false;
+  }
   @action select(index: number, selectionI: number, selectionJ: number) {
     this.selection = index;
     if (this.mode != Mode.Focus) this.mode = Mode.Selected;
