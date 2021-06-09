@@ -8,7 +8,7 @@ const TodoSchema = Schema({
   //   ref: Cell,
   // },
   _id: String,
-
+  onCell: String,
   completed: {
     type: Boolean,
     default: false,

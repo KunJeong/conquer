@@ -11,6 +11,7 @@ configure({ enforceActions: "always" });
 export class Todo {
   store: TodoStore;
   id: string = null;
+  onCell: string = null;
   @observable completed = false;
   @observable name: string;
 
@@ -18,16 +19,18 @@ export class Todo {
     store: TodoStore,
     name: string = "New Todo",
     save: boolean = true,
+    onCell = null,
     id = uuidv4()
   ) {
     this.store = store;
     this.id = id;
     this.name = name;
+    this.onCell = onCell;
     makeObservable(this);
     console.log(`id:${id}`);
     if (save)
       axios
-        .post("http://localhost:3000/todos", { id, name })
+        .post("http://localhost:3000/todos", { id, name, onCell })
         .then((response) => {
           console.log(response.data.todo);
         })
@@ -87,7 +90,7 @@ export class TodoStore {
       .then((response) => {
         console.log(response);
         let newTodos = response.data.todos.map((todo) => {
-          return new Todo(this, todo.name, false);
+          return new Todo(this, todo.name, false, todo.onCell, todo._id);
         });
         console.log(newTodos);
         this.todos = newTodos;
@@ -103,8 +106,8 @@ export class TodoStore {
       });
   }
 
-  @action addTodo(name: string, id: string) {
-    let todo = new Todo(this, name, true, id);
+  @action addTodo(name: string, id: string, onCell: string) {
+    let todo = new Todo(this, name, true, onCell, id);
     this.todos.push(todo);
   }
 

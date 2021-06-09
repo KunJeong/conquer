@@ -50,8 +50,8 @@ const TodoCell = observer(function AddCell(props) {
         borderWidth={props.borderWidth}
       ></Rhombus>
       <Typography className={classes.text}>
-        {`todos:${todos.todos}`}
-        {/* {todos.todoById(props.cell.id).name} */}
+        {/* {`todos:${todos.todos}`} */}
+        {todos.todoById(props.cell.hasElement).name}
       </Typography>
     </div>
   );

@@ -19,6 +19,7 @@ export enum CellType {
 export class Cell {
   store: CellStore;
   id: string = null;
+  hasElement: string = null;
   @observable type: CellType;
   @observable name: string = "";
   i: number;
@@ -31,6 +32,7 @@ export class Cell {
     type = CellType.Grass,
 
     save: boolean = true,
+    hasElement = null,
     id = uuidv4()
   ) {
     this.store = store;
@@ -38,7 +40,8 @@ export class Cell {
     this.i = i;
     this.j = j;
     this.type = type;
-    console.log(`created cell: ${i}, ${j}, ${type.toString()}`);
+    this.hasElement = hasElement;
+    console.log(`created cell: ${i}, ${j}, ${type.toString()}, ${hasElement}`);
     if (save) {
       this.save();
     }
@@ -60,6 +63,7 @@ export class Cell {
         type: this.type.toString(),
         i: this.i,
         j: this.j,
+        hasElement: this.hasElement,
       })
       .then((response) => {
         console.log(response);
@@ -86,6 +90,7 @@ export class CellStore {
   @action _deleteCells() {
     this.cells = [];
   }
+
   @action async _deleteCellsAndSave() {
     this._deleteCells();
     return await axios
@@ -110,7 +115,15 @@ export class CellStore {
       .then((response) => {
         console.log(response);
         let newCells = response.data.cells.map((cell) => {
-          return new Cell(this, cell.i, cell.j, cell.type, false);
+          return new Cell(
+            this,
+            cell.i,
+            cell.j,
+            cell.type,
+            false,
+            cell.hasElement,
+            cell._id
+          );
         });
         console.log(newCells);
         this.cells = newCells;
@@ -127,14 +140,13 @@ export class CellStore {
   }
 
   //PROTOTYPE
-  @action addTodo(selection: number) {
+  @action addTodo(selection: number, todoId: string) {
     let { id, i, j } = this.sortedCells[selection];
-
-    let cellIndex = this.cells.findIndex((e) => {
-      return e.i == i && e.j == j;
+    this._modifyCellAndSave(i, j, {
+      type: CellType.Todo,
+      hasElement: todoId,
+      id,
     });
-    this.cells[cellIndex] = new Cell(this, i, j, CellType.Todo, false, id);
-    this._modifyCellAndSave(i, j, CellType.Todo);
   }
 
   //TESTING
@@ -181,7 +193,7 @@ export class CellStore {
   }
 
   @action startTimer(i: number, j: number) {
-    this._modifyCell(i, j, CellType.Timer);
+    this._modifyCell(i, j, { type: CellType.Timer });
   }
 
   @action _addCellAndSave(i: number, j: number, type: CellType) {
@@ -190,16 +202,24 @@ export class CellStore {
     // axios.post("http://localhost:3000/cells", { i, j, type });
   }
 
-  @action _modifyCell(i: number, j: number, type: CellType) {
+  @action _modifyCell(i: number, j: number, { type, ...rest }) {
     let cellIndex = this.cells.findIndex((e) => {
       return e.i == i && e.j == j;
     });
-    this.cells[cellIndex] = new Cell(this, i, j, type, false);
+    this.cells[cellIndex] = new Cell(
+      this,
+      i,
+      j,
+      type,
+      false,
+      rest.hasElement,
+      rest.id
+    );
   }
 
-  @action _modifyCellAndSave(i: number, j: number, type: CellType) {
-    this._modifyCell(i, j, type);
-    axios.patch("http://localhost:3000/cells", { i, j, type });
+  @action _modifyCellAndSave(i: number, j: number, { type, ...rest }) {
+    this._modifyCell(i, j, { type, ...rest });
+    axios.patch("http://localhost:3000/cells", { i, j, type, ...rest });
   }
 
   @action _checkAndAddCellAndSave(i: number, j: number, type: CellType) {
@@ -213,7 +233,7 @@ export class CellStore {
   }
 
   @action addCell(i: number, j: number) {
-    this._modifyCellAndSave(i, j, CellType.Grass);
+    this._modifyCellAndSave(i, j, { type: CellType.Grass });
     this._checkAndAddCellAndSave(i - 1, j, CellType.Add);
     this._checkAndAddCellAndSave(i + 1, j, CellType.Add);
     this._checkAndAddCellAndSave(i, j - 1, CellType.Add);

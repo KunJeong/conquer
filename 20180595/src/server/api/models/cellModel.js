@@ -6,6 +6,7 @@ const CellSchema = Schema({
   _id: String,
   i: Number,
   j: Number,
+  hasElement: String,
   layer: {
     type: Number,
     default: function () {

@@ -9,6 +9,7 @@ exports.addCell = function (req, res) {
   cell.j = req.body.j;
   cell.layer = req.body.i + req.body.j;
   cell.type = req.body.type;
+  cell.hasElement = req.body.hasElement;
   cell._id = req.body.id;
   cell.save(function (err) {
     if (err) {
@@ -26,6 +27,8 @@ exports.editCell = function (req, res) {
     if (err) return res.status(500).send({ error: "database failure" });
     console.log(`editing cell: ${cell}`);
     cell.type = req.body.type;
+    cell.hasElement = req.body.hasElement;
+    cell._id = req.body.id;
     cell.save(function (err) {
       if (err) {
         console.error(err);
