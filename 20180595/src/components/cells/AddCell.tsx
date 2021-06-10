@@ -47,17 +47,7 @@ const AddCell = observer(function AddCell(props) {
         className={classes.rhombus}
         onClick={() => {
           props.onClick();
-          cells.startTimer(props.i, props.j);
-          ui.startTimer();
-
-          const interval = setInterval(() => {
-            if (ui.mode == Mode.Focus) ui.decreaseTimer();
-            else {
-              ui.select(props.index, props.i, props.j);
-              cells.addCell(props.i, props.j);
-              clearInterval(interval);
-            }
-          }, 1000);
+          ui.setMode(Mode.AddingTimer);
         }}
         width={props.width}
         borderWidth={props.borderWidth}

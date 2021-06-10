@@ -9,13 +9,14 @@ export enum Mode {
   Selected,
   Focus,
   AddingTodo,
+  AddingTimer,
 }
 
 export class UIStore {
   @observable mode: Mode = Mode.List;
   @observable width: number = 160;
-  minWidth = 40;
-  maxWidth = 240;
+  minWidth = 80;
+  maxWidth = 280;
 
   //selection
   @observable selection: number = null;
