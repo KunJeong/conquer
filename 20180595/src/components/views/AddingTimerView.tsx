@@ -5,6 +5,8 @@ import {
   TextField,
   Typography,
   Grid,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { v4 as uuidv4 } from "uuid";
@@ -15,18 +17,26 @@ import { Mode } from "../../stores/UIStore";
 
 const AddingTimerView = observer(function AddingTimerView() {
   const { cells, ui, todos } = useStores();
-  const [name, setName] = useState("");
+  const [time, setTime] = useState(0.1);
 
   return (
     <Box component="span" display="block">
-      <Grid container justify="flex-start"></Grid>
+      <Grid container justify="flex-start">
+        <Select value={time} onChange={(e) => setTime(e.target.value)}>
+          <MenuItem value={0.1}>Six Seconds</MenuItem>
+          <MenuItem value={15}>Fifteen Minutes</MenuItem>
+          <MenuItem value={30}>Thirty Minutes</MenuItem>
+          <MenuItem value={60}>One Hour</MenuItem>
+          <MenuItem value={120}>Two Hours</MenuItem>
+        </Select>
+      </Grid>
       <Grid container justify="flex-end">
         <Button
           startIcon={<AddIcon />}
           onClick={() => {
             let cell = cells.cells[ui.selection];
             cells.startTimer(cell.i, cell.j);
-            ui.startTimer();
+            ui.startTimer(time);
 
             const interval = setInterval(() => {
               if (ui.mode == Mode.Focus) ui.decreaseTimer();

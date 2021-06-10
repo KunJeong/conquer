@@ -58,9 +58,9 @@ export class UIStore {
   }
 
   //timer
-  @action startTimer() {
-    this.secondsRemaining = 10;
-    this.secondsTotal = 10;
+  @action startTimer(minutes: number) {
+    this.secondsRemaining = minutes * 60;
+    this.secondsTotal = minutes * 60;
     this.mode = Mode.Focus;
   }
 
