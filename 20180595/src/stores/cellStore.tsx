@@ -239,4 +239,8 @@ export class CellStore {
     this._checkAndAddCellAndSave(i, j - 1, CellType.Add);
     this._checkAndAddCellAndSave(i, j + 1, CellType.Add);
   }
+
+  cellById(id: string) {
+    return this.cells.find((cell) => cell.id == id);
+  }
 }

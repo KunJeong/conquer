@@ -4,37 +4,23 @@ import { v4 as uuidv4 } from "uuid";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { useStores } from "../../../hooks/useStores";
-
-const useStyles = makeStyles({
-  title: (props) => ({
-    ...props.style,
-    fontSize: 18,
-  }),
-  body: (props) => ({
-    ...props.style,
-    fontSize: 20,
-  }),
-  seconds: (props) => ({
-    ...props.style,
-    fontSize: 30,
-  }),
-  paper: {
-    padding: "20px",
-    textAlign: "center",
-  },
-});
+import { Mode } from "../../../stores/UIStore";
 
 const GrassSelectedView = observer(function GrassSelectedView() {
-  const classes = useStyles();
-  const { cells, ui } = useStores();
+  const { cells, ui, todos } = useStores();
 
   return (
     <Box>
       <Button
         startIcon={<AddIcon />}
         onClick={() => {
-          let id = uuidv4();
-          cells.addTodo(ui.selection, id);
+          ui.setMode(Mode.AddingTodo);
+          // let name = "item" + todos.count;
+          // let cellId = cells.cells[ui.selection].id;
+          // // console.log(`found id: ${cellId}`);
+          // let todoId = uuidv4();
+          // cells.addTodo(ui.selection, todoId);
+          // todos.addTodo(name, todoId, cellId);
         }}
       >
         Add Todo

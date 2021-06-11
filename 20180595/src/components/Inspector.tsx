@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks/useStores";
 import React, { useEffect, useState } from "react";
-import { Mode } from "../stores/UIStore";
+import { Mode } from "../stores";
 import {
   FocusView,
   ListView,
@@ -70,7 +70,7 @@ const Inspector = observer(function Inspector() {
       case Mode.Focus:
         return <FocusView />;
       case Mode.Selected:
-        return <SelectedView />;
+        return <SelectedView cell={cells.cells[ui.selection]} />;
       case Mode.AddingTodo:
         return <AddingTodoView />;
       case Mode.List:

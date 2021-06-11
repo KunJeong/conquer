@@ -19,10 +19,14 @@ const AddingTimerView = observer(function AddingTimerView() {
   const { cells, ui, todos } = useStores();
   const [time, setTime] = useState(0.1);
 
+  const onChange = (e) => {
+    setTime(e.target.value);
+  };
+
   return (
     <Box component="span" display="block">
       <Grid container justify="flex-start">
-        <Select value={time} onChange={(e) => setTime(e.target.value)}>
+        <Select value={time} onChange={onChange}>
           <MenuItem value={0.1}>Six Seconds</MenuItem>
           <MenuItem value={15}>Fifteen Minutes</MenuItem>
           <MenuItem value={30}>Thirty Minutes</MenuItem>

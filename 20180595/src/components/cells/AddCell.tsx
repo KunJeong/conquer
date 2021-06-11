@@ -4,7 +4,7 @@ import AddIcon from "@material-ui/icons/Add";
 import Rhombus from "../Rhombus";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../hooks/useStores";
-import { Mode } from "../../stores/UIStore";
+import { Mode } from "../../stores";
 
 const useStyles = makeStyles({
   plus: (props) => ({
