@@ -9,7 +9,7 @@ import { Mode } from "../stores";
 const sqrt1over3 = 0.57735;
 
 const useStyles = makeStyles({
-  cell: (props) => ({
+  cell: (props: CellProps) => ({
     // backgroundColor: "#dddddd",
     // borderStyle: 'solid',
     pointerEvents: "none",
@@ -28,6 +28,13 @@ const useStyles = makeStyles({
     height: props.width * sqrt1over3 + "px",
   }),
 });
+
+interface CellProps {
+  width: number;
+  marginX: number;
+  x: number;
+  y: number;
+}
 
 function _Cell(props) {
   const { ui } = useStores();
@@ -109,13 +116,6 @@ function _Cell(props) {
       </div>
     );
 }
-
-_Cell.propTypes = {
-  i: PropTypes.number,
-  j: PropTypes.number,
-  // cell: PropTypes.objectOf(PropTypes.string),
-  width: PropTypes.number,
-};
 
 _Cell.defaultProps = {
   i: 0,

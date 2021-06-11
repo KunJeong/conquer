@@ -84,7 +84,7 @@ const Inspector = observer(function Inspector() {
       <Paper className={classes.paper} elevation={3}>
         {view(ui.mode)}
       </Paper>
-
+      {/* DEBUG */}
       <Button
         onClick={() => {
           cells.initStore();
@@ -93,6 +93,7 @@ const Inspector = observer(function Inspector() {
       >
         Reset
       </Button>
+      {/* DEBUG */}
       <Button
         onClick={() => {
           cells.getCells();

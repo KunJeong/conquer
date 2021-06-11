@@ -5,6 +5,7 @@ import Rhombus from "../Rhombus";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../hooks/useStores";
 import { Mode } from "../../stores";
+import { mapColors } from "../../constants";
 
 const useStyles = makeStyles({
   plus: (props) => ({
@@ -25,12 +26,9 @@ const useStyles = makeStyles({
     display: "none",
   }),
   rhombus: {
-    // backgroundColor: '#f3f3f3',
     "&:hover": {
-      // borderStyle: 'dashed',
-      // borderColor: '#777777',
       borderRadius: "10px",
-      backgroundColor: "#f3f3f3",
+      backgroundColor: mapColors.BACKGROUND_HOVER,
     },
     "&:hover + $plus": {
       display: "block",
@@ -38,8 +36,13 @@ const useStyles = makeStyles({
   },
 });
 
-const AddCell = observer(function AddCell(props) {
-  const { cells, ui } = useStores();
+interface AddCellType {
+  width: number;
+  [rest: string]: any;
+}
+
+const AddCell = observer(function AddCell({ ...props }: AddCellType) {
+  const { ui } = useStores();
   const classes = useStyles();
   return (
     <div>
@@ -49,8 +52,8 @@ const AddCell = observer(function AddCell(props) {
           props.onClick();
           ui.setMode(Mode.AddingTimer);
         }}
-        width={props.width}
-        borderWidth={props.borderWidth}
+        {...props}
+        // borderWidth={props.borderWidth}
       ></Rhombus>
       <AddIcon className={classes.plus} />
     </div>

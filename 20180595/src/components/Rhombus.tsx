@@ -8,7 +8,7 @@ const sqrt3 = 1.73205;
 const sqrt1over3 = 0.57735;
 
 const useStyles = makeStyles({
-  rhombus: (props) => ({
+  rhombus: (props: RhombusProps) => ({
     ...props.style,
     // backgroundColor: props.backgroundColor,
     boxSizing: "border-box",
@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     // willChange: 'transform',
     left: "50%",
     bottom: "50%",
-    // border: '3px dashed',
+    // borderWidth: props.style.borderwidth * sqrt3,
     marginLeft: props.width * sqrt1over2 * -0.5 + "px",
     marginBottom: props.width * sqrt1over2 * -0.5 + "px",
     width: props.width * sqrt1over2 + "px",
@@ -32,20 +32,16 @@ const useStyles = makeStyles({
   }),
 });
 
-function Rhombus(props) {
-  const classes = useStyles(props);
-  return (
-    <div
-      onClick={props.onClick}
-      className={`${classes.rhombus} ${props.className}`}
-    ></div>
-  );
+interface RhombusProps {
+  width: number;
+  [rest: string]: any;
 }
 
-Rhombus.defaultProps = {
-  width: 160,
-  borderWidth: 3,
-  backgroundColor: "#af1234",
-};
+function Rhombus({ width = 120, ...props }: RhombusProps) {
+  const classes = useStyles({ width, ...props });
+  return (
+    <div className={`${classes.rhombus} ${props.className}`} {...props}></div>
+  );
+}
 
 export default Rhombus;

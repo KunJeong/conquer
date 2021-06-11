@@ -8,7 +8,7 @@ import React from "react";
 
 const sqrt3 = 1.73205;
 
-function _IsometricGrid(props) {
+const IsometricGrid = observer(function _IsometricGrid(props) {
   const { cells, ui } = useStores();
   const animationRef = React.useRef(null);
 
@@ -91,21 +91,19 @@ function _IsometricGrid(props) {
       })}
     </Anime>
   );
-}
+});
 
-_IsometricGrid.defaultProps = {
-  width: 500,
-  height: 400,
-  childwidth: 80,
-  spacing: 100,
-  cells: [
-    { _id: "1", i: 0, j: 0 },
-    { _id: "2", i: 1, j: 0 },
-    { _id: "3", i: 0, j: 1 },
-    { _id: "4", i: 1, j: 1 },
-  ],
-};
-
-const IsometricGrid = observer(_IsometricGrid);
+// _IsometricGrid.defaultProps = {
+//   width: 500,
+//   height: 400,
+//   childwidth: 80,
+//   spacing: 100,
+//   cells: [
+//     { _id: "1", i: 0, j: 0 },
+//     { _id: "2", i: 1, j: 0 },
+//     { _id: "3", i: 0, j: 1 },
+//     { _id: "4", i: 1, j: 1 },
+//   ],
+// };
 
 export default IsometricGrid;

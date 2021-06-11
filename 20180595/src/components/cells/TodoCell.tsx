@@ -6,11 +6,12 @@ import Rhombus from "../Rhombus";
 import { observer } from "mobx-react-lite";
 import { action } from "mobx";
 import { useStores } from "../../hooks/useStores";
+import { Cell } from "../../stores";
 
 const sqrt1over3 = 0.57735;
 
 const useStyles = makeStyles({
-  text: (props) => ({
+  text: (props: TodoCellProps) => ({
     ...props.style,
     position: "absolute",
     fontSize: "12pt",
@@ -35,10 +36,17 @@ const useStyles = makeStyles({
   }),
 });
 
-const TodoCell = observer(function AddCell(props) {
-  const { cells, todos } = useStores();
-  const classes = useStyles(props);
-  console.log(`cell:${props.cell.id}`);
+interface TodoCellProps {
+  cell: Cell;
+  width: number;
+  selected: boolean;
+  [rest: string]: any;
+}
+
+const TodoCell = observer(function TodoCell({ cell, ...props }: TodoCellProps) {
+  const { todos } = useStores();
+  const classes = useStyles({ cell, ...props });
+  console.log(`cell:${cell.id}`);
   return (
     <div>
       <Rhombus
@@ -46,8 +54,7 @@ const TodoCell = observer(function AddCell(props) {
         onClick={() => {
           props.onClick();
         }}
-        width={props.width}
-        borderWidth={props.borderWidth}
+        {...props}
       ></Rhombus>
       <Typography className={classes.text}>
         {/* {`todos:${todos.todos}`} */}
