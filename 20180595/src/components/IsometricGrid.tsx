@@ -15,19 +15,19 @@ function _IsometricGrid(props) {
   const selectionJ = cells.cellById(ui.selectedCell)?.j;
   const animationRef = React.useRef(null);
 
-  const halfSpan = Math.max(
-    Math.floor(props.width / props.childWidth),
-    Math.floor((props.height * sqrt3) / props.childWidth)
-  );
-  const totalSpan = halfSpan * 2 + 1;
-  console.log(`width: ${props.width}, child: ${props.childWidth}`);
+  // const halfSpan = Math.max(
+  //   Math.floor(props.width / props.childWidth),
+  //   Math.floor((props.height * sqrt3) / props.childWidth)
+  // );
+  // const totalSpan = halfSpan * 2 + 1;
+  // console.log(`width: ${props.width}, child: ${props.childWidth}`);
 
-  console.log(`half: ${halfSpan}, total: ${totalSpan}`);
+  // console.log(`half: ${halfSpan}, total: ${totalSpan}`);
 
-  const { minI, minJ, maxI, maxJ } = cells.mapSize;
-  const iSize = maxI - minI + 1;
-  const jSize = maxJ - minJ + 1;
-  console.log(`size: ${iSize}, ${jSize}`);
+  // const { minI, minJ, maxI, maxJ } = cells.mapSize;
+  // const iSize = maxI - minI + 1;
+  // const jSize = maxJ - minJ + 1;
+  // console.log(`size: ${iSize}, ${jSize}`);
 
   return (
     // <Anime
@@ -69,7 +69,7 @@ function _IsometricGrid(props) {
               willChange: "transform",
             }}
             width={ui.width}
-            selected={props.i == selectionI && props.j == selectionJ}
+            selected={cell.id === ui.selectedCell}
             type={cell.type}
             index={index}
             i={cell.i}
