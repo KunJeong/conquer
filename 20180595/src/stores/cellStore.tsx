@@ -21,7 +21,7 @@ export class Cell {
   id: string = null;
   hasElement: string = null;
   @observable type: CellType;
-  @observable name: string = "";
+  // @observable name: string = "";
   i: number;
   j: number;
 
@@ -43,27 +43,47 @@ export class Cell {
     this.hasElement = hasElement;
     console.log(`created cell: ${i}, ${j}, ${type.toString()}, ${hasElement}`);
     if (save) {
-      this.save();
+      this.addToServer();
     }
     makeObservable(this);
   }
 
-  @action editName(newName: string) {
-    this.name = newName;
-  }
+  // @action editName(newName: string) {
+  //   this.name = newName;
+  // }
 
   @computed get layer() {
     return this.i + this.j;
   }
 
-  @action save() {
-    axios
+  @action async addToServer() {
+    return await axios
       .post("http://localhost:3000/cells", {
         id: this.id,
         type: this.type.toString(),
         i: this.i,
         j: this.j,
         hasElement: this.hasElement,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch(function (error) {
+        if (error.response) {
+          console.log("error1");
+        } else if (error.request) {
+          console.log("error2");
+        } else {
+          console.log("error3");
+        }
+      });
+  }
+
+  @action async modifyToServer({ type, ...rest }) {
+    return await axios
+      .patch(`http://localhost:3000/cells/${this.id}`, {
+        type: type.toString(),
+        ...rest,
       })
       .then((response) => {
         console.log(response);
@@ -87,12 +107,12 @@ export class CellStore {
     makeObservable(this);
   }
 
-  @action _deleteCells() {
+  @action private deleteCells() {
     this.cells = [];
   }
 
-  @action async _deleteCellsAndSave() {
-    this._deleteCells();
+  @action private async deleteCellsAndSave() {
+    this.deleteCells();
     return await axios
       .delete("http://localhost:3000/cells")
       .then((response) => {
@@ -109,8 +129,8 @@ export class CellStore {
       });
   }
 
-  @action getCells() {
-    axios
+  @action async getCells() {
+    return await axios
       .get("http://localhost:3000/cells")
       .then((response) => {
         console.log(response);
@@ -152,7 +172,7 @@ export class CellStore {
 
   //TESTING
   @action initStore() {
-    this._deleteCellsAndSave()
+    this.deleteCellsAndSave()
       .then(
         () =>
           (this.cells = [
@@ -199,6 +219,7 @@ export class CellStore {
 
   @action _addCellAndSave(i: number, j: number, type: CellType) {
     const cell = new Cell(this, i, j, type);
+
     this.cells.push(cell);
     // axios.post("http://localhost:3000/cells", { i, j, type });
   }
@@ -233,9 +254,9 @@ export class CellStore {
     );
   }
 
-  @action _modifyCellAndSave(i: number, j: number, { type, ...rest }) {
-    this._modifyCell(i, j, { type, ...rest });
-    axios.patch("http://localhost:3000/cells", { i, j, type, ...rest });
+  @action _modifyCellAndSave(id: string, { type, ...rest }) {
+    this._modifyCellById(id, { type, ...rest });
+    axios.patch(`http://localhost:3000/cells/${id}`, { type, ...rest });
   }
 
   @action _checkAndAddCellAndSave(i: number, j: number, type: CellType) {
@@ -249,7 +270,8 @@ export class CellStore {
   }
 
   @action addCell(i: number, j: number) {
-    this._modifyCellAndSave(i, j, { type: CellType.Grass });
+    const id = this.cellByPosition(i, j).id;
+    this._modifyCellAndSave(id, { type: CellType.Grass });
     this._checkAndAddCellAndSave(i - 1, j, CellType.Add);
     this._checkAndAddCellAndSave(i + 1, j, CellType.Add);
     this._checkAndAddCellAndSave(i, j - 1, CellType.Add);
@@ -262,5 +284,13 @@ export class CellStore {
 
   cellIndexById(id: string) {
     return this.cells.findIndex((cell) => cell.id === id);
+  }
+
+  cellByPosition(i: number, j: number) {
+    return this.cells.find((cell) => cell.i == i && cell.j == j);
+  }
+
+  cellIndexByPosition(i: number, j: number) {
+    return this.cells.findIndex((cell) => cell.i == i && cell.j == j);
   }
 }

@@ -41,11 +41,12 @@ const AddingTimerView = observer(function AddingTimerView() {
             let cell = cells.cellById(ui.selectedCell);
             cells.startTimer(ui.selectedCell);
             ui.startTimer(time);
+            console.log(`started: ${cell.id}, ${cell.i}, ${cell.j}}`);
 
             const interval = setInterval(() => {
               if (ui.mode == Mode.Focus) ui.decreaseTimer(cell.id);
               else {
-                // console.log(`added: ${cell.id}`);
+                console.log(`added: ${cell.id}, ${cell.i}, ${cell.j}}`);
                 cells.addCell(cell.i, cell.j);
                 clearInterval(interval);
               }

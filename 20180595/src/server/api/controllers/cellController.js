@@ -45,10 +45,10 @@ exports.editCellById = function (req, res) {
   Cell.findOne({ _id: req.params.cellId }).exec(function (err, cell) {
     if (err) return res.status(500).send({ error: "database failure" });
     console.log(`editing cell: ${cell}`);
-    cell.type = req.body.type;
-    cell.hasElement = req.body.hasElement;
-    cell.i = req.body.i;
-    cell.j = req.body.j;
+    if (req.body.type) cell.type = req.body.type;
+    if (req.body.hasElement) cell.hasElement = req.body.hasElement;
+    if (req.body.i) cell.i = req.body.i;
+    if (req.body.j) cell.j = req.body.j;
     cell.save(function (err) {
       if (err) {
         console.error(err);
