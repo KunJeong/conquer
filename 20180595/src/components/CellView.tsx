@@ -41,6 +41,7 @@ interface CellViewProps {
   marginX: number;
   cell: Cell;
   selected: boolean;
+  editing: boolean;
   [rest: string]: any;
 }
 

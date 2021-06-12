@@ -5,6 +5,7 @@ import Anime, { anime } from "react-animejs-wrapper";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks";
 import React, { Fragment } from "react";
+import { Mode } from "../stores";
 
 const sqrt3 = 1.73205;
 
@@ -70,6 +71,7 @@ function _IsometricGrid(props) {
             }}
             width={ui.width}
             selected={cell.id === ui.selectedCell}
+            editing={ui.mode == Mode.Edit}
             type={cell.type}
             index={index}
             i={cell.i}

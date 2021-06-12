@@ -6,11 +6,19 @@ import Rhombus from "../Rhombus";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../hooks";
 import { Cell } from "../../stores";
+import { mapColors } from "../../constants";
 
 const sqrt1over3 = 0.57735;
 
 const useStyles = makeStyles({
-  text: (props: { selected: boolean; [rest: string]: any }) => ({
+  text: ({
+    selected,
+    ...props
+  }: {
+    selected: boolean;
+    editing: boolean;
+    [rest: string]: any;
+  }) => ({
     ...props.style,
     position: "absolute",
     fontSize: "12pt",
@@ -23,12 +31,28 @@ const useStyles = makeStyles({
     lineHeight: "30px",
     marginLeft: "-30px",
     marginBottom: "-15px",
-    display: props.selected ? "block" : "none",
+    display: selected ? "block" : "none",
     transform: `scale(1, ${sqrt1over3}) rotate(45deg)`,
     color: "#ffffff",
   }),
-  rhombus: (props) => ({
-    backgroundColor: props.selected ? "#e174ff" : "#ad14da",
+  rhombus: ({
+    selected,
+    editing,
+    ...props
+  }: {
+    selected: boolean;
+    editing: boolean;
+    [rest: string]: any;
+  }) => ({
+    borderStyle: "dashed",
+    borderColor: mapColors.BORDER_EDITING,
+    borderWidth: editing && selected ? "4px" : "0px",
+    backgroundColor:
+      editing && selected
+        ? mapColors.TODO_EDITING
+        : selected
+        ? mapColors.TODO_SELECTED
+        : mapColors.TODO,
     "&:hover + $text": {
       display: "block",
     },
@@ -39,6 +63,7 @@ interface TodoCellProps {
   width: number;
   cell: Cell;
   selected: boolean;
+  editing: boolean;
   [rest: string]: any;
 }
 

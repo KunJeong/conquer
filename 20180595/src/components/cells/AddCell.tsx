@@ -25,9 +25,18 @@ const useStyles = makeStyles({
     marginBottom: "-15px",
     display: "none",
   }),
-  rhombus: (props: { selected: boolean; [rest: string]: any }) => ({
-    borderRadius: props.selected ? "10px" : undefined,
-    backgroundColor: props.selected ? mapColors.ADD_SELECTED : undefined,
+  rhombus: ({
+    selected,
+    editing,
+    ...props
+  }: {
+    selected: boolean;
+    editing: boolean;
+    [rest: string]: any;
+  }) => ({
+    display: editing ? "none" : "block",
+    borderRadius: selected ? "10px" : "",
+    backgroundColor: selected && !editing ? mapColors.ADD_SELECTED : "",
     "&:hover": {
       borderRadius: "10px",
       backgroundColor: mapColors.ADD_HOVER,
@@ -41,6 +50,7 @@ const useStyles = makeStyles({
 interface AddCellProps {
   width: number;
   selected: boolean;
+  editing: boolean;
   [rest: string]: any;
 }
 
