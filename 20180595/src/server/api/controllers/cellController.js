@@ -47,8 +47,8 @@ exports.editCellById = function (req, res) {
     console.log(`editing cell: ${cell}`);
     if (req.body.type) cell.type = req.body.type;
     if (req.body.hasElement) cell.hasElement = req.body.hasElement;
-    if (req.body.i) cell.i = req.body.i;
-    if (req.body.j) cell.j = req.body.j;
+    if (req.body.i !== undefined) cell.i = req.body.i;
+    if (req.body.j !== undefined) cell.j = req.body.j;
     cell.save(function (err) {
       if (err) {
         console.error(err);

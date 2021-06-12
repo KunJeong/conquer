@@ -20,7 +20,7 @@ export class UIStore {
   maxWidth = 280;
 
   //selection
-  @observable selectedCell: string = "";
+  @observable selectedCell: string = undefined;
 
   @observable isPanning: boolean = false;
 
@@ -39,7 +39,7 @@ export class UIStore {
   @action deselect() {
     if (this.mode != Mode.Focus && this.mode != Mode.Edit)
       this.mode = Mode.List;
-    this.selectedCell = "";
+    this.selectedCell = undefined;
   }
 
   @action startPan() {

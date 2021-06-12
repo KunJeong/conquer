@@ -22,8 +22,8 @@ export class Cell {
   hasElement: string = null;
   @observable type: CellType;
   // @observable name: string = "";
-  i: number;
-  j: number;
+  @observable i: number;
+  @observable j: number;
 
   constructor(
     store: CellStore,
@@ -79,12 +79,21 @@ export class Cell {
       });
   }
 
-  @action async modifyToServer({ type, ...rest }) {
+  @action modify(args) {
+    console.log(this.id, args);
+    const { i, j, type, hasElement } = args;
+    console.log(i, j);
+    if (i !== undefined) this.i = i;
+    if (j !== undefined) this.j = j;
+    if (type) this.type = type;
+    if (hasElement) this.hasElement = hasElement;
+    console.log(this.id, this.i, this.j);
+  }
+
+  @action async modifyToServer(args) {
+    const type = args.type?.toString();
     return await axios
-      .patch(`http://localhost:3000/cells/${this.id}`, {
-        type: type.toString(),
-        ...rest,
-      })
+      .patch(`http://localhost:3000/cells/${this.id}`, { ...args, type })
       .then((response) => {
         console.log(response);
       })
@@ -94,7 +103,7 @@ export class Cell {
         } else if (error.request) {
           console.log("error2");
         } else {
-          console.log("error3");
+          console.log("@modifytoserver- error3");
         }
       });
   }
@@ -161,9 +170,9 @@ export class CellStore {
 
   //PROTOTYPE
   @action addTodo(cellId: string, todoId: string) {
-    const index = this.cells.findIndex((cell) => cell.id === cellId);
-    const { id } = this.cells[index];
-    this._modifyCellAndSave(id, {
+    // const index = this.cells.findIndex((cell) => cell.id === cellId);
+    // const { id } = this.cells[index];
+    this.modifyCellAndSave(cellId, {
       type: CellType.Todo,
       hasElement: todoId,
     });
@@ -213,7 +222,7 @@ export class CellStore {
   }
 
   @action startTimer(id: string) {
-    this._modifyCellById(id, { type: CellType.Timer });
+    this.modifyCellById(id, { type: CellType.Timer });
   }
 
   @action _addCellAndSave(i: number, j: number, type: CellType) {
@@ -223,39 +232,25 @@ export class CellStore {
     // axios.post("http://localhost:3000/cells", { i, j, type });
   }
 
-  @action _modifyCellById(id: string, args) {
-    let cellIndex = this.cellIndexById(id);
-    const cell = this.cells[cellIndex];
-    this.cells[cellIndex] = new Cell(
-      this,
-      args.i ?? cell.i,
-      args.j ?? cell.j,
-      args.type ?? cell.type,
-      false,
-      args.hasElement ?? cell.hasElement,
-      id
-    );
+  @action private modifyCellById(id: string, args) {
+    this.cellById(id).modify(args);
+    // const cell = this.cells[cellIndex];
+    // this.cells[cellIndex] = new Cell(
+    //   this,
+    //   args.i ?? cell.i,
+    //   args.j ?? cell.j,
+    //   args.type ?? cell.type,
+    //   false,
+    //   args.hasElement ?? cell.hasElement,
+    //   id
+    // );
   }
 
-  @action _modifyCell(i: number, j: number, { type, ...rest }) {
-    let cellIndex = this.cells.findIndex((e) => {
-      return e.i == i && e.j == j;
-    });
-    const { id } = this.cells[cellIndex];
-    this.cells[cellIndex] = new Cell(
-      this,
-      i,
-      j,
-      type,
-      false,
-      rest.hasElement,
-      id
-    );
-  }
-
-  @action _modifyCellAndSave(id: string, { type, ...rest }) {
-    this._modifyCellById(id, { type, ...rest });
-    axios.patch(`http://localhost:3000/cells/${id}`, { type, ...rest });
+  @action private async modifyCellAndSave(id: string, args) {
+    this.modifyCellById(id, args);
+    return await this.cellById(id).modifyToServer(args);
+    // this._modifyCellById(id, args);
+    // return await axios.patch(`http://localhost:3000/cells/${id}`, { ...args });
   }
 
   @action _checkAndAddCellAndSave(i: number, j: number, type: CellType) {
@@ -270,11 +265,30 @@ export class CellStore {
 
   @action addCell(i: number, j: number) {
     const id = this.cellByPosition(i, j).id;
-    this._modifyCellAndSave(id, { type: CellType.Grass });
+    this.modifyCellAndSave(id, { type: CellType.Grass });
     this._checkAndAddCellAndSave(i - 1, j, CellType.Add);
     this._checkAndAddCellAndSave(i + 1, j, CellType.Add);
     this._checkAndAddCellAndSave(i, j - 1, CellType.Add);
     this._checkAndAddCellAndSave(i, j + 1, CellType.Add);
+  }
+
+  @action async swapCells(from: string, to: string) {
+    const fromCell = this.cellById(from);
+    const toCell = this.cellById(to);
+    const fromI = fromCell.i;
+    const fromJ = fromCell.j;
+    const toI = toCell.i;
+    const toJ = toCell.j;
+
+    console.log(fromI, fromJ, toI, toJ);
+    console.log(this.cellById(from));
+    console.log(this.cellById(to));
+
+    await this.modifyCellAndSave(from, { i: toI, j: toJ });
+    await this.modifyCellAndSave(to, { i: fromI, j: fromJ });
+    console.log("after");
+    console.log(this.cellById(from));
+    console.log(this.cellById(to));
   }
 
   cellById(id: string) {

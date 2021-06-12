@@ -57,7 +57,12 @@ function _CellView({ cell, ...props }: CellViewProps) {
   const onClick = () => {
     console.log(`clicked ${cell.id}`);
 
-    ui.select(cell.id);
+    if (ui.mode == Mode.Edit && ui.selectedCell) {
+      console.log(ui.selectedCell, cell.id);
+      cells.swapCells(ui.selectedCell, cell.id);
+    } else {
+      ui.select(cell.id);
+    }
     // console.log(
     //   `selected from ${i}, ${j}: ${(i - minI) * jSize + j - minJ + 1}`
     // );
