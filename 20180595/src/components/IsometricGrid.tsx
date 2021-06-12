@@ -1,6 +1,6 @@
 //@ts-check
 import PropTypes from "prop-types";
-import Cell from "./Cell";
+import CellView from "./CellView";
 import Anime, { anime } from "react-animejs-wrapper";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks/useStores";
@@ -60,7 +60,7 @@ function _IsometricGrid(props) {
     <Fragment>
       {props.cells.map((cell, index) => {
         return (
-          <Cell
+          <CellView
             key={cell.i * 300 + cell.j}
             // classes={{ cell: "cell" }}
             style={{
@@ -78,7 +78,7 @@ function _IsometricGrid(props) {
             backgroundColor="#ddef77"
             borderWidth={0}
             marginX={props.spacing}
-          ></Cell>
+          ></CellView>
         );
       })}
     </Fragment>

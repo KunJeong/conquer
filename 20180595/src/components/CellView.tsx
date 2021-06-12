@@ -37,9 +37,9 @@ const useStyles = makeStyles({
 
 interface CellViewProps {}
 
-function _Cell(props) {
+function _CellView(props) {
   const { ui, cells } = useStores();
-  const selectedCell = cells.cellById(ui.selectedCell);
+  // const selectedCell = cells.cellById(ui.selectedCell);
 
   const onClick = () => {
     console.log(`clicked ${props.cell.id}`);
@@ -131,20 +131,5 @@ function _Cell(props) {
     );
 }
 
-// _Cell.propTypes = {
-//   i: PropTypes.number,
-//   j: PropTypes.number,
-//   // cell: PropTypes.objectOf(PropTypes.string),
-//   width: PropTypes.number,
-// };
-
-// _Cell.defaultProps = {
-//   i: 0,
-//   j: 0,
-//   type: "empty",
-//   width: 160,
-//   marginX: 20,
-// };
-
-const Cell = observer(_Cell);
-export default Cell;
+const CellView = observer(_CellView);
+export default CellView;

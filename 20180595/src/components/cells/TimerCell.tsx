@@ -36,7 +36,7 @@ interface TimerCellProps {
   [rest: string]: any;
 }
 
-const TimerCell = observer(function TimerCell(props: TimerCellProps) {
+const TimerCell = observer(function _TimerCell(props: TimerCellProps) {
   const classes = useStyles(props);
   const { ui } = useStores();
   console.log(`percentage: ${ui.percentage}`);
