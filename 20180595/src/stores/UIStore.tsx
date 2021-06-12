@@ -60,9 +60,10 @@ export class UIStore {
     this.mode = Mode.Focus;
   }
 
-  @action decreaseTimer() {
+  @action decreaseTimer(cellId: string) {
     this.secondsRemaining -= 1;
     if (this.secondsRemaining === 0) {
+      this.select(cellId);
       this.mode = Mode.Selected;
     }
   }

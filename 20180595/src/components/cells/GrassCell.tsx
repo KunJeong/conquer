@@ -6,6 +6,7 @@ interface GrassCellProps {
   width: number;
   [rest: string]: any;
 }
+
 function GrassCell(props: GrassCellProps) {
   return (
     <Rhombus

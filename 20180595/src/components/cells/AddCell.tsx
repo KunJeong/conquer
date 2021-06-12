@@ -8,7 +8,7 @@ import { Mode } from "../../stores";
 import { mapColors } from "../../constants";
 
 const useStyles = makeStyles({
-  plus: (props) => ({
+  plus: (props: { selected: boolean; [rest: string]: any }) => ({
     // ...props.style,
     position: "absolute",
     // fontWeight: 'bold',
@@ -25,27 +25,28 @@ const useStyles = makeStyles({
     marginBottom: "-15px",
     display: "none",
   }),
-  rhombus: {
+  rhombus: (props: { selected: boolean; [rest: string]: any }) => ({
+    borderRadius: props.selected ? "10px" : undefined,
+    backgroundColor: props.selected ? mapColors.ADD_SELECTED : undefined,
     "&:hover": {
-      // borderStyle: 'dashed',
-      // borderColor: '#777777',
       borderRadius: "10px",
       backgroundColor: mapColors.ADD_HOVER,
     },
     "&:hover + $plus": {
       display: "block",
     },
-  },
+  }),
 });
 
 interface AddCellProps {
   width: number;
+  selected: boolean;
   [rest: string]: any;
 }
 
 const AddCell = observer(function AddCell(props: AddCellProps) {
   const { ui } = useStores();
-  const classes = useStyles();
+  const classes = useStyles(props);
   return (
     <div>
       <Rhombus
