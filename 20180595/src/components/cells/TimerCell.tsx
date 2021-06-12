@@ -10,7 +10,7 @@ import { useStores } from "../../hooks/useStores";
 // import { useStores } from '../../hooks/useStores';
 
 const useStyles = makeStyles({
-  hourglass: (props) => ({
+  hourglass: (props: any) => ({
     ...props.style,
     position: "absolute",
     // fontWeight: 'bold',
@@ -30,20 +30,24 @@ const useStyles = makeStyles({
     borderWidth: "0px",
   },
 });
-const TimerCell = observer(function TimerCell(props) {
-  const classes = useStyles();
+
+interface TimerCellProps {
+  width: number;
+  [rest: string]: any;
+}
+
+const TimerCell = observer(function TimerCell(props: TimerCellProps) {
+  const classes = useStyles(props);
   const { ui } = useStores();
   console.log(`percentage: ${ui.percentage}`);
   return (
     <div>
       <Rhombus
-        onClick={props.onClick}
+        {...props}
         className={classes.rhombus}
         style={{
           background: `linear-gradient(45deg, #ddef77, ${ui.percentage}%, #ddef77, ${ui.percentage}%, #f3f3f3)`,
         }}
-        width={props.width}
-        borderWidth={props.borderWidth}
       ></Rhombus>
       <Anime
         config={{

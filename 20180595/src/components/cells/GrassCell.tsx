@@ -3,16 +3,18 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Rhombus from "../Rhombus";
 
-function GrassCell(props) {
+interface GrassCellProps {
+  width: number;
+  [rest: string]: any;
+}
+function GrassCell(props: GrassCellProps) {
   return (
     <Rhombus
+      {...props}
       style={{
         borderRadius: "0px",
         backgroundColor: props.selected ? "#eeff99" : "#ddef77",
       }}
-      onClick={props.onClick}
-      width={props.width}
-      borderWidth={props.borderWidth}
     ></Rhombus>
   );
 }

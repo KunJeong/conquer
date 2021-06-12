@@ -38,19 +38,23 @@ const useStyles = makeStyles({
   },
 });
 
-const AddCell = observer(function AddCell(props) {
-  const { cells, ui } = useStores();
+interface AddCellProps {
+  width: number;
+  [rest: string]: any;
+}
+
+const AddCell = observer(function AddCell(props: AddCellProps) {
+  const { ui } = useStores();
   const classes = useStyles();
   return (
     <div>
       <Rhombus
+        {...props}
         className={classes.rhombus}
         onClick={() => {
           props.onClick();
           ui.setMode(Mode.AddingTimer);
         }}
-        width={props.width}
-        borderWidth={props.borderWidth}
       ></Rhombus>
       <AddIcon className={classes.plus} />
     </div>

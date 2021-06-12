@@ -15,15 +15,15 @@ import {
 
 const useStyles = makeStyles({
   title: (props) => ({
-    ...props.style,
+    // ...props.style,
     fontSize: 18,
   }),
   body: (props) => ({
-    ...props.style,
+    // ...props.style,
     fontSize: 20,
   }),
   seconds: (props) => ({
-    ...props.style,
+    // ...props.style,
     fontSize: 30,
   }),
   paper: {

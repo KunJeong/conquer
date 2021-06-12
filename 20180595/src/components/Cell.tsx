@@ -9,7 +9,13 @@ import { Mode } from "../stores";
 const sqrt1over3 = 0.57735;
 
 const useStyles = makeStyles({
-  cell: (props) => ({
+  cell: (props: {
+    width: number;
+    x: number;
+    y: number;
+    marginX: number;
+    [rest: string]: any;
+  }) => ({
     // backgroundColor: "#dddddd",
     // borderStyle: 'solid',
     pointerEvents: "none",
@@ -28,6 +34,8 @@ const useStyles = makeStyles({
     height: props.width * sqrt1over3 + "px",
   }),
 });
+
+interface CellViewProps {}
 
 function _Cell(props) {
   const { ui, cells } = useStores();
@@ -123,20 +131,20 @@ function _Cell(props) {
     );
 }
 
-_Cell.propTypes = {
-  i: PropTypes.number,
-  j: PropTypes.number,
-  // cell: PropTypes.objectOf(PropTypes.string),
-  width: PropTypes.number,
-};
+// _Cell.propTypes = {
+//   i: PropTypes.number,
+//   j: PropTypes.number,
+//   // cell: PropTypes.objectOf(PropTypes.string),
+//   width: PropTypes.number,
+// };
 
-_Cell.defaultProps = {
-  i: 0,
-  j: 0,
-  type: "empty",
-  width: 160,
-  marginX: 20,
-};
+// _Cell.defaultProps = {
+//   i: 0,
+//   j: 0,
+//   type: "empty",
+//   width: 160,
+//   marginX: 20,
+// };
 
 const Cell = observer(_Cell);
 export default Cell;

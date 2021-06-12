@@ -8,7 +8,7 @@ const sqrt3 = 1.73205;
 const sqrt1over3 = 0.57735;
 
 const useStyles = makeStyles({
-  rhombus: (props) => ({
+  rhombus: (props: { width: number; [rest: string]: any }) => ({
     ...props.style,
     // backgroundColor: props.backgroundColor,
     boxSizing: "border-box",

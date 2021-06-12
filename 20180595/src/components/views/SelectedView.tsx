@@ -7,9 +7,15 @@ import { useStores } from "../../hooks/useStores";
 import { GrassSelectedView, TodoSelectedView } from "./selectedViews";
 import { Cell, CellType, Mode } from "../../stores";
 
-const SelectedView = observer(function SelectedView(props) {
-  console.log(props.cell.id);
-  const { cells, ui, todos } = useStores();
+interface SelectedViewProps {
+  cell: Cell;
+}
+const SelectedView = observer(function SelectedView({
+  cell,
+  ...props
+}: SelectedViewProps) {
+  console.log(cell.id);
+  const { todos } = useStores();
 
   const selectedView = (cell: Cell) => {
     switch (cell.type) {
@@ -19,7 +25,7 @@ const SelectedView = observer(function SelectedView(props) {
         return <TodoSelectedView todo={todos.todoById(cell.hasElement)} />;
     }
   };
-  return <Box>{selectedView(props.cell)}</Box>;
+  return <Box>{selectedView(cell)}</Box>;
 });
 
 export default SelectedView;
