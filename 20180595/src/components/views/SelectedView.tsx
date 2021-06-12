@@ -1,6 +1,4 @@
-import { Box, Button, makeStyles, Typography } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import { v4 as uuidv4 } from "uuid";
+import { Box } from "@material-ui/core";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { useStores } from "../../hooks/useStores";
@@ -20,9 +18,11 @@ const SelectedView = observer(function SelectedView({
   const selectedView = (cell: Cell) => {
     switch (cell.type) {
       case CellType.Grass:
-        return <GrassSelectedView />;
+        return <GrassSelectedView {...props} />;
       case CellType.Todo:
-        return <TodoSelectedView todo={todos.todoById(cell.hasElement)} />;
+        return (
+          <TodoSelectedView {...props} todo={todos.todoById(cell.hasElement)} />
+        );
     }
   };
   return <Box>{selectedView(cell)}</Box>;

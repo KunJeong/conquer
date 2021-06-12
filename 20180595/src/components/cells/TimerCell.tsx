@@ -7,7 +7,7 @@ import Rhombus from "../Rhombus";
 import Anime, { anime } from "react-animejs-wrapper";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../hooks/useStores";
-// import { useStores } from '../../hooks/useStores';
+import { mapColors } from "../../constants";
 
 const useStyles = makeStyles({
   hourglass: (props: any) => ({
@@ -39,14 +39,13 @@ interface TimerCellProps {
 const TimerCell = observer(function _TimerCell(props: TimerCellProps) {
   const classes = useStyles(props);
   const { ui } = useStores();
-  console.log(`percentage: ${ui.percentage}`);
   return (
     <div>
       <Rhombus
         {...props}
         className={classes.rhombus}
         style={{
-          background: `linear-gradient(45deg, #ddef77, ${ui.percentage}%, #ddef77, ${ui.percentage}%, #f3f3f3)`,
+          background: `linear-gradient(45deg, ${mapColors.GRASS}, ${ui.percentage}%, ${mapColors.GRASS}, ${ui.percentage}%, ${mapColors.ADD_HOVER})`,
         }}
       ></Rhombus>
       <Anime

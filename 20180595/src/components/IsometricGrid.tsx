@@ -64,8 +64,8 @@ function _IsometricGrid(props) {
             key={cell.i * 300 + cell.j}
             // classes={{ cell: "cell" }}
             style={{
-              width: props.width,
-              height: props.height,
+              // width: props.width,
+              // height: props.height,
               willChange: "transform",
             }}
             width={ui.width}
@@ -86,18 +86,18 @@ function _IsometricGrid(props) {
   );
 }
 
-_IsometricGrid.defaultProps = {
-  width: 500,
-  height: 400,
-  childwidth: 80,
-  spacing: 100,
-  cells: [
-    { _id: "1", i: 0, j: 0 },
-    { _id: "2", i: 1, j: 0 },
-    { _id: "3", i: 0, j: 1 },
-    { _id: "4", i: 1, j: 1 },
-  ],
-};
+// _IsometricGrid.defaultProps = {
+//   width: 500,
+//   height: 400,
+//   childwidth: 80,
+//   spacing: 100,
+//   cells: [
+//     { _id: "1", i: 0, j: 0 },
+//     { _id: "2", i: 1, j: 0 },
+//     { _id: "3", i: 0, j: 1 },
+//     { _id: "4", i: 1, j: 1 },
+//   ],
+// };
 
 const IsometricGrid = observer(_IsometricGrid);
 

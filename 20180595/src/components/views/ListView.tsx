@@ -15,27 +15,20 @@ import { Edit, More } from "@material-ui/icons";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { useStores } from "../../hooks/useStores";
+import { Todo } from "../../stores";
 
 const useStyles = makeStyles({
   title: (props) => ({
-    ...props.style,
+    // ...props.style,
     fontSize: 18,
   }),
-  body: (props) => ({
-    ...props.style,
-    fontSize: 20,
-  }),
-  seconds: (props) => ({
-    ...props.style,
-    fontSize: 30,
-  }),
-  paper: {
-    padding: "20px",
-    textAlign: "center",
-  },
 });
 
-const TodoRow = observer(function TodoRow({ todo }) {
+interface TodoRowProps {
+  todo: Todo;
+  [rest: string]: any;
+}
+const TodoRow = observer(function TodoRow({ todo, ...props }: TodoRowProps) {
   // const { todos } = useStores();
 
   const onClick = () => {
@@ -63,7 +56,7 @@ const TodoRow = observer(function TodoRow({ todo }) {
 
 const ListView = observer(function ListView() {
   const classes = useStyles();
-  const { cells, ui, todos } = useStores();
+  const { todos } = useStores();
 
   return (
     <Box>

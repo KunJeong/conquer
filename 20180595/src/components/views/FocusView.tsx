@@ -8,10 +8,6 @@ const useStyles = makeStyles({
     // ...props.style,
     fontSize: 18,
   }),
-  body: (props) => ({
-    // ...props.style,
-    fontSize: 20,
-  }),
   seconds: (props) => ({
     // ...props.style,
     fontSize: 30,

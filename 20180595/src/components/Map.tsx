@@ -1,25 +1,23 @@
 //@ts-check
-import PropTypes from "prop-types";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks/useStores";
-import { Box, Button, IconButton } from "@material-ui/core";
+import { Box, IconButton } from "@material-ui/core";
 import Draggable from "react-draggable";
 import IsometricGrid from "./IsometricGrid";
-import { MapInteractionCSS } from "react-map-interaction";
 import { Add, Remove } from "@material-ui/icons";
 
 const sqrt3 = 1.73205;
 
-function _Map(props) {
+function _Map() {
   const { cells, ui } = useStores();
-  const onStop = () => {
-    const wasPanning = ui.isPanning;
-    ui.endPan();
-    if (wasPanning) {
-      // onDrop()
-    } else {
-    }
-  };
+  // const onStop = () => {
+  //   const wasPanning = ui.isPanning;
+  //   ui.endPan();
+  //   if (wasPanning) {
+  //     // onDrop()
+  //   } else {
+  //   }
+  // };
   return (
     <Box
       component="span"
@@ -40,19 +38,6 @@ function _Map(props) {
           e.stopPropagation();
         }}
       >
-        <IconButton
-          onClick={() => ui.zoom(false)}
-          disabled={ui.width >= ui.maxWidth}
-        >
-          <Add />
-        </IconButton>
-        <IconButton
-          onClick={() => ui.zoom(true)}
-          disabled={ui.width <= ui.minWidth}
-        >
-          <Remove />
-        </IconButton>
-
         <Draggable
           defaultPosition={{ x: 0, y: 400 }}
           onDrag={() => ui.startPan()}
@@ -77,23 +62,35 @@ function _Map(props) {
           </Box>
           {/* </MapInteractionCSS> */}
         </Draggable>
+        <IconButton
+          onClick={() => ui.zoom(false)}
+          disabled={ui.width >= ui.maxWidth}
+        >
+          <Add />
+        </IconButton>
+        <IconButton
+          onClick={() => ui.zoom(true)}
+          disabled={ui.width <= ui.minWidth}
+        >
+          <Remove />
+        </IconButton>
       </Box>
     </Box>
   );
 }
 
-_Map.defaultProps = {
-  width: 600,
-  height: 1000,
-  childwidth: 80,
-  spacing: 100,
-  cells: [
-    { _id: "1", i: 0, j: 0 },
-    { _id: "2", i: 1, j: 0 },
-    { _id: "3", i: 0, j: 1 },
-    { _id: "4", i: 1, j: 1 },
-  ],
-};
+// _Map.defaultProps = {
+//   width: 600,
+//   height: 1000,
+//   childwidth: 80,
+//   spacing: 100,
+//   cells: [
+//     { _id: "1", i: 0, j: 0 },
+//     { _id: "2", i: 1, j: 0 },
+//     { _id: "3", i: 0, j: 1 },
+//     { _id: "4", i: 1, j: 1 },
+//   ],
+// };
 
 const Map = observer(_Map);
 

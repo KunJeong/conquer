@@ -3,13 +3,19 @@ import { observer } from "mobx-react-lite";
 import React from "react";
 import { Todo } from "../../../stores";
 
-const TodoSelectedView = observer(function TodoSelectedView(props: {
+interface TodoSelectedViewProps {
   todo: Todo;
-}) {
+  [rest: string]: any;
+}
+
+const TodoSelectedView = observer(function TodoSelectedView({
+  todo,
+  ...props
+}: TodoSelectedViewProps) {
   return (
     <Box>
-      <Typography>{props.todo.name}</Typography>
-      <Checkbox checked={props.todo.completed}></Checkbox>
+      <Typography>{todo.name}</Typography>
+      <Checkbox checked={todo.completed}></Checkbox>
     </Box>
   );
 });

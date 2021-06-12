@@ -4,14 +4,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import Rhombus from "../Rhombus";
 import { observer } from "mobx-react-lite";
-import { action } from "mobx";
 import { useStores } from "../../hooks/useStores";
 import { Cell } from "../../stores";
 
 const sqrt1over3 = 0.57735;
 
 const useStyles = makeStyles({
-  text: (props: any) => ({
+  text: (props: { selected: boolean; [rest: string]: any }) => ({
     ...props.style,
     position: "absolute",
     fontSize: "12pt",
@@ -39,6 +38,7 @@ const useStyles = makeStyles({
 interface TodoCellProps {
   width: number;
   cell: Cell;
+  selected: boolean;
   [rest: string]: any;
 }
 

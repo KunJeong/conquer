@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { AddCell, TodoCell, GrassCell, TimerCell } from "./cells";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks/useStores";
-import { Mode } from "../stores";
+import { Mode, Cell } from "../stores";
 
 const sqrt1over3 = 0.57735;
 
@@ -35,16 +35,22 @@ const useStyles = makeStyles({
   }),
 });
 
-interface CellViewProps {}
+interface CellViewProps {
+  width: number;
+  marginX: number;
+  cell: Cell;
+  selected: boolean;
+  [rest: string]: any;
+}
 
-function _CellView(props) {
+function _CellView({ cell, ...props }: CellViewProps) {
   const { ui, cells } = useStores();
   // const selectedCell = cells.cellById(ui.selectedCell);
 
   const onClick = () => {
-    console.log(`clicked ${props.cell.id}`);
+    console.log(`clicked ${cell.id}`);
 
-    ui.select(props.cell.id);
+    ui.select(cell.id);
     // console.log(
     //   `selected from ${i}, ${j}: ${(i - minI) * jSize + j - minJ + 1}`
     // );
@@ -55,8 +61,8 @@ function _CellView(props) {
 
   // console.log(`selected: ${ui.selection}, index: ${props.index}`);
   const classes = useStyles({
-    x: props.i - props.j,
-    y: props.i + props.j,
+    x: cell.i - cell.j,
+    y: cell.i + cell.j,
     ...props,
   });
   if (props.type === "add" && ui.mode == Mode.Focus)
@@ -64,69 +70,25 @@ function _CellView(props) {
   else if (props.type === "add")
     return (
       <div className={classes.cell}>
-        <AddCell
-          style={props.style}
-          onClick={onClick}
-          width={props.width}
-          selected={props.selected}
-          backgroundColor={props.backgroundColor}
-          borderWidth={props.borderWidth}
-          index={props.index}
-          i={props.i}
-          j={props.j}
-        ></AddCell>
+        <AddCell {...props} onClick={onClick}></AddCell>
       </div>
     );
   else if (props.type === "grass")
     return (
       <div className={classes.cell}>
-        <GrassCell
-          style={props.style}
-          onClick={onClick}
-          width={props.width}
-          selected={props.selected}
-          backgroundColor={props.backgroundColor}
-          borderWidth={props.borderWidth}
-          index={props.index}
-          i={props.i}
-          j={props.j}
-          cells={props.cells}
-        ></GrassCell>
+        <GrassCell {...props} onClick={onClick}></GrassCell>
       </div>
     );
   else if (props.type === "timer")
     return (
       <div className={classes.cell}>
-        <TimerCell
-          style={props.style}
-          onClick={onClick}
-          width={props.width}
-          selected={props.selected}
-          backgroundColor={props.backgroundColor}
-          borderWidth={props.borderWidth}
-          index={props.index}
-          i={props.i}
-          j={props.j}
-          cells={props.cells}
-        ></TimerCell>
+        <TimerCell onClick={onClick} {...props}></TimerCell>
       </div>
     );
   else if (props.type === "todo")
     return (
       <div className={classes.cell}>
-        <TodoCell
-          style={props.style}
-          onClick={onClick}
-          width={props.width}
-          cell={props.cell}
-          selected={props.selected}
-          backgroundColor={props.backgroundColor}
-          borderWidth={props.borderWidth}
-          index={props.index}
-          i={props.i}
-          j={props.j}
-          cells={props.cells}
-        ></TodoCell>
+        <TodoCell onClick={onClick} cell={cell} {...props}></TodoCell>
       </div>
     );
 }

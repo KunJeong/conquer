@@ -32,29 +32,6 @@ const useStyles = makeStyles({
   },
 });
 
-function AddTodo(props) {
-  const classes = useStyles();
-
-  const [title, setTitle] = useState("");
-  const editTitle = (event) => {
-    setTitle(event.target.value);
-  };
-
-  return (
-    <Paper className={classes.paper} elevation={3}>
-      <Box>
-        <TextField
-          label="Title"
-          value={title}
-          onChange={editTitle}
-          margin="normal"
-        ></TextField>
-        <Button onClick={props.addTodo(title)}>Create</Button>
-      </Box>
-    </Paper>
-  );
-}
-
 const Inspector = observer(function Inspector() {
   const classes = useStyles();
   const { todos, cells, ui } = useStores();
@@ -66,9 +43,9 @@ const Inspector = observer(function Inspector() {
   //   todos.getTodos();
   // }, []);
   const view = (mode: Mode) => {
-    console.log(`@inspector - selected: ${ui.selectedCell}`);
-    console.log(cells.cells);
-    console.log(`@inspector - cell: ${cells.cellById(ui.selectedCell)}`);
+    // console.log(`@inspector - selected: ${ui.selectedCell}`);
+    // console.log(cells.cells);
+    // console.log(`@inspector - cell: ${cells.cellById(ui.selectedCell)}`);
     switch (mode) {
       case Mode.Focus:
         return <FocusView />;

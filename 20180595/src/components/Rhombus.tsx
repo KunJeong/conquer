@@ -35,17 +35,8 @@ const useStyles = makeStyles({
 function Rhombus(props) {
   const classes = useStyles(props);
   return (
-    <div
-      onClick={props.onClick}
-      className={`${classes.rhombus} ${props.className}`}
-    ></div>
+    <div {...props} className={`${classes.rhombus} ${props.className}`}></div>
   );
 }
-
-Rhombus.defaultProps = {
-  width: 160,
-  borderWidth: 3,
-  backgroundColor: "#af1234",
-};
 
 export default Rhombus;

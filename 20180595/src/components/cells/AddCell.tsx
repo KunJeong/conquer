@@ -5,6 +5,7 @@ import Rhombus from "../Rhombus";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../hooks/useStores";
 import { Mode } from "../../stores";
+import { mapColors } from "../../constants";
 
 const useStyles = makeStyles({
   plus: (props) => ({
@@ -25,12 +26,11 @@ const useStyles = makeStyles({
     display: "none",
   }),
   rhombus: {
-    // backgroundColor: '#f3f3f3',
     "&:hover": {
       // borderStyle: 'dashed',
       // borderColor: '#777777',
       borderRadius: "10px",
-      backgroundColor: "#f3f3f3",
+      backgroundColor: mapColors.ADD_HOVER,
     },
     "&:hover + $plus": {
       display: "block",

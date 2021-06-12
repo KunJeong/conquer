@@ -1,7 +1,6 @@
 //@ts-check
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
 import Rhombus from "../Rhombus";
+import { mapColors } from "../../constants";
 
 interface GrassCellProps {
   width: number;
@@ -13,7 +12,9 @@ function GrassCell(props: GrassCellProps) {
       {...props}
       style={{
         borderRadius: "0px",
-        backgroundColor: props.selected ? "#eeff99" : "#ddef77",
+        backgroundColor: props.selected
+          ? mapColors.GRASS_SELECTED
+          : mapColors.GRASS,
       }}
     ></Rhombus>
   );
