@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import Rhombus from "../Rhombus";
 import { observer } from "mobx-react-lite";
-import { useStores } from "../../hooks/useStores";
+import { useStores } from "../../hooks";
 import { Cell } from "../../stores";
 
 const sqrt1over3 = 0.57735;

@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { AddCell, TodoCell, GrassCell, TimerCell } from "./cells";
 import { observer } from "mobx-react-lite";
-import { useStores } from "../hooks/useStores";
+import { useStores, useLongPress } from "../hooks";
 import { Mode, Cell } from "../stores";
+// import { useLongPress } from "use-long-press";
 
 const sqrt1over3 = 0.57735;
 
@@ -47,6 +48,11 @@ function _CellView({ cell, ...props }: CellViewProps) {
   const { ui, cells } = useStores();
   // const selectedCell = cells.cellById(ui.selectedCell);
 
+  // const onLongPress = () => {
+  //   console.log(`longpressed`);
+  //   ui.setMode(Mode.Edit);
+  // };
+
   const onClick = () => {
     console.log(`clicked ${cell.id}`);
 
@@ -65,6 +71,18 @@ function _CellView({ cell, ...props }: CellViewProps) {
     y: cell.i + cell.j,
     ...props,
   });
+
+  const longPressEvent = useLongPress;
+  // const longPressEvent = useLongPress(onLongPress, {
+  //   threshold: 700,
+  //   // onFinish: onLongPress,
+  //   onStart: (event) => console.log("Press started"),
+  //   onFinish: (event) => console.log("Long press finished"),
+  //   onCancel: (event) => console.log("Press cancelled"),
+  // });
+
+  // const longPressEvent = useLongPress();
+
   if (props.type === "add" && ui.mode == Mode.Focus)
     return <div className={classes.cell}></div>;
   else if (props.type === "add")
@@ -82,13 +100,18 @@ function _CellView({ cell, ...props }: CellViewProps) {
   else if (props.type === "timer")
     return (
       <div className={classes.cell}>
-        <TimerCell onClick={onClick} {...props}></TimerCell>
+        <TimerCell {...props} onClick={onClick}></TimerCell>
       </div>
     );
   else if (props.type === "todo")
     return (
       <div className={classes.cell}>
-        <TodoCell onClick={onClick} cell={cell} {...props}></TodoCell>
+        <TodoCell
+          {...props}
+          // {...longPressEvent}
+          onClick={onClick}
+          cell={cell}
+        ></TodoCell>
       </div>
     );
 }

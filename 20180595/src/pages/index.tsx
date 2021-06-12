@@ -1,7 +1,7 @@
 //@ts-check
 import { Box, Grid } from "@material-ui/core";
 import { observer } from "mobx-react-lite";
-import { useStores } from "../hooks/useStores";
+import { useStores } from "../hooks";
 import { useEffect } from "react";
 import { Inspector, Map } from "../components";
 import { mapColors } from "../constants";

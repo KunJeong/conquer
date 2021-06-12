@@ -14,7 +14,7 @@ import { Edit, More } from "@material-ui/icons";
 // import { CommentIcon } from "@material-ui/icons";
 import { observer } from "mobx-react-lite";
 import React from "react";
-import { useStores } from "../../hooks/useStores";
+import { useStores } from "../../hooks";
 import { Todo } from "../../stores";
 
 const useStyles = makeStyles({
@@ -64,8 +64,8 @@ const ListView = observer(function ListView() {
         Todo Items
       </Typography>
       <List>
-        {todos.todos.map((todo) => {
-          return <TodoRow todo={todo} />;
+        {todos.todos.map((todo, i) => {
+          return <TodoRow key={i} todo={todo} />;
         })}
       </List>
     </Box>

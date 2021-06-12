@@ -10,7 +10,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { v4 as uuidv4 } from "uuid";
 import { observer } from "mobx-react-lite";
 import React, { useState } from "react";
-import { useStores } from "../../hooks/useStores";
+import { useStores } from "../../hooks";
 import { Mode } from "../../stores/UIStore";
 
 const AddingTodoView = observer(function AddingTodoView() {

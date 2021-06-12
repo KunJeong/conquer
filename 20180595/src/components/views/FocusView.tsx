@@ -1,7 +1,7 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
 import { observer } from "mobx-react-lite";
 import React from "react";
-import { useStores } from "../../hooks/useStores";
+import { useStores } from "../../hooks";
 
 const useStyles = makeStyles({
   title: (props) => ({

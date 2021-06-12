@@ -161,12 +161,11 @@ export class CellStore {
 
   //PROTOTYPE
   @action addTodo(cellId: string, todoId: string) {
-    let index = this.cells.findIndex((cell) => cell.id === cellId);
-    let { id, i, j } = this.cells[index];
-    this._modifyCellAndSave(i, j, {
+    const index = this.cells.findIndex((cell) => cell.id === cellId);
+    const { id } = this.cells[index];
+    this._modifyCellAndSave(id, {
       type: CellType.Todo,
       hasElement: todoId,
-      id,
     });
   }
 

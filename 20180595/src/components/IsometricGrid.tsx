@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CellView from "./CellView";
 import Anime, { anime } from "react-animejs-wrapper";
 import { observer } from "mobx-react-lite";
-import { useStores } from "../hooks/useStores";
+import { useStores } from "../hooks";
 import React, { Fragment } from "react";
 
 const sqrt3 = 1.73205;

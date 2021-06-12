@@ -2,7 +2,7 @@
 import { useContext } from "react";
 import { StoresContext } from "../contexts";
 
-export function useStores() {
+export default function useStores() {
   const context = useContext(StoresContext);
   if (
     context.cells === undefined ||

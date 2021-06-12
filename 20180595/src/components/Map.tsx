@@ -1,10 +1,11 @@
 //@ts-check
 import { observer } from "mobx-react-lite";
-import { useStores } from "../hooks/useStores";
+import { useStores } from "../hooks";
 import { Box, IconButton } from "@material-ui/core";
 import Draggable from "react-draggable";
 import IsometricGrid from "./IsometricGrid";
-import { Add, Remove } from "@material-ui/icons";
+import { Add, Done, Edit, Remove } from "@material-ui/icons";
+import { Mode } from "../stores";
 
 const sqrt3 = 1.73205;
 
@@ -74,6 +75,15 @@ function _Map() {
         >
           <Remove />
         </IconButton>
+        {ui.mode == Mode.Edit ? (
+          <IconButton onClick={() => ui.setMode(Mode.List)}>
+            <Done />
+          </IconButton>
+        ) : (
+          <IconButton onClick={() => ui.setMode(Mode.Edit)}>
+            <Edit />
+          </IconButton>
+        )}
       </Box>
     </Box>
   );

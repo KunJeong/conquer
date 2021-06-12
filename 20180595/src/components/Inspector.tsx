@@ -2,8 +2,8 @@
 import { Box, Paper, Typography, TextField, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { observer } from "mobx-react-lite";
-import { useStores } from "../hooks/useStores";
-import React, { useEffect, useState } from "react";
+import { useStores } from "../hooks";
+import React, { Fragment, useEffect, useState } from "react";
 import { Mode } from "../stores";
 import {
   FocusView,
@@ -57,6 +57,8 @@ const Inspector = observer(function Inspector() {
         return <ListView />;
       case Mode.AddingTimer:
         return <AddingTimerView />;
+      case Mode.Edit:
+        return <Fragment />;
     }
   };
   return (

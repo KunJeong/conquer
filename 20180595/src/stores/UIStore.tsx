@@ -10,6 +10,7 @@ export enum Mode {
   Focus,
   AddingTodo,
   AddingTimer,
+  Edit,
 }
 
 export class UIStore {
@@ -36,7 +37,8 @@ export class UIStore {
   }
 
   @action deselect() {
-    if (this.mode != Mode.Focus) this.mode = Mode.List;
+    if (this.mode != Mode.Focus && this.mode != Mode.Edit)
+      this.mode = Mode.List;
     this.selectedCell = "";
   }
 
@@ -50,7 +52,8 @@ export class UIStore {
 
   @action select(id: string) {
     this.selectedCell = id;
-    if (this.mode != Mode.Focus) this.mode = Mode.Selected;
+    if (this.mode != Mode.Focus && this.mode != Mode.Edit)
+      this.mode = Mode.Selected;
   }
 
   //timer
