@@ -38,14 +38,15 @@ const AddingTimerView = observer(function AddingTimerView() {
         <Button
           startIcon={<AddIcon />}
           onClick={() => {
-            let cell = cells.cells[ui.selection];
-            cells.startTimer(cell.i, cell.j);
+            let cell = cells.cellById(ui.selectedCell);
+            cells.startTimer(ui.selectedCell);
             ui.startTimer(time);
 
             const interval = setInterval(() => {
-              if (ui.mode == Mode.Focus) ui.decreaseTimer();
+              if (ui.secondsRemaining > 0) ui.decreaseTimer();
               else {
-                ui.select(-1, cell.i, cell.j);
+                console.log(`added: ${cell.id}`);
+                ui.select(cell.id);
                 cells.addCell(cell.i, cell.j);
                 clearInterval(interval);
               }

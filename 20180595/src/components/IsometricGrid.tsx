@@ -4,12 +4,15 @@ import Cell from "./Cell";
 import Anime, { anime } from "react-animejs-wrapper";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks/useStores";
-import React from "react";
+import React, { Fragment } from "react";
 
 const sqrt3 = 1.73205;
 
 function _IsometricGrid(props) {
   const { cells, ui } = useStores();
+
+  const selectionI = cells.cellById(ui.selectedCell)?.i;
+  const selectionJ = cells.cellById(ui.selectedCell)?.j;
   const animationRef = React.useRef(null);
 
   const halfSpan = Math.max(
@@ -25,71 +28,61 @@ function _IsometricGrid(props) {
   const iSize = maxI - minI + 1;
   const jSize = maxJ - minJ + 1;
   console.log(`size: ${iSize}, ${jSize}`);
-  const onClick = (index, i, j) => {
-    // if (!ui.isPanning) {
-    console.log("clicked");
-
-    ui.select(index, i, j);
-    console.log(
-      `selected from ${i}, ${j}: ${(i - minI) * jSize + j - minJ + 1}`
-    );
-    animationRef.current.play();
-    // if(props.onClickCell) props.onClickCell(i, j);
-    // }
-  };
 
   return (
-    <Anime
-      ref={animationRef}
-      style={{
-        // width: props.width,
-        // height: props.height,
-        position: "relative",
-        willChange: "transform",
-      }}
-      config={{
-        targets: ".cell",
-        // translateY: [
-        //   {value: -20, easing: 'easeOutExpo', duration: 300},
-        //   {value: 0, easing: 'easeInOutQuad', duration: 700}
-        // ],
-        scale: [1, 0.5, 1],
-        // loop: true,
-        // direction: 'alternate',
-        autoplay: true,
-        delay: anime.stagger(100, {
-          grid: [4, 4],
-          start: 0,
-          from: ui.selection,
-        }),
-        duration: 1000,
-        easing: "spring(1, 80, 10, 0)",
-      }}
-    >
+    // <Anime
+    //   ref={animationRef}
+    //   style={{
+    //     // width: props.width,
+    //     // height: props.height,
+    //     position: "relative",
+    //     willChange: "transform",
+    //   }}
+    //   config={{
+    //     targets: ".cell",
+    //     // translateY: [
+    //     //   {value: -20, easing: 'easeOutExpo', duration: 300},
+    //     //   {value: 0, easing: 'easeInOutQuad', duration: 700}
+    //     // ],
+    //     scale: [1, 0.5, 1],
+    //     // loop: true,
+    //     // direction: 'alternate',
+    //     autoplay: true,
+    //     delay: anime.stagger(100, {
+    //       grid: [4, 4],
+    //       start: 0,
+    //       from: ui.selection,
+    //     }),
+    //     duration: 1000,
+    //     easing: "spring(1, 80, 10, 0)",
+    //   }}
+    // >
+    <Fragment>
       {props.cells.map((cell, index) => {
         return (
           <Cell
-            key={cell.i * 2 + cell.j}
-            classes={{ cell: "cell" }}
+            key={cell.i * 300 + cell.j}
+            // classes={{ cell: "cell" }}
             style={{
               width: props.width,
               height: props.height,
               willChange: "transform",
             }}
             width={ui.width}
+            selected={props.i == selectionI && props.j == selectionJ}
             type={cell.type}
             index={index}
             i={cell.i}
             j={cell.j}
             cell={cell}
-            onClick={() => onClick(index, cell.i, cell.j)}
             backgroundColor="#ddef77"
             borderWidth={0}
             marginX={props.spacing}
           ></Cell>
         );
       })}
-    </Anime>
+    </Fragment>
+    // </Anime>
   );
 }
 

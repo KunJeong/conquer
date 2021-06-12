@@ -36,10 +36,10 @@ const AddingTodoView = observer(function AddingTodoView() {
           onClick={() => {
             // ui.setMode(Mode.AddingTodo);
             // let name = "item" + todos.count;
-            let cellId = cells.cells[ui.selection].id;
+            let cellId = ui.selectedCell;
             // console.log(`found id: ${cellId}`);
             let todoId = uuidv4();
-            cells.addTodo(ui.selection, todoId);
+            cells.addTodo(cellId, todoId);
             todos.addTodo(name, todoId, cellId);
           }}
         >

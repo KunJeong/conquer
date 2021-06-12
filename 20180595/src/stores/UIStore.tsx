@@ -19,11 +19,7 @@ export class UIStore {
   maxWidth = 280;
 
   //selection
-  @observable selection: number = null;
-  @observable selectionPos = {
-    selectionI: null,
-    selectionJ: null,
-  };
+  @observable selectedCell: string = "";
 
   @observable isPanning: boolean = false;
 
@@ -41,7 +37,7 @@ export class UIStore {
 
   @action deselect() {
     if (this.mode != Mode.Focus) this.mode = Mode.List;
-    this.selectionPos = { selectionI: null, selectionJ: null };
+    this.selectedCell = "";
   }
 
   @action startPan() {
@@ -51,10 +47,10 @@ export class UIStore {
   @action endPan() {
     this.isPanning = false;
   }
-  @action select(index: number, selectionI: number, selectionJ: number) {
-    this.selection = index;
+
+  @action select(id: string) {
+    this.selectedCell = id;
     if (this.mode != Mode.Focus) this.mode = Mode.Selected;
-    this.selectionPos = { selectionI, selectionJ };
   }
 
   //timer

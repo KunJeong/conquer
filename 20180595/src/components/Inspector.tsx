@@ -66,11 +66,14 @@ const Inspector = observer(function Inspector() {
   //   todos.getTodos();
   // }, []);
   const view = (mode: Mode) => {
+    console.log(`@inspector - selected: ${ui.selectedCell}`);
+    console.log(cells.cells);
+    console.log(`@inspector - cell: ${cells.cellById(ui.selectedCell)}`);
     switch (mode) {
       case Mode.Focus:
         return <FocusView />;
       case Mode.Selected:
-        return <SelectedView cell={cells.cells[ui.selection]} />;
+        return <SelectedView cell={cells.cellById(ui.selectedCell)} />;
       case Mode.AddingTodo:
         return <AddingTodoView />;
       case Mode.List:

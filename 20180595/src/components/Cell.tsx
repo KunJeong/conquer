@@ -30,8 +30,21 @@ const useStyles = makeStyles({
 });
 
 function _Cell(props) {
-  const { ui } = useStores();
-  const { selectionI, selectionJ } = ui.selectionPos;
+  const { ui, cells } = useStores();
+  const selectedCell = cells.cellById(ui.selectedCell);
+
+  const onClick = () => {
+    console.log(`clicked ${props.cell.id}`);
+
+    ui.select(props.cell.id);
+    // console.log(
+    //   `selected from ${i}, ${j}: ${(i - minI) * jSize + j - minJ + 1}`
+    // );
+    // animationRef.current.play();
+    // if(props.onClickCell) props.onClickCell(i, j);
+    // }
+  };
+
   // console.log(`selected: ${ui.selection}, index: ${props.index}`);
   const classes = useStyles({
     x: props.i - props.j,
@@ -45,9 +58,9 @@ function _Cell(props) {
       <div className={classes.cell}>
         <AddCell
           style={props.style}
-          onClick={props.onClick}
+          onClick={onClick}
           width={props.width}
-          selected={props.i == selectionI && props.j == selectionJ}
+          selected={props.selected}
           backgroundColor={props.backgroundColor}
           borderWidth={props.borderWidth}
           index={props.index}
@@ -61,9 +74,9 @@ function _Cell(props) {
       <div className={classes.cell}>
         <GrassCell
           style={props.style}
-          onClick={props.onClick}
+          onClick={onClick}
           width={props.width}
-          selected={props.i == selectionI && props.j == selectionJ}
+          selected={props.selected}
           backgroundColor={props.backgroundColor}
           borderWidth={props.borderWidth}
           index={props.index}
@@ -78,9 +91,9 @@ function _Cell(props) {
       <div className={classes.cell}>
         <TimerCell
           style={props.style}
-          onClick={props.onClick}
+          onClick={onClick}
           width={props.width}
-          selected={props.i == selectionI && props.j == selectionJ}
+          selected={props.selected}
           backgroundColor={props.backgroundColor}
           borderWidth={props.borderWidth}
           index={props.index}
@@ -95,10 +108,10 @@ function _Cell(props) {
       <div className={classes.cell}>
         <TodoCell
           style={props.style}
-          onClick={props.onClick}
+          onClick={onClick}
           width={props.width}
           cell={props.cell}
-          selected={props.i == selectionI && props.j == selectionJ}
+          selected={props.selected}
           backgroundColor={props.backgroundColor}
           borderWidth={props.borderWidth}
           index={props.index}

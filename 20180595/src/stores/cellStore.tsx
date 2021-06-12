@@ -29,7 +29,7 @@ export class Cell {
     store: CellStore,
     i: number,
     j: number,
-    type = CellType.Grass,
+    type: CellType = CellType.Grass,
 
     save: boolean = true,
     hasElement = null,
@@ -80,7 +80,7 @@ export class Cell {
   }
 }
 export class CellStore {
-  @observable cells = [];
+  @observable cells: Cell[] = [];
 
   constructor() {
     // this.initStore();
@@ -140,8 +140,9 @@ export class CellStore {
   }
 
   //PROTOTYPE
-  @action addTodo(selection: number, todoId: string) {
-    let { id, i, j } = this.sortedCells[selection];
+  @action addTodo(cellId: string, todoId: string) {
+    let index = this.cells.findIndex((cell) => cell.id === cellId);
+    let { id, i, j } = this.cells[index];
     this._modifyCellAndSave(i, j, {
       type: CellType.Todo,
       hasElement: todoId,
@@ -192,8 +193,8 @@ export class CellStore {
     return this.cells.length;
   }
 
-  @action startTimer(i: number, j: number) {
-    this._modifyCell(i, j, { type: CellType.Timer });
+  @action startTimer(id: string) {
+    this._modifyCellById(id, { type: CellType.Timer });
   }
 
   @action _addCellAndSave(i: number, j: number, type: CellType) {
@@ -202,10 +203,25 @@ export class CellStore {
     // axios.post("http://localhost:3000/cells", { i, j, type });
   }
 
+  @action _modifyCellById(id: string, args) {
+    let cellIndex = this.cellIndexById(id);
+    const cell = this.cells[cellIndex];
+    this.cells[cellIndex] = new Cell(
+      this,
+      args.i ?? cell.i,
+      args.j ?? cell.j,
+      args.type ?? cell.type,
+      false,
+      args.hasElement ?? cell.hasElement,
+      id
+    );
+  }
+
   @action _modifyCell(i: number, j: number, { type, ...rest }) {
     let cellIndex = this.cells.findIndex((e) => {
       return e.i == i && e.j == j;
     });
+    const { id } = this.cells[cellIndex];
     this.cells[cellIndex] = new Cell(
       this,
       i,
@@ -213,7 +229,7 @@ export class CellStore {
       type,
       false,
       rest.hasElement,
-      rest.id
+      id
     );
   }
 
@@ -241,6 +257,10 @@ export class CellStore {
   }
 
   cellById(id: string) {
-    return this.cells.find((cell) => cell.id == id);
+    return this.cells.find((cell) => cell.id === id);
+  }
+
+  cellIndexById(id: string) {
+    return this.cells.findIndex((cell) => cell.id === id);
   }
 }

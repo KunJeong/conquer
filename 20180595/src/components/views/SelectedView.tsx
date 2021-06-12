@@ -7,7 +7,8 @@ import { useStores } from "../../hooks/useStores";
 import { GrassSelectedView, TodoSelectedView } from "./selectedViews";
 import { Cell, CellType, Mode } from "../../stores";
 
-const SelectedView = observer(function SelectedView(props: { cell: Cell }) {
+const SelectedView = observer(function SelectedView(props) {
+  console.log(props.cell.id);
   const { cells, ui, todos } = useStores();
 
   const selectedView = (cell: Cell) => {

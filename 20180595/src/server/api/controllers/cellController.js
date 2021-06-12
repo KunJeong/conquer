@@ -41,6 +41,26 @@ exports.editCell = function (req, res) {
   });
 };
 
+exports.editCellById = function (req, res) {
+  Cell.findOne({ _id: req.params.cellId }).exec(function (err, cell) {
+    if (err) return res.status(500).send({ error: "database failure" });
+    console.log(`editing cell: ${cell}`);
+    cell.type = req.body.type;
+    cell.hasElement = req.body.hasElement;
+    cell.i = req.body.i;
+    cell.j = req.body.j;
+    cell.save(function (err) {
+      if (err) {
+        console.error(err);
+        res.json({ result: 0 });
+        return;
+      }
+      console.log(`edited cell: ${cell}`);
+      res.status(200).json({ result: 1 });
+    });
+  });
+};
+
 exports.getCells = function (req, res) {
   Cell.find()
     .sort("layer i")
