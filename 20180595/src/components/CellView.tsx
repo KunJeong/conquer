@@ -45,7 +45,10 @@ interface CellViewProps {
   [rest: string]: any;
 }
 
-function _CellView({ cell, ...props }: CellViewProps) {
+const CellView = observer(function _CellView({
+  cell,
+  ...props
+}: CellViewProps) {
   const { ui, cells } = useStores();
   // const selectedCell = cells.cellById(ui.selectedCell);
 
@@ -73,12 +76,12 @@ function _CellView({ cell, ...props }: CellViewProps) {
 
   // console.log(`selected: ${ui.selection}, index: ${props.index}`);
   const classes = useStyles({
-    x: cell.i - cell.j,
-    y: cell.i + cell.j,
+    x: props.x,
+    y: props.y,
     ...props,
   });
 
-  const longPressEvent = useLongPress;
+  // const longPressEvent = useLongPress;
   // const longPressEvent = useLongPress(onLongPress, {
   //   threshold: 700,
   //   // onFinish: onLongPress,
@@ -120,7 +123,6 @@ function _CellView({ cell, ...props }: CellViewProps) {
         ></TodoCell>
       </div>
     );
-}
+});
 
-const CellView = observer(_CellView);
 export default CellView;

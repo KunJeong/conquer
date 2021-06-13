@@ -1,5 +1,4 @@
 //@ts-check
-import PropTypes from "prop-types";
 import CellView from "./CellView";
 import Anime, { anime } from "react-animejs-wrapper";
 import { observer } from "mobx-react-lite";
@@ -74,8 +73,8 @@ function _IsometricGrid(props) {
             editing={ui.mode == Mode.Edit}
             type={cell.type}
             index={index}
-            i={cell.i}
-            j={cell.j}
+            x={cell.x}
+            y={cell.y}
             cell={cell}
             backgroundColor="#ddef77"
             borderWidth={0}
@@ -87,19 +86,6 @@ function _IsometricGrid(props) {
     // </Anime>
   );
 }
-
-// _IsometricGrid.defaultProps = {
-//   width: 500,
-//   height: 400,
-//   childwidth: 80,
-//   spacing: 100,
-//   cells: [
-//     { _id: "1", i: 0, j: 0 },
-//     { _id: "2", i: 1, j: 0 },
-//     { _id: "3", i: 0, j: 1 },
-//     { _id: "4", i: 1, j: 1 },
-//   ],
-// };
 
 const IsometricGrid = observer(_IsometricGrid);
 

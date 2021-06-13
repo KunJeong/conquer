@@ -1,5 +1,12 @@
 //@ts-check
-import { action, observable, computed, makeObservable, configure } from "mobx";
+import {
+  action,
+  observable,
+  computed,
+  makeObservable,
+  configure,
+  autorun,
+} from "mobx";
 import { enableStaticRendering } from "mobx-react-lite";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
@@ -52,7 +59,12 @@ export class Cell {
   //   this.name = newName;
   // }
 
-  @computed get layer() {
+  @computed get x() {
+    return this.i - this.j;
+  }
+
+  @computed get y() {
+    //layer
     return this.i + this.j;
   }
 
@@ -82,12 +94,12 @@ export class Cell {
   @action modify(args) {
     console.log(this.id, args);
     const { i, j, type, hasElement } = args;
-    console.log(i, j);
+    // console.log(i, j);
     if (i !== undefined) this.i = i;
     if (j !== undefined) this.j = j;
     if (type) this.type = type;
     if (hasElement) this.hasElement = hasElement;
-    console.log(this.id, this.i, this.j);
+    // console.log(this.id, this.i, this.j);
   }
 
   @action async modifyToServer(args) {
@@ -114,6 +126,7 @@ export class CellStore {
   constructor() {
     // this.initStore();
     makeObservable(this);
+    autorun(() => console.log(this.cells));
   }
 
   @action private deleteCells() {
@@ -196,8 +209,8 @@ export class CellStore {
 
   @computed get sortedCells() {
     return this.cells.slice().sort((a, b) => {
-      if (a.layer > b.layer) return 1;
-      if (a.layer < b.layer) return -1;
+      if (a.y > b.y) return 1;
+      if (a.y < b.y) return -1;
       if (a.i > b.i) return 1;
       if (a.i < b.i) return -1;
     });
@@ -283,9 +296,8 @@ export class CellStore {
     console.log(fromI, fromJ, toI, toJ);
     console.log(this.cellById(from));
     console.log(this.cellById(to));
-
-    await this.modifyCellAndSave(from, { i: toI, j: toJ });
-    await this.modifyCellAndSave(to, { i: fromI, j: fromJ });
+    this.modifyCellAndSave(from, { i: toI, j: toJ });
+    this.modifyCellAndSave(to, { i: fromI, j: fromJ });
     console.log("after");
     console.log(this.cellById(from));
     console.log(this.cellById(to));

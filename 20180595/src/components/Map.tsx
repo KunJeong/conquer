@@ -6,11 +6,16 @@ import Draggable from "react-draggable";
 import IsometricGrid from "./IsometricGrid";
 import { Add, Done, Edit, Remove } from "@material-ui/icons";
 import { Mode } from "../stores";
+import { autorun, toJS } from "mobx";
 
 const sqrt3 = 1.73205;
 
 function _Map() {
   const { cells, ui } = useStores();
+  autorun(() => {
+    console.log(toJS(cells.cells));
+  });
+  // console.log(cells.sortedCells);
   // const onStop = () => {
   //   const wasPanning = ui.isPanning;
   //   ui.endPan();
