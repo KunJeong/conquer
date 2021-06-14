@@ -1,13 +1,18 @@
 import { StoresContext } from "../contexts";
-import { CellStore, UIStore, TodoStore } from "../stores";
+import { RootStore } from "../stores";
 
 export function StoreProvider({ children }) {
-  let cells = new CellStore();
-  let ui = new UIStore(cells);
-  let todos = new TodoStore();
+  let root = new RootStore();
 
   return (
-    <StoresContext.Provider value={{ cells, ui, todos }}>
+    <StoresContext.Provider
+      value={{
+        root,
+        cells: root.cellStore,
+        ui: root.uiStore,
+        todos: root.todoStore,
+      }}
+    >
       {children}
     </StoresContext.Provider>
   );

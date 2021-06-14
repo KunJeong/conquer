@@ -1,6 +1,5 @@
 //@ts-check
 import CellView from "./CellView";
-import Anime, { anime } from "react-animejs-wrapper";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks";
 import React, { Fragment } from "react";

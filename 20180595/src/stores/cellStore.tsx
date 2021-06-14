@@ -10,6 +10,8 @@ import {
 import { enableStaticRendering } from "mobx-react-lite";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+import { Todo } from "./TodoStore";
+import { RootStore } from "./RootStore";
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 enableStaticRendering(typeof window === "undefined");
@@ -121,10 +123,11 @@ export class Cell {
   }
 }
 export class CellStore {
+  rootStore: RootStore;
   @observable cells: Cell[] = [];
 
-  constructor() {
-    // this.initStore();
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore;
     makeObservable(this);
     autorun(() => console.log(this.cells));
   }

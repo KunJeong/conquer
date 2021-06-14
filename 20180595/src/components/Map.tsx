@@ -65,10 +65,7 @@ const Map = observer(function _Map() {
             height: "600px",
             width: "1000px",
             // backgroundColor: "#ffffff",
-            position: "relative",
-            left: ui.offsetX,
-            top: ui.offsetY,
-            overflow: "hidden",
+            // overflow: "hidden",
             willChange: "transform",
           }}
           onClick={() => {
@@ -76,20 +73,32 @@ const Map = observer(function _Map() {
           }}
         >
           <Box
-            // onDrag={(e) => {
-            //   e.stopPropagation();
-            // }}
-            onClick={(e) => {
-              e.stopPropagation();
+            component="span"
+            display="block"
+            style={{
+              // backgroundColor: "#aaaaaa",
+              position: "relative",
+              left: ui.offsetX,
+              top: ui.offsetY + 300,
+              pointerEvents: "none",
             }}
           >
-            <IsometricGrid
-              // width={600}
-              // height={600}
-              childWidth={160}
-              spacing={5}
-              cells={cells.sortedCells}
-            />
+            <Box
+              // onDrag={(e) => {
+              //   e.stopPropagation();
+              // }}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <IsometricGrid
+                // width={600}
+                // height={600}
+                childWidth={160}
+                spacing={5}
+                cells={cells.sortedCells}
+              />
+            </Box>
           </Box>
         </Box>
       </Draggable>

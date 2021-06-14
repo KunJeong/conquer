@@ -13,6 +13,7 @@ import { Cell, CellStore } from "./CellStore";
 import gsap from "gsap";
 
 import anime from "animejs";
+import { RootStore } from "./RootStore";
 // eslint-disable-next-line react-hooks/rules-of-hooks
 enableStaticRendering(typeof window === "undefined");
 
@@ -26,7 +27,7 @@ export enum Mode {
 }
 
 export class UIStore {
-  cellStore: CellStore;
+  rootStore: RootStore;
   @observable mode: Mode = Mode.List;
   @observable width: number = 160;
   @observable spacing: number = 5;
@@ -48,8 +49,8 @@ export class UIStore {
   @observable secondsTotal: number = 30;
   @observable secondsRemaining: number = 30;
 
-  constructor(cellStore: CellStore) {
-    this.cellStore = cellStore;
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore;
     makeObservable(this);
 
     autorun(() => {
@@ -73,11 +74,14 @@ export class UIStore {
 
   @action select(id: string) {
     this.selectedCell = id;
-    const cell = this.cellStore.cellById(id);
     if (this.mode != Mode.Focus && this.mode != Mode.Edit) {
       this.mode = Mode.Selected;
-      this.panToCell(cell.i, cell.j);
+      this.panToCell(id);
     }
+  }
+
+  @action selectWithoutModeChange(id: string) {
+    this.selectedCell = id;
   }
 
   //timer
@@ -118,10 +122,11 @@ export class UIStore {
     this.mouseY = y;
   }
 
-  @action panToCell(i: number, j: number) {
-    // let t1 = gsap.timeline();
-    let x = i - j;
-    let y = i + j;
+  @action panToCell(id: string) {
+    const cell = this.rootStore.cellStore.cellById(id);
+
+    let x = cell.i - cell.j;
+    let y = cell.i + cell.j;
     const xFactor = this.width * 0.5 + this.spacing;
     const yFactor = xFactor * mapDimensions.sqrt1over3;
     gsap.to(this, {

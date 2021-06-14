@@ -7,6 +7,7 @@ exports.addTodo = function (req, res) {
   var todo = new Todo();
   todo.name = req.body.name;
   todo._id = req.body.id;
+  todo.onCell = req.body.onCell;
   console.log(`title: ${todo.name}, id: ${todo.id}`);
   todo.save(function (err) {
     if (err) {

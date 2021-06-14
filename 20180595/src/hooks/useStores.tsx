@@ -5,6 +5,7 @@ import { StoresContext } from "../contexts";
 export default function useStores() {
   const context = useContext(StoresContext);
   if (
+    context.root === undefined ||
     context.cells === undefined ||
     context.ui === undefined ||
     context.todos == undefined

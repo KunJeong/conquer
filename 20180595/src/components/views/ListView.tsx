@@ -29,13 +29,15 @@ interface TodoRowProps {
   [rest: string]: any;
 }
 const TodoRow = observer(function TodoRow({ todo, ...props }: TodoRowProps) {
-  // const { todos } = useStores();
+  const { ui } = useStores();
 
   const onClick = () => {
-    todo.toggleComplete();
+    ui.selectWithoutModeChange(todo.onCell);
+    ui.panToCell(todo.onCell);
+    // ui.panToCell(cells.cellById(todo.onCell).i, cells.cellById(todo.onCell).j);
   };
   return (
-    <ListItem role={undefined} dense button onClick={onClick}>
+    <ListItem dense button onClick={onClick}>
       <ListItemIcon>
         <Checkbox
           edge="start"

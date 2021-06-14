@@ -3,6 +3,7 @@ import { action, observable, computed, makeObservable, configure } from "mobx";
 import { enableStaticRendering } from "mobx-react-lite";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+import { RootStore } from "./RootStore";
 // eslint-disable-next-line react-hooks/rules-of-hooks
 
 enableStaticRendering(typeof window === "undefined");
@@ -55,8 +56,10 @@ export class Todo {
 }
 
 export class TodoStore {
+  rootStore: RootStore;
   @observable todos: Todo[] = [];
-  constructor() {
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore;
     makeObservable(this);
   }
 
