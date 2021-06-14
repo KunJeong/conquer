@@ -17,7 +17,7 @@ const TodoSelectedView = observer(function TodoSelectedView({
       <Typography>{todo.name}</Typography>
       <Checkbox
         checked={todo.completed}
-        onClick={() => todo.toggleComplete(!todo.completed)}
+        onClick={() => todo.setComplete(!todo.completed)}
       ></Checkbox>
     </Box>
   );

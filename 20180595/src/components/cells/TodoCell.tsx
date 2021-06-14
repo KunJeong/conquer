@@ -1,18 +1,21 @@
 //@ts-check
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
+import { Typography, Box } from "@material-ui/core";
 import Rhombus from "../Rhombus";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../hooks";
 import { Cell } from "../../stores";
-import { mapColors } from "../../constants";
+import { mapColors, mapDimensions } from "../../constants";
+import { useState } from "react";
 
 const sqrt1over3 = 0.57735;
 
 const useStyles = makeStyles({
   text: ({
     selected,
+    editing,
+    width,
     ...props
   }: {
     selected: boolean;
@@ -21,18 +24,21 @@ const useStyles = makeStyles({
   }) => ({
     ...props.style,
     position: "absolute",
-    fontSize: "12pt",
-    // color: "#777777",
-    left: "35%",
-    bottom: "35%",
-    width: "60px",
+    fontSize: "11pt",
+    // backgroundColor: "#777777",
+    left: "50%",
+    bottom: "0%",
+    width: width * mapDimensions.sqrt1over2,
     height: "30px",
     textAlign: "center",
-    lineHeight: "30px",
-    marginLeft: "-30px",
-    marginBottom: "-15px",
-    display: selected ? "block" : "none",
-    transform: `scale(1, ${sqrt1over3}) rotate(45deg)`,
+
+    verticalAlign: "text-bottom",
+    lineHeight: "13px",
+    marginLeft: `${-0.5 * width * mapDimensions.sqrt1over2}px`,
+    marginBottom: "3px",
+    display: "block",
+    // display: selected ? "block" : "none",
+    // transform: `scale(1, ${sqrt1over3}) rotate(45deg)`,
     color: "#ffffff",
   }),
   rhombus: ({
@@ -44,9 +50,9 @@ const useStyles = makeStyles({
     editing: boolean;
     [rest: string]: any;
   }) => ({
-    borderStyle: "dashed",
-    borderColor: mapColors.BORDER_EDITING,
-    borderWidth: editing && selected ? "4px" : "0px",
+    outlineStyle: "dashed",
+    outlineColor: mapColors.BORDER_EDITING,
+    outlineWidth: editing && selected ? "4px" : "0px",
     backgroundColor:
       editing && selected
         ? mapColors.TODO_EDITING
@@ -67,17 +73,32 @@ interface TodoCellProps {
   [rest: string]: any;
 }
 
-const TodoCell = observer(function TodoCell({ cell, ...props }: TodoCellProps) {
+const TodoCell = observer(function TodoCell({
+  cell,
+  selected,
+  ...props
+}: TodoCellProps) {
   const { todos } = useStores();
-  const classes = useStyles(props);
+  const classes = useStyles({ selected, ...props });
+  const [hover, setHover] = useState(false);
   console.log(`cell:${cell.id}`);
   return (
     <div>
-      <Rhombus {...props} className={classes.rhombus}></Rhombus>
-      <Typography className={classes.text}>
-        {/* {`todos:${todos.todos}`} */}
-        {todos.todoById(cell.hasElement)?.name}
-      </Typography>
+      <Rhombus
+        {...props}
+        className={classes.rhombus}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+      >
+        {hover || selected ? (
+          <Typography className={classes.text}>
+            {/* {`todos:${todos.todos}`} */}
+            {todos.todoById(cell.hasElement)?.name}
+          </Typography>
+        ) : (
+          <Box></Box>
+        )}
+      </Rhombus>
     </div>
   );
 });

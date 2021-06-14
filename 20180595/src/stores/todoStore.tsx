@@ -49,10 +49,11 @@ export class Todo {
         });
   }
 
-  @action editName(newName: string) {
+  @action setName(newName: string) {
     this.name = newName;
   }
-  @action async toggleComplete(completed: boolean) {
+
+  @action async setComplete(completed: boolean) {
     this.completed = completed;
     this.modifyToServer({ completed: this.completed });
   }

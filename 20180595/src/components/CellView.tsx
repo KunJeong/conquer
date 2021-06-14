@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     // borderStyle: 'solid',
     pointerEvents: "none",
     position: "absolute",
-    willChange: "transform",
+    // willChange: "transform",
     left: `calc(50% + ${width * (x + 1) * -0.5 - x * marginX}px)`,
     bottom: `calc(50% + ${
       (width * (y + 1) * -0.5 - y * marginX) * mapDimensions.sqrt1over3

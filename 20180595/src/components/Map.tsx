@@ -80,6 +80,7 @@ const Map = observer(function _Map() {
               position: "relative",
               left: ui.offsetX,
               top: ui.offsetY + 300,
+              willChange: "transform",
               pointerEvents: "none",
             }}
           >
