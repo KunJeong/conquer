@@ -4,17 +4,22 @@ import { makeStyles } from "@material-ui/core/styles";
 import { AddCell, TodoCell, GrassCell, TimerCell } from "./cells";
 import { observer } from "mobx-react-lite";
 import { useStores, useLongPress } from "../hooks";
-import { Mode, Cell } from "../stores";
-// import { useLongPress } from "use-long-press";
-
-const sqrt1over3 = 0.57735;
+import { Mode, Cell, CellType } from "../stores";
+import { mapDimensions } from "../constants";
 
 const useStyles = makeStyles({
-  cell: (props: {
+  cell: ({
+    width,
+    marginX,
+    offset,
+    x,
+    y,
+  }: {
     width: number;
+    marginX: number;
+    offset: { x: number; y: number };
     x: number;
     y: number;
-    marginX: number;
     [rest: string]: any;
   }) => ({
     // backgroundColor: "#dddddd",
@@ -22,17 +27,13 @@ const useStyles = makeStyles({
     pointerEvents: "none",
     position: "absolute",
     willChange: "transform",
-    left:
-      "calc(50% + " +
-      (props.width * (props.x + 1) * -0.5 - props.x * props.marginX) +
-      "px)",
-    bottom:
-      "calc(50% + " +
-      (props.width * (props.y + 1) * -0.5 - props.y * props.marginX) *
-        sqrt1over3 +
-      "px)",
-    width: props.width + "px",
-    height: props.width * sqrt1over3 + "px",
+    left: `calc(50% + ${offset.x + width * (x + 1) * -0.5 - x * marginX}px)`,
+    bottom: `calc(50% + ${
+      (width * (y + 1) * -0.5 - y * marginX) * mapDimensions.sqrt1over3 -
+      offset.y
+    }px)`,
+    width: `${width}px`,
+    height: `${width * mapDimensions.sqrt1over3}px`,
   }),
 });
 
@@ -42,6 +43,10 @@ interface CellViewProps {
   cell: Cell;
   selected: boolean;
   editing: boolean;
+  offset: {
+    x: number;
+    y: number;
+  };
   [rest: string]: any;
 }
 
@@ -76,8 +81,8 @@ const CellView = observer(function _CellView({
 
   // console.log(`selected: ${ui.selection}, index: ${props.index}`);
   const classes = useStyles({
-    x: props.x,
-    y: props.y,
+    x: cell.x,
+    y: cell.y,
     ...props,
   });
 
@@ -92,7 +97,7 @@ const CellView = observer(function _CellView({
 
   // const longPressEvent = useLongPress();
 
-  if (props.type === "add" && ui.mode == Mode.Focus)
+  if (cell.type == CellType.Add && ui.mode == Mode.Focus)
     return <div className={classes.cell}></div>;
   else if (props.type === "add")
     return (
@@ -100,19 +105,19 @@ const CellView = observer(function _CellView({
         <AddCell {...props} onClick={onClick}></AddCell>
       </div>
     );
-  else if (props.type === "grass")
+  else if (cell.type == CellType.Grass)
     return (
       <div className={classes.cell}>
         <GrassCell {...props} onClick={onClick}></GrassCell>
       </div>
     );
-  else if (props.type === "timer")
+  else if (cell.type == CellType.Timer)
     return (
       <div className={classes.cell}>
         <TimerCell {...props} onClick={onClick}></TimerCell>
       </div>
     );
-  else if (props.type === "todo")
+  else if (cell.type == CellType.Todo)
     return (
       <div className={classes.cell}>
         <TodoCell

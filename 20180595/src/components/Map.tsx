@@ -2,7 +2,7 @@
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks";
 import { Box, IconButton } from "@material-ui/core";
-import Draggable from "react-draggable";
+import Draggable, { DraggableCore } from "react-draggable";
 import IsometricGrid from "./IsometricGrid";
 import { Add, Done, Edit, Remove } from "@material-ui/icons";
 import { Mode } from "../stores";
@@ -25,39 +25,60 @@ function _Map() {
   //   }
   // };
   return (
-    <Box
-      component="span"
-      display="block"
-      // height={1}
-      style={{
-        height: "100%",
-        // position: "relative",
-        overflow: "hidden",
-        willChange: "transform",
-      }}
-      onClick={() => {
-        ui.deselect();
-      }}
-    >
-      <Box
-        onClick={(e) => {
-          e.stopPropagation();
+    <Box>
+      <IconButton
+        onClick={() => ui.zoom(false)}
+        disabled={ui.width >= ui.maxWidth}
+      >
+        <Add />
+      </IconButton>
+      <IconButton
+        onClick={() => ui.zoom(true)}
+        disabled={ui.width <= ui.minWidth}
+      >
+        <Remove />
+      </IconButton>
+      {ui.mode == Mode.Edit ? (
+        <IconButton onClick={() => ui.setMode(Mode.List)}>
+          <Done />
+        </IconButton>
+      ) : (
+        <IconButton onClick={() => ui.setMode(Mode.Edit)}>
+          <Edit />
+        </IconButton>
+      )}
+      <Draggable
+        position={{ x: 0, y: 0 }}
+        onStart={(e, data) => {
+          console.log(data.x, data.y);
+          ui.saveMouse(data.x, data.y);
+        }}
+        onStop={(e, data) => {
+          console.log(data.x, data.y);
+          ui.panMap(data.x, data.y);
         }}
       >
-        <Draggable
-          defaultPosition={{ x: 0, y: 400 }}
-          onDrag={() => ui.startPan()}
-          onStop={(e) => {
-            e.stopPropagation();
-            ui.endPan();
+        <Box
+          component="span"
+          display="block"
+          // height={1}
+          style={{
+            height: "600px",
+            width: "1000px",
+            // backgroundColor: "#ffffff",
+            // position: "relative",
+            overflow: "hidden",
+            willChange: "transform",
+          }}
+          onClick={() => {
+            ui.deselect();
           }}
         >
-          {/* <MapInteractionCSS
-            showControls
-            disablePan
-            defaultValue={{ scale: 1, translation: { x: 300, y: 400 } }}
-          > */}
-          <Box>
+          <Box
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             <IsometricGrid
               // width={600}
               // height={600}
@@ -66,30 +87,8 @@ function _Map() {
               cells={cells.sortedCells}
             />
           </Box>
-          {/* </MapInteractionCSS> */}
-        </Draggable>
-        <IconButton
-          onClick={() => ui.zoom(false)}
-          disabled={ui.width >= ui.maxWidth}
-        >
-          <Add />
-        </IconButton>
-        <IconButton
-          onClick={() => ui.zoom(true)}
-          disabled={ui.width <= ui.minWidth}
-        >
-          <Remove />
-        </IconButton>
-        {ui.mode == Mode.Edit ? (
-          <IconButton onClick={() => ui.setMode(Mode.List)}>
-            <Done />
-          </IconButton>
-        ) : (
-          <IconButton onClick={() => ui.setMode(Mode.Edit)}>
-            <Edit />
-          </IconButton>
-        )}
-      </Box>
+        </Box>
+      </Draggable>
     </Box>
   );
 }

@@ -11,4 +11,11 @@ const mapColors = {
   TODO_EDITING: "#ae24d6",
 };
 
-export { mapColors };
+const mapDimensions = {
+  sqrt2: 1.41421,
+  sqrt1over2: 0.70711,
+  sqrt3: 1.73205,
+  sqrt1over3: 0.57735,
+};
+
+export { mapColors, mapDimensions };

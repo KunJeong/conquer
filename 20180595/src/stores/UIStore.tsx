@@ -19,6 +19,12 @@ export class UIStore {
   minWidth = 80;
   maxWidth = 280;
 
+  @observable mapX: number = 0;
+  @observable mapY: number = 0;
+
+  @observable mouseX: number = 0;
+  @observable mouseY: number = 0;
+
   //selection
   @observable selectedCell: string = undefined;
 
@@ -79,8 +85,18 @@ export class UIStore {
     this.mode = mode;
   }
 
+  @action panMap(x: number, y: number) {
+    this.mapX += x - this.mouseX;
+    this.mapY += y - this.mouseY;
+  }
+
   @action zoom(out: boolean) {
     if (out) this.width -= 40;
     else this.width += 40;
+  }
+
+  @action saveMouse(x: number, y: number) {
+    this.mouseX = x;
+    this.mouseY = y;
   }
 }
