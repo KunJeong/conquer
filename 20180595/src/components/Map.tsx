@@ -3,14 +3,13 @@ import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks";
 import { Box, IconButton } from "@material-ui/core";
 import Draggable, { DraggableCore } from "react-draggable";
-import IsometricGrid from "./IsometricGrid";
 import { Add, Done, Edit, Remove } from "@material-ui/icons";
 import { Mode } from "../stores";
 import { autorun, toJS } from "mobx";
+import React, { Fragment } from "react";
+import IsometricGrid from "./IsometricGrid";
 
-const sqrt3 = 1.73205;
-
-function _Map() {
+const Map = observer(function _Map() {
   const { cells, ui } = useStores();
   autorun(() => {
     console.log(toJS(cells.cells));
@@ -25,7 +24,7 @@ function _Map() {
   //   }
   // };
   return (
-    <Box>
+    <Fragment>
       <IconButton
         onClick={() => ui.zoom(false)}
         disabled={ui.width >= ui.maxWidth}
@@ -66,7 +65,9 @@ function _Map() {
             height: "600px",
             width: "1000px",
             // backgroundColor: "#ffffff",
-            // position: "relative",
+            position: "relative",
+            left: ui.offsetX,
+            top: ui.offsetY,
             overflow: "hidden",
             willChange: "transform",
           }}
@@ -75,6 +76,9 @@ function _Map() {
           }}
         >
           <Box
+            // onDrag={(e) => {
+            //   e.stopPropagation();
+            // }}
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -89,23 +93,8 @@ function _Map() {
           </Box>
         </Box>
       </Draggable>
-    </Box>
+    </Fragment>
   );
-}
-
-// _Map.defaultProps = {
-//   width: 600,
-//   height: 1000,
-//   childwidth: 80,
-//   spacing: 100,
-//   cells: [
-//     { _id: "1", i: 0, j: 0 },
-//     { _id: "2", i: 1, j: 0 },
-//     { _id: "3", i: 0, j: 1 },
-//     { _id: "4", i: 1, j: 1 },
-//   ],
-// };
-
-const Map = observer(_Map);
+});
 
 export default Map;

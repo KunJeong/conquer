@@ -4,9 +4,10 @@ import { enableStaticRendering } from "mobx-react-lite";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 // eslint-disable-next-line react-hooks/rules-of-hooks
+
 enableStaticRendering(typeof window === "undefined");
 
-configure({ enforceActions: "always" });
+// configure({ enforceActions: "always" });
 
 export class Todo {
   store: TodoStore;

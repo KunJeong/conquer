@@ -11,13 +11,11 @@ const useStyles = makeStyles({
   cell: ({
     width,
     marginX,
-    offset,
     x,
     y,
   }: {
     width: number;
     marginX: number;
-    offset: { x: number; y: number };
     x: number;
     y: number;
     [rest: string]: any;
@@ -27,10 +25,9 @@ const useStyles = makeStyles({
     pointerEvents: "none",
     position: "absolute",
     willChange: "transform",
-    left: `calc(50% + ${offset.x + width * (x + 1) * -0.5 - x * marginX}px)`,
+    left: `calc(50% + ${width * (x + 1) * -0.5 - x * marginX}px)`,
     bottom: `calc(50% + ${
-      (width * (y + 1) * -0.5 - y * marginX) * mapDimensions.sqrt1over3 -
-      offset.y
+      (width * (y + 1) * -0.5 - y * marginX) * mapDimensions.sqrt1over3
     }px)`,
     width: `${width}px`,
     height: `${width * mapDimensions.sqrt1over3}px`,
@@ -43,10 +40,6 @@ interface CellViewProps {
   cell: Cell;
   selected: boolean;
   editing: boolean;
-  offset: {
-    x: number;
-    y: number;
-  };
   [rest: string]: any;
 }
 
@@ -86,20 +79,9 @@ const CellView = observer(function _CellView({
     ...props,
   });
 
-  // const longPressEvent = useLongPress;
-  // const longPressEvent = useLongPress(onLongPress, {
-  //   threshold: 700,
-  //   // onFinish: onLongPress,
-  //   onStart: (event) => console.log("Press started"),
-  //   onFinish: (event) => console.log("Long press finished"),
-  //   onCancel: (event) => console.log("Press cancelled"),
-  // });
-
-  // const longPressEvent = useLongPress();
-
   if (cell.type == CellType.Add && ui.mode == Mode.Focus)
     return <div className={classes.cell}></div>;
-  else if (props.type === "add")
+  else if (cell.type === "add")
     return (
       <div className={classes.cell}>
         <AddCell {...props} onClick={onClick}></AddCell>
@@ -120,12 +102,7 @@ const CellView = observer(function _CellView({
   else if (cell.type == CellType.Todo)
     return (
       <div className={classes.cell}>
-        <TodoCell
-          {...props}
-          // {...longPressEvent}
-          onClick={onClick}
-          cell={cell}
-        ></TodoCell>
+        <TodoCell {...props} onClick={onClick} cell={cell}></TodoCell>
       </div>
     );
 });

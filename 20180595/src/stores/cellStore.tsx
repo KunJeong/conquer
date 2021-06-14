@@ -14,7 +14,7 @@ import { v4 as uuidv4 } from "uuid";
 // eslint-disable-next-line react-hooks/rules-of-hooks
 enableStaticRendering(typeof window === "undefined");
 
-configure({ enforceActions: "always" });
+// configure({ enforceActions: "always" });
 
 export enum CellType {
   Grass = "grass",
