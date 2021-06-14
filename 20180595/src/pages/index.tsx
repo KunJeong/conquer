@@ -1,6 +1,7 @@
 //@ts-check
 import { Box, Grid } from "@material-ui/core";
 import { observer } from "mobx-react-lite";
+import { autorun, toJS } from "mobx";
 import { useStores } from "../hooks";
 import { useEffect } from "react";
 import { Inspector, Map } from "../components";
@@ -12,6 +13,10 @@ const Index = observer(function Index() {
     cells.getCells();
     todos.getTodos();
   }, []);
+  autorun(() => {
+    console.log(toJS(cells.cells));
+    console.log(toJS(todos.todos));
+  });
 
   return (
     <Box p={2} height="100vh" overflow="hidden" bgcolor={mapColors.BACKGROUND}>

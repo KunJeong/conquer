@@ -8,5 +8,5 @@ module.exports = function (app) {
     .post(todo.addTodo)
     .delete(todo.deleteAllTodos);
 
-  // app.route("/todos/:todo").delete(todo.deleteTodo).patch(todo.editTodo);
+  app.route("/todos/:todoId").patch(todo.editTodo);
 };

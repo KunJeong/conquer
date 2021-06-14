@@ -20,6 +20,25 @@ exports.addTodo = function (req, res) {
   });
 };
 
+exports.editTodo = function (req, res) {
+  Todo.findOne({ _id: req.params.todoId }).exec(function (err, todo) {
+    if (err) return res.status(500).send({ error: "database failure" });
+    console.log(`editing todo: ${todo}`);
+    if (req.body.name !== undefined) todo.name = req.body.name;
+    if (req.body.completed !== undefined) todo.completed = req.body.completed;
+    if (req.body.onCell) todo.onCell = req.body.onCell;
+    todo.save(function (err) {
+      if (err) {
+        console.error(err);
+        res.json({ result: 0 });
+        return;
+      }
+      console.log(`edited todo: ${todo}`);
+      res.status(200).json({ result: 1 });
+    });
+  });
+};
+
 exports.getTodos = function (req, res) {
   Todo.find().exec(function (err, todos) {
     if (err) return res.status(500).send({ error: "database failure" });

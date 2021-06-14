@@ -14,12 +14,13 @@ export class Todo {
   store: TodoStore;
   id: string = null;
   onCell: string = null;
-  @observable completed = false;
+  @observable completed: boolean = false;
   @observable name: string;
 
   constructor(
     store: TodoStore,
     name: string = "New Todo",
+    completed: boolean = false,
     save: boolean = true,
     onCell = null,
     id = uuidv4()
@@ -27,6 +28,7 @@ export class Todo {
     this.store = store;
     this.id = id;
     this.name = name;
+    this.completed = completed;
     this.onCell = onCell;
     makeObservable(this);
     console.log(`id:${id}`);
@@ -50,8 +52,26 @@ export class Todo {
   @action editName(newName: string) {
     this.name = newName;
   }
-  @action toggleComplete() {
-    this.completed = !this.completed;
+  @action async toggleComplete(completed: boolean) {
+    this.completed = completed;
+    this.modifyToServer({ completed: this.completed });
+  }
+
+  @action async modifyToServer(args) {
+    return await axios
+      .patch(`http://localhost:3000/todos/${this.id}`, { ...args })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch(function (error) {
+        if (error.response) {
+          console.log("error1");
+        } else if (error.request) {
+          console.log("error2");
+        } else {
+          console.log("@modifytoserver- error3");
+        }
+      });
   }
 }
 
@@ -94,7 +114,14 @@ export class TodoStore {
       .then((response) => {
         console.log(response);
         let newTodos = response.data.todos.map((todo) => {
-          return new Todo(this, todo.name, false, todo.onCell, todo._id);
+          return new Todo(
+            this,
+            todo.name,
+            todo.completed,
+            false,
+            todo.onCell,
+            todo._id
+          );
         });
         console.log(newTodos);
         this.todos = newTodos;
@@ -111,7 +138,7 @@ export class TodoStore {
   }
 
   @action addTodo(name: string, id: string, onCell: string) {
-    let todo = new Todo(this, name, true, onCell, id);
+    let todo = new Todo(this, name, false, true, onCell, id);
     this.todos.push(todo);
   }
 

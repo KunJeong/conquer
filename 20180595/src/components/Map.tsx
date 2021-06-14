@@ -11,9 +11,9 @@ import IsometricGrid from "./IsometricGrid";
 
 const Map = observer(function _Map() {
   const { cells, ui } = useStores();
-  autorun(() => {
-    console.log(toJS(cells.cells));
-  });
+  // autorun(() => {
+  //   console.log(toJS(cells.cells));
+  // });
   // console.log(cells.sortedCells);
   // const onStop = () => {
   //   const wasPanning = ui.isPanning;

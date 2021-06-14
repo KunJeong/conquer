@@ -94,14 +94,12 @@ export class Cell {
   }
 
   @action modify(args) {
-    console.log(this.id, args);
+    console.log("modify", this.id, args);
     const { i, j, type, hasElement } = args;
-    // console.log(i, j);
     if (i !== undefined) this.i = i;
     if (j !== undefined) this.j = j;
     if (type) this.type = type;
     if (hasElement) this.hasElement = hasElement;
-    // console.log(this.id, this.i, this.j);
   }
 
   @action async modifyToServer(args) {
