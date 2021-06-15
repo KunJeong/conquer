@@ -22,18 +22,35 @@ const Index = observer(function Index() {
   });
 
   return (
-    <Box p={2} height="100vh" overflow="hidden" bgcolor={mapColors.BACKGROUND}>
+    <Box height="100vh" overflow="hidden" bgcolor={mapColors.BACKGROUND}>
       <Inspector
         style={{
           zIndex: 400,
           position: "absolute",
           width: "25vw",
+          top: "16px",
           left: "16px",
         }}
       />
       <MapControls
-        style={{ zIndex: 400, position: "absolute", right: "16px" }}
+        style={{
+          zIndex: 400,
+          position: "absolute",
+          top: "16px",
+          right: "16px",
+        }}
       />
+      {/* <Box
+        style={{
+          zIndex: 400,
+          width: 10,
+          height: 10,
+          backgroundColor: "#ffffff",
+          position: "absolute",
+          right: "50vw",
+          top: "50vh",
+        }}
+      /> */}
       <Map />
     </Box>
   );

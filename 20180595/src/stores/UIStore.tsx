@@ -29,10 +29,10 @@ export enum Mode {
 export class UIStore {
   rootStore: RootStore;
   @observable mode: Mode = Mode.List;
-  @observable width: number = 160;
+  @observable width: number = 150;
   @observable spacing: number = 5;
-  minWidth = 80;
-  maxWidth = 280;
+  minWidth = 90;
+  maxWidth = 300;
 
   @observable offsetX = 0;
   @observable offsetY = 0;
@@ -113,8 +113,26 @@ export class UIStore {
   }
 
   @action zoom(out: boolean) {
-    if (out) this.width -= 40;
-    else this.width += 40;
+    if (out) {
+      this.width -= 30;
+      gsap.to(this, {
+        // width: this.width - 30,
+        offsetX: (this.offsetX * (this.width - 30)) / this.width,
+        offsetY: (this.offsetY * (this.width - 30)) / this.width,
+        duration: 0.01,
+      });
+    }
+    // this.width -= 30;
+    else {
+      this.width += 30;
+
+      gsap.to(this, {
+        // width: this.width + 30,
+        offsetX: (this.offsetX * (this.width + 30)) / this.width,
+        offsetY: (this.offsetY * (this.width + 30)) / this.width,
+        duration: 0.01,
+      });
+    }
   }
 
   @action saveMouse(x: number, y: number) {
@@ -133,10 +151,6 @@ export class UIStore {
       offsetX: x * xFactor,
       offsetY: -y * yFactor,
       duration: 0.4,
-      snap: {
-        mapX: 0.01 * xFactor,
-        mapY: 0.01 * yFactor,
-      },
     });
   }
 }

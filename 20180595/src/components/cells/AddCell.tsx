@@ -1,5 +1,5 @@
 //@ts-check
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, Box } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import Rhombus from "../Rhombus";
 import { observer } from "mobx-react-lite";
@@ -9,20 +9,16 @@ import { mapColors } from "../../constants";
 
 const useStyles = makeStyles({
   plus: (props: { selected: boolean; [rest: string]: any }) => ({
-    // ...props.style,
     position: "absolute",
-    // fontWeight: 'bold',
-    fontSize: "20pt",
     color: "#777777",
     left: "50%",
     bottom: "25%",
     width: "30px",
-    height: "30px",
-    // pointerEvents: 'none',
+    height: props.width >= 150 ? "30px" : "20px",
     textAlign: "center",
-    lineHeight: "30px",
+    lineHeight: props.width >= 150 ? "30px" : "20px",
     marginLeft: "-15px",
-    marginBottom: "-15px",
+    marginBottom: props.width >= 150 ? "-15px" : "-10px",
     display: "none",
   }),
   rhombus: ({

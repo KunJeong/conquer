@@ -25,16 +25,15 @@ const useStyles = makeStyles({
   }) => ({
     ...props.style,
     position: "absolute",
-    fontSize: width >= 160 ? "11pt" : "8pt",
-    // backgroundColor: "#777777",
+    fontSize: width >= 150 ? "11pt" : "8pt",
     left: "50%",
     bottom: "0%",
     width: width * mapDimensions.sqrt1over2,
-    height: width >= 160 ? "30px" : "15px",
+    height: width >= 150 ? "30px" : "15px",
     textAlign: "center",
 
     verticalAlign: "text-bottom",
-    lineHeight: width >= 160 ? "13px" : "8px",
+    lineHeight: width >= 150 ? "13px" : "8px",
     marginLeft: `${-0.5 * width * mapDimensions.sqrt1over2}px`,
     marginBottom: "3px",
     display: "block",
@@ -110,7 +109,7 @@ const TodoCell = observer(function TodoCell({
         height={props.width * 2 * mapDimensions.sqrt1over3}
       /> */}
       <div style={{ position: "absolute", bottom: 0 }}>
-        {todo.completed ? (
+        {todo?.completed ? (
           <Image
             className={classes.image}
             src="/tower-red-complete.png"

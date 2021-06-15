@@ -13,17 +13,15 @@ const useStyles = makeStyles({
   hourglass: (props: any) => ({
     ...props.style,
     position: "absolute",
-    // fontWeight: 'bold',
-    fontSize: "20pt",
     color: "#777777",
     left: "50%",
     bottom: "25%",
     width: "30px",
-    height: "30px",
+    height: props.width >= 150 ? "30px" : "20px",
     textAlign: "center",
-    lineHeight: "30px",
+    lineHeight: props.width >= 150 ? "30px" : "20px",
     marginLeft: "-15px",
-    marginBottom: "-15px",
+    marginBottom: props.width >= 150 ? "-15px" : "-10px",
   }),
   rhombus: {
     // background: `linear-gradient(45deg, #ddef77, 40%, #ddef77, 40%, #f3f3f3)`,
@@ -56,7 +54,10 @@ const TimerCell = observer(function _TimerCell(props: TimerCellProps) {
           loop: true,
         }}
       >
-        <HourglassIcon className={classes.hourglass} />
+        <HourglassIcon
+          fontSize={props.width >= 150 ? "default" : "small"}
+          className={classes.hourglass}
+        />
       </Anime>
     </div>
   );
