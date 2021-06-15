@@ -7,15 +7,20 @@ const useStyles = makeStyles({
   rhombus: ({ width, ...props }: { width: number; [rest: string]: any }) => ({
     ...props.style,
     // backgroundColor: props.backgroundColor,
-    boxSizing: "border-box",
+    // boxSizing: "border-box",
     position: "absolute",
     pointerEvents: "visibleFill",
     // padding: '5px',
     // willChange: "transform",
     left: "50%",
-    bottom: "50%",
-    marginLeft: width * mapDimensions.sqrt1over2 * -0.5 + "px",
-    marginBottom: width * mapDimensions.sqrt1over2 * -0.5 + "px",
+    bottom: "0px",
+    marginLeft: width * -0.5 * mapDimensions.sqrt1over2,
+    marginBottom: `${
+      -width * 0.5 * mapDimensions.sqrt1over2 +
+      width * 0.5 * mapDimensions.sqrt1over3
+    }px`,
+    // width: width,
+    // height: width * mapDimensions.sqrt1over3,
     width: width * mapDimensions.sqrt1over2 + "px",
     height: width * mapDimensions.sqrt1over2 + "px",
     transform: `scale(1, ${mapDimensions.sqrt1over3}) rotate(45deg)`,

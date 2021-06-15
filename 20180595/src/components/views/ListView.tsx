@@ -44,6 +44,7 @@ const TodoRow = observer(function TodoRow({ todo, ...props }: TodoRowProps) {
           checked={todo.completed}
           tabIndex={-1}
           disableRipple
+          onClick={() => todo.setComplete(!todo.completed)}
         />
       </ListItemIcon>
       <ListItemText primary={todo.name} />

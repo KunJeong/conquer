@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     fontSize: "20pt",
     color: "#777777",
     left: "50%",
-    bottom: "50%",
+    bottom: "25%",
     width: "30px",
     height: "30px",
     textAlign: "center",

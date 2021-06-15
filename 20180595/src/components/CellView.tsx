@@ -6,6 +6,7 @@ import { observer } from "mobx-react-lite";
 import { useStores, useLongPress } from "../hooks";
 import { Mode, Cell, CellType } from "../stores";
 import { mapDimensions } from "../constants";
+import Image from "next/image";
 
 const useStyles = makeStyles({
   cell: ({
@@ -25,12 +26,13 @@ const useStyles = makeStyles({
     pointerEvents: "none",
     position: "absolute",
     // willChange: "transform",
+    padding: 0,
     left: `calc(50% + ${width * (x + 1) * -0.5 - x * marginX}px)`,
     bottom: `calc(50% + ${
       (width * (y + 1) * -0.5 - y * marginX) * mapDimensions.sqrt1over3
     }px)`,
     width: `${width}px`,
-    height: `${width * mapDimensions.sqrt1over3}px`,
+    height: `${width * 2 * mapDimensions.sqrt1over3}px`,
   }),
 });
 
@@ -102,7 +104,15 @@ const CellView = observer(function _CellView({
   else if (cell.type == CellType.Todo)
     return (
       <div className={classes.cell}>
+        {/* <div
+          style={{
+            // height: props.width * mapDimensions.sqrt1over3,
+            bottom: "0px",
+            backgroundColor: "#ffffff",
+          }}
+        > */}
         <TodoCell {...props} onClick={onClick} cell={cell}></TodoCell>
+        {/* </div> */}
       </div>
     );
 });

@@ -8,6 +8,7 @@ import { useStores } from "../../hooks";
 import { Cell } from "../../stores";
 import { mapColors, mapDimensions } from "../../constants";
 import { useState } from "react";
+import Image from "next/image";
 
 const sqrt1over3 = 0.57735;
 
@@ -24,21 +25,19 @@ const useStyles = makeStyles({
   }) => ({
     ...props.style,
     position: "absolute",
-    fontSize: "11pt",
+    fontSize: width >= 160 ? "11pt" : "8pt",
     // backgroundColor: "#777777",
     left: "50%",
     bottom: "0%",
     width: width * mapDimensions.sqrt1over2,
-    height: "30px",
+    height: width >= 160 ? "30px" : "15px",
     textAlign: "center",
 
     verticalAlign: "text-bottom",
-    lineHeight: "13px",
+    lineHeight: width >= 160 ? "13px" : "8px",
     marginLeft: `${-0.5 * width * mapDimensions.sqrt1over2}px`,
     marginBottom: "3px",
     display: "block",
-    // display: selected ? "block" : "none",
-    // transform: `scale(1, ${sqrt1over3}) rotate(45deg)`,
     color: "#ffffff",
   }),
   rhombus: ({
@@ -81,6 +80,7 @@ const TodoCell = observer(function TodoCell({
   const { todos } = useStores();
   const classes = useStyles({ selected, ...props });
   const [hover, setHover] = useState(false);
+  const todo = todos.todoById(cell.hasElement);
   console.log(`cell:${cell.id}`);
   return (
     <div>
@@ -99,6 +99,32 @@ const TodoCell = observer(function TodoCell({
           <Box></Box>
         )}
       </Rhombus>
+
+      {/* <img
+        style={{ zIndex: 10000 }}
+        src="/tower-red.png"
+        width={props.width}
+        height={props.width * 2 * mapDimensions.sqrt1over3}
+      /> */}
+      {/* <div style={{ backgroundColor: "#ffffff" }}> */}
+      {todo.completed ? (
+        <Image
+          src="/tower-red-complete.png"
+          width={props.width}
+          height={props.width * 2 * mapDimensions.sqrt1over3}
+          priority
+          // objectPosition="center bottom"
+        ></Image>
+      ) : (
+        <Image
+          src="/tower-red.png"
+          width={props.width}
+          height={props.width * 2 * mapDimensions.sqrt1over3}
+          priority
+          // objectPosition="center bottom"
+        ></Image>
+      )}
+      {/* </div> */}
     </div>
   );
 });
