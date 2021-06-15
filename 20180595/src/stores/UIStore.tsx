@@ -82,6 +82,7 @@ export class UIStore {
     this.secondsRemaining = minutes * 60;
     this.secondsTotal = minutes * 60;
     this.timerOnCell = cellId;
+    console.log(this.timerOnCell);
     this.mode = Mode.Focus;
   }
   @action runTimer(cellId: string) {
@@ -94,6 +95,8 @@ export class UIStore {
     clearInterval(this.timer);
 
     this.select(this.timerOnCell);
+    console.log(this.timerOnCell);
+
     this.rootStore.cellStore.stopTimer(this.timerOnCell);
     this.mode = Mode.Selected;
   }

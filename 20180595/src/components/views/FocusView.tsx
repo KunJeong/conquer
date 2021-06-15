@@ -45,7 +45,7 @@ const FocusView = observer(function FocusView() {
           onClick={() => {
             ui.stopTimer();
           }}
-          color={red[100]}
+          color="secondary"
         >
           Cancel Timer
         </Button>

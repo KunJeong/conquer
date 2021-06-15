@@ -112,20 +112,24 @@ const TodoCell = observer(function TodoCell({
         {todo?.completed ? (
           <Image
             className={classes.image}
-            src={imageUrls[todo?.imageName + "Completed"]}
+            src={
+              todo
+                ? imageUrls[todo.imageName + "Completed"]
+                : imageUrls.towerRed
+            }
             width={props.width}
             height={props.width * 2 * mapDimensions.sqrt1over3}
             priority
-            quality={100}
+            // quality={100}
             // objectPosition="center bottom"
           />
         ) : (
           <Image
-            src={imageUrls[todo?.imageName]}
+            src={todo ? imageUrls[todo.imageName] : imageUrls.towerRed}
             width={props.width}
             height={props.width * 2 * mapDimensions.sqrt1over3}
             priority
-            quality={100}
+            // quality={100}
             // objectPosition="center bottom"
           />
         )}

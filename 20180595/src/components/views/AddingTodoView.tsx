@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   TextField,
-  Typography,
   Grid,
   Select,
   MenuItem,
@@ -16,6 +15,7 @@ import React, { useState } from "react";
 import { useStores } from "../../hooks";
 import Image from "next/image";
 import { imageUrls, mapDimensions } from "../../constants";
+import { Mode } from "../../stores";
 
 const AddingTodoView = observer(function AddingTodoView() {
   const { cells, ui, todos } = useStores();
@@ -99,6 +99,7 @@ const AddingTodoView = observer(function AddingTodoView() {
             let todoId = uuidv4();
             cells.addTodo(cellId, todoId);
             todos.addTodo(name, todoId, imageName, cellId);
+            ui.setMode(Mode.Selected);
           }}
         >
           Add Todo
