@@ -144,7 +144,7 @@ const TodoSelectedView = observer(function TodoSelectedView({
             <ListItemText primary={todo.name} />
           </ListItem>
         </List>
-        <Grid container justify="flex-start">
+        <Grid container justify="center">
           <Image
             src={todo ? imageUrls[todo.imageName] : imageUrls.towerRed}
             width={120}

@@ -100,11 +100,12 @@ export class UIStore {
   @action stopTimer() {
     clearInterval(this.timer);
 
-    this.select(this.timerOnCell);
-    console.log(this.timerOnCell);
+    console.log("timer On", this.timerOnCell);
 
     this.rootStore.cellStore.stopTimer(this.timerOnCell);
-    this.mode = Mode.Selected;
+
+    this.select(this.timerOnCell);
+    this.mode = Mode.AddingTimer;
   }
 
   @action decreaseTimer(cellId: string) {
