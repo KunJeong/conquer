@@ -4,6 +4,7 @@ import { enableStaticRendering } from "mobx-react-lite";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { RootStore } from "./RootStore";
+import gsap from "gsap";
 // eslint-disable-next-line react-hooks/rules-of-hooks
 
 enableStaticRendering(typeof window === "undefined");
@@ -17,6 +18,8 @@ export class Todo {
   @observable completed: boolean = false;
   @observable name: string;
   @observable imageName: string = null;
+  @observable completedOpacity: number = 0;
+  @observable incompleteOpacity: number = 1;
 
   constructor(
     store: TodoStore,
@@ -32,6 +35,8 @@ export class Todo {
     this.name = name;
     this.imageName = imageName;
     this.completed = completed;
+    this.completedOpacity = completed ? 1 : 0;
+    this.incompleteOpacity = completed ? 0 : 1;
     this.onCell = onCell;
     makeObservable(this);
     console.log(`id:${id}`);
@@ -58,6 +63,20 @@ export class Todo {
 
   @action async setComplete(completed: boolean) {
     this.completed = completed;
+    const target = completed ? 1 : 0;
+    gsap.to(this, {
+      completedOpacity: target,
+      snap: { completedOpacity: 0.05 },
+      duration: 0.3,
+      ease: completed ? "power2" : "power2.in",
+    });
+    gsap.to(this, {
+      incompleteOpacity: 1 - target,
+      snap: { incompleteOpacity: 0.05 },
+      duration: 0.3,
+      ease: completed ? "power2.in" : "power2",
+    });
+
     this.modifyToServer({ completed: this.completed });
   }
 
@@ -120,9 +139,14 @@ export class TodoStore {
     this._deleteTodosAndSave().then(() => this.getTodos());
   }
 
-  @action getTodos() {
-    axios
+  @action async getTodos() {
+    return await axios
       .get("http://localhost:3000/todos")
+
+      // .then((res) => {
+      //   return res;
+      // });
+
       .then((response) => {
         console.log(response);
         let newTodos = response.data.todos.map((todo) => {
@@ -138,8 +162,9 @@ export class TodoStore {
         });
         console.log(newTodos);
         this.todos = newTodos;
+        return response;
       })
-      .catch(function (error) {
+      .catch((error) => {
         if (error.response) {
           console.log("error1");
         } else if (error.request) {

@@ -49,7 +49,7 @@ const CellView = observer(function _CellView({
   cell,
   ...props
 }: CellViewProps) {
-  const { ui, cells } = useStores();
+  const { ui, cells, todos } = useStores();
 
   const onClick = () => {
     console.log(`clicked ${cell.id}`);
@@ -88,18 +88,23 @@ const CellView = observer(function _CellView({
         <TimerCell {...props} onClick={onClick}></TimerCell>
       </div>
     );
+  else if (
+    cell.type == CellType.Todo &&
+    todos.todoById(cell.hasElement) === undefined
+  )
+    return (
+      <div className={classes.cell}>
+        <GrassCell {...props} onClick={onClick}></GrassCell>
+      </div>
+    );
   else if (cell.type == CellType.Todo)
     return (
       <div className={classes.cell}>
-        {/* <div
-          style={{
-            // height: props.width * mapDimensions.sqrt1over3,
-            bottom: "0px",
-            backgroundColor: "#ffffff",
-          }}
-        > */}
-        <TodoCell {...props} onClick={onClick} cell={cell}></TodoCell>
-        {/* </div> */}
+        <TodoCell
+          {...props}
+          onClick={onClick}
+          todo={todos.todoById(cell.hasElement)}
+        ></TodoCell>
       </div>
     );
 });

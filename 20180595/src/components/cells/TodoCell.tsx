@@ -1,14 +1,17 @@
 //@ts-check
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Box } from "@material-ui/core";
+import { Typography, Box, duration } from "@material-ui/core";
 import Rhombus from "../Rhombus";
-import { observer } from "mobx-react-lite";
+import { Observer, observer } from "mobx-react-lite";
 import { useStores } from "../../hooks";
-import { Cell } from "../../stores";
+import { Cell, Todo } from "../../stores";
 import { imageUrls, mapColors, mapDimensions } from "../../constants";
 import { useState } from "react";
 import Image from "next/image";
+import gsap from "gsap";
+import { useEffect } from "react";
+import { observable } from "mobx";
 
 const sqrt1over3 = 0.57735;
 
@@ -39,10 +42,6 @@ const useStyles = makeStyles({
     display: "block",
     color: "#ffffff",
   }),
-  image: {
-    position: "absolute",
-    bottom: "0%",
-  },
   rhombus: ({
     selected,
     editing,
@@ -69,22 +68,63 @@ const useStyles = makeStyles({
 
 interface TodoCellProps {
   width: number;
-  cell: Cell;
+  // cell: Cell;
+  todo: Todo;
   selected: boolean;
   editing: boolean;
   [rest: string]: any;
 }
 
+class Opacity {
+  @observable completed: number;
+  @observable incomplete: number;
+  constructor(completed: boolean) {
+    console.log("starting");
+    if (completed) {
+      this.completed = 0;
+      gsap.fromTo(
+        this,
+        {
+          completed: 0,
+          incomplete: 1,
+        },
+        {
+          completed: 1,
+          incomplete: 0,
+          snap: {
+            completed: 0.05,
+            incomplete: 0.05,
+          },
+        }
+      );
+    } else {
+      gsap.fromTo(
+        this,
+        {
+          completed: 1,
+          incomplete: 0,
+        },
+        {
+          completed: 0,
+          incomplete: 1,
+          snap: {
+            completed: 0.05,
+            incomplete: 0.05,
+          },
+        }
+      );
+    }
+  }
+}
+
 const TodoCell = observer(function TodoCell({
-  cell,
+  todo,
   selected,
   ...props
 }: TodoCellProps) {
-  const { todos } = useStores();
   const classes = useStyles({ selected, ...props });
   const [hover, setHover] = useState(false);
-  const todo = todos.todoById(cell.hasElement);
-  console.log(`cell:${cell.id}`);
+
   return (
     <div>
       <Rhombus
@@ -96,34 +136,42 @@ const TodoCell = observer(function TodoCell({
         {hover || selected ? (
           <Typography className={classes.text}>
             {/* {`todos:${todos.todos}`} */}
-            {todos.todoById(cell.hasElement)?.name}
+            {todo.name}
           </Typography>
         ) : (
           <Box></Box>
         )}
       </Rhombus>
-      <div style={{ position: "absolute", bottom: 0 }}>
-        {todo?.completed ? (
-          <Image
-            className={classes.image}
-            src={
-              todo
-                ? imageUrls[todo.imageName + "Completed"]
-                : imageUrls.towerRed
-            }
-            width={props.width}
-            height={props.width * 2 * mapDimensions.sqrt1over3}
-            priority
-          />
-        ) : (
-          <Image
-            src={todo ? imageUrls[todo.imageName] : imageUrls.towerRed}
-            width={props.width}
-            height={props.width * 2 * mapDimensions.sqrt1over3}
-            priority
-          />
-        )}
-      </div>
+      <Box
+        style={{
+          position: "absolute",
+          bottom: 0,
+          opacity: todo.completedOpacity,
+        }}
+      >
+        <Image
+          src={
+            todo ? imageUrls[todo.imageName + "Completed"] : imageUrls.towerRed
+          }
+          width={props.width}
+          height={props.width * 2 * mapDimensions.sqrt1over3}
+          priority
+        />
+      </Box>
+      <Box
+        style={{
+          position: "absolute",
+          bottom: 0,
+          opacity: todo.incompleteOpacity,
+        }}
+      >
+        <Image
+          src={todo ? imageUrls[todo.imageName] : imageUrls.towerRed}
+          width={props.width}
+          height={props.width * 2 * mapDimensions.sqrt1over3}
+          priority
+        />
+      </Box>
     </div>
   );
 });

@@ -147,8 +147,8 @@ const TodoSelectedView = observer(function TodoSelectedView({
         <Grid container justify="center">
           <Image
             src={todo ? imageUrls[todo.imageName] : imageUrls.towerRed}
-            width={120}
-            height={120 * 2 * mapDimensions.sqrt1over3}
+            width={150}
+            height={150 * 2 * mapDimensions.sqrt1over3}
             priority
           />
         </Grid>
