@@ -56,7 +56,7 @@ const TodoSelectedView = observer(function TodoSelectedView({
     setIsEditing(false);
     console.log(name, imageName);
     todo.modify({ name, imageName });
-    todo.modifyToServer({ name, imageName }).then((res) => console.log(res));
+    todo.modifyToServer({ name, imageName });
   };
   if (isEditing)
     return (

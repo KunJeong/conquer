@@ -14,10 +14,6 @@ const useStyles = makeStyles({
     // ...props.style,
     fontSize: 30,
   }),
-  paper: {
-    padding: "20px",
-    textAlign: "center",
-  },
 });
 
 const FocusView = observer(function FocusView() {

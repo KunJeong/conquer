@@ -8,7 +8,7 @@ const mapColors = {
   GRASS_EDITING: "#29cc57",
   TODO: "#F92B2B",
   TODO_SELECTED: "#F76161",
-  TODO_EDITING: "#A51E1E",
+  TODO_EDITING: "#bf2424",
 };
 
 const mapDimensions = {

@@ -11,6 +11,7 @@ import {
   SelectedView,
   AddingTodoView,
   AddingTimerView,
+  EditView,
 } from "./views";
 
 const useStyles = makeStyles({
@@ -53,7 +54,7 @@ const Inspector = observer(function Inspector(props: InspectorProps) {
       case Mode.AddingTimer:
         return <AddingTimerView />;
       case Mode.Edit:
-        return <Fragment />;
+        return <EditView />;
     }
   };
   return (
