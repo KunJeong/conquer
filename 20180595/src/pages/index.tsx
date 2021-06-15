@@ -5,10 +5,9 @@ import { observer } from "mobx-react-lite";
 import { autorun, toJS } from "mobx";
 import { useStores } from "../hooks";
 import { useEffect } from "react";
-import { Inspector, Map } from "../components";
+import { Inspector, Map, MapControls } from "../components";
 import { mapColors } from "../constants";
 import { Mode } from "../stores";
-import MapControls from "../components/MapControls";
 
 const Index = observer(function Index() {
   const { todos, cells, ui } = useStores();
@@ -40,17 +39,6 @@ const Index = observer(function Index() {
           right: "16px",
         }}
       />
-      {/* <Box
-        style={{
-          zIndex: 400,
-          width: 10,
-          height: 10,
-          backgroundColor: "#ffffff",
-          position: "absolute",
-          right: "50vw",
-          top: "50vh",
-        }}
-      /> */}
       <Map />
     </Box>
   );

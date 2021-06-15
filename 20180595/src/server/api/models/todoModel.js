@@ -14,10 +14,10 @@ const TodoSchema = Schema({
     default: false,
   },
   name: String,
-  // imageName: {
-  //   type: String,
-  //   enum: ["Tower"],
-  // },
+  imageName: {
+    type: String,
+    enum: ["Tower"],
+  },
 });
 
 const Todo = mongoose.model("Todo", TodoSchema);

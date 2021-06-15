@@ -8,6 +8,7 @@ exports.addTodo = function (req, res) {
   todo.name = req.body.name;
   todo._id = req.body.id;
   todo.onCell = req.body.onCell;
+  todo.imageName = req.body.imageName;
   console.log(`title: ${todo.name}, id: ${todo.id}`);
   todo.save(function (err) {
     if (err) {
@@ -27,6 +28,7 @@ exports.editTodo = function (req, res) {
     if (req.body.name !== undefined) todo.name = req.body.name;
     if (req.body.completed !== undefined) todo.completed = req.body.completed;
     if (req.body.onCell) todo.onCell = req.body.onCell;
+    if (req.body.imageName) todo.onCell = req.body.onCell;
     todo.save(function (err) {
       if (err) {
         console.error(err);

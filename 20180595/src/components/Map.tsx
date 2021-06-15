@@ -12,23 +12,18 @@ const Map = observer(function _Map() {
     <Draggable
       position={{ x: 0, y: 0 }}
       onStart={(e, data) => {
-        console.log(data.x, data.y);
         ui.saveMouse(data.x, data.y);
       }}
       onStop={(e, data) => {
-        console.log(data.x, data.y);
         ui.panMap(data.x, data.y);
       }}
     >
       <Box
         component="span"
         display="block"
-        // height={1}
         style={{
           height: "100vh",
           width: "100vw",
-          // backgroundColor: "#ffffff",
-          // overflow: "hidden",
           willChange: "transform",
         }}
         onClick={() => {
@@ -39,7 +34,6 @@ const Map = observer(function _Map() {
           component="span"
           display="block"
           style={{
-            // backgroundColor: "#aaaaaa",
             position: "relative",
             left: ui.offsetX,
             top: `calc(${ui.offsetY}px + 50%)`,
@@ -56,8 +50,6 @@ const Map = observer(function _Map() {
             }}
           >
             <IsometricGrid
-              // width={600}
-              // height={600}
               childWidth={160}
               spacing={5}
               cells={cells.sortedCells}

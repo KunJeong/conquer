@@ -76,3 +76,4 @@ const ListView = observer(function ListView() {
 });
 
 export default ListView;
+export { TodoRow };

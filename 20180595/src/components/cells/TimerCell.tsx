@@ -26,6 +26,7 @@ const useStyles = makeStyles({
   rhombus: {
     // background: `linear-gradient(45deg, #ddef77, 40%, #ddef77, 40%, #f3f3f3)`,
     borderWidth: "0px",
+    borderRadius: "15px",
   },
 });
 

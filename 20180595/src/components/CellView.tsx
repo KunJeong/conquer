@@ -50,12 +50,6 @@ const CellView = observer(function _CellView({
   ...props
 }: CellViewProps) {
   const { ui, cells } = useStores();
-  // const selectedCell = cells.cellById(ui.selectedCell);
-
-  // const onLongPress = () => {
-  //   console.log(`longpressed`);
-  //   ui.setMode(Mode.Edit);
-  // };
 
   const onClick = () => {
     console.log(`clicked ${cell.id}`);
@@ -66,15 +60,8 @@ const CellView = observer(function _CellView({
     } else {
       ui.select(cell.id);
     }
-    // console.log(
-    //   `selected from ${i}, ${j}: ${(i - minI) * jSize + j - minJ + 1}`
-    // );
-    // animationRef.current.play();
-    // if(props.onClickCell) props.onClickCell(i, j);
-    // }
   };
 
-  // console.log(`selected: ${ui.selection}, index: ${props.index}`);
   const classes = useStyles({
     x: cell.x,
     y: cell.y,

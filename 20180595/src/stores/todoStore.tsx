@@ -16,11 +16,13 @@ export class Todo {
   onCell: string = null;
   @observable completed: boolean = false;
   @observable name: string;
+  @observable imageName: string = null;
 
   constructor(
     store: TodoStore,
     name: string = "New Todo",
     completed: boolean = false,
+    imageName: string,
     save: boolean = true,
     onCell = null,
     id = uuidv4()
@@ -28,6 +30,7 @@ export class Todo {
     this.store = store;
     this.id = id;
     this.name = name;
+    this.imageName = imageName;
     this.completed = completed;
     this.onCell = onCell;
     makeObservable(this);
@@ -119,6 +122,7 @@ export class TodoStore {
             this,
             todo.name,
             todo.completed,
+            todo.imageName,
             false,
             todo.onCell,
             todo._id
@@ -138,8 +142,8 @@ export class TodoStore {
       });
   }
 
-  @action addTodo(name: string, id: string, onCell: string) {
-    let todo = new Todo(this, name, false, true, onCell, id);
+  @action addTodo(name: string, id: string, imageName: string, onCell: string) {
+    let todo = new Todo(this, name, false, imageName, true, onCell, id);
     this.todos.push(todo);
   }
 

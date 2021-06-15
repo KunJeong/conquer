@@ -12,7 +12,6 @@ const SelectedView = observer(function SelectedView({
   cell,
   ...props
 }: SelectedViewProps) {
-  console.log(cell.id);
   const { todos } = useStores();
 
   const selectedView = (cell: Cell) => {

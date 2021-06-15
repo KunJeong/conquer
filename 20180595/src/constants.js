@@ -4,11 +4,11 @@ const mapColors = {
   ADD_SELECTED: "#e4e8ed",
   BORDER_EDITING: "#e85220",
   GRASS: "#ddef77",
-  GRASS_SELECTED: "#eeff99",
+  GRASS_SELECTED: "#eafa8a",
   GRASS_EDITING: "#29cc57",
   TODO: "#F92B2B",
   TODO_SELECTED: "#F76161",
-  TODO_EDITING: "#DD1717",
+  TODO_EDITING: "#A51E1E",
 };
 
 const mapDimensions = {
@@ -18,4 +18,15 @@ const mapDimensions = {
   sqrt1over3: 0.57735,
 };
 
-export { mapColors, mapDimensions };
+const imageUrls = {
+  towerRed: "/tower-red.png",
+  towerBlue: "/tower-blue.png",
+  towerDarkRed: "/tower-dark-red.png",
+  towerDarkBlue: "/tower-dark-blue.png",
+  towerRedCompleted: "/tower-red-completed.png",
+  towerBlueCompleted: "/tower-blue-completed.png",
+  towerDarkRedCompleted: "/tower-dark-red-completed.png",
+  towerDarkBlueCompleted: "/tower-dark-blue-completed.png",
+};
+
+export { mapColors, mapDimensions, imageUrls };

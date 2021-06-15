@@ -31,10 +31,10 @@ const useStyles = makeStyles({
     [rest: string]: any;
   }) => ({
     display: editing ? "none" : "block",
-    borderRadius: selected ? "10px" : "",
+    borderRadius: "15px",
     backgroundColor: selected && !editing ? mapColors.ADD_SELECTED : "",
     "&:hover": {
-      borderRadius: "10px",
+      borderRadius: "15px",
       backgroundColor: mapColors.ADD_HOVER,
     },
     "&:hover + $plus": {

@@ -6,7 +6,7 @@ import Rhombus from "../Rhombus";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../hooks";
 import { Cell } from "../../stores";
-import { mapColors, mapDimensions } from "../../constants";
+import { imageUrls, mapColors, mapDimensions } from "../../constants";
 import { useState } from "react";
 import Image from "next/image";
 
@@ -112,18 +112,20 @@ const TodoCell = observer(function TodoCell({
         {todo?.completed ? (
           <Image
             className={classes.image}
-            src="/tower-red-complete.png"
+            src={imageUrls[todo?.imageName + "Completed"]}
             width={props.width}
             height={props.width * 2 * mapDimensions.sqrt1over3}
             priority
+            quality={100}
             // objectPosition="center bottom"
           />
         ) : (
           <Image
-            src="/tower-red.png"
+            src={imageUrls[todo?.imageName]}
             width={props.width}
             height={props.width * 2 * mapDimensions.sqrt1over3}
             priority
+            quality={100}
             // objectPosition="center bottom"
           />
         )}

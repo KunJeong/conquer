@@ -1,18 +1,8 @@
 //@ts-check
-import {
-  action,
-  observable,
-  computed,
-  makeObservable,
-  autorun,
-  runInAction,
-} from "mobx";
+import { action, observable, computed, makeObservable, autorun } from "mobx";
 import { enableStaticRendering } from "mobx-react-lite";
 import { mapDimensions } from "../constants";
-import { Cell, CellStore } from "./CellStore";
 import gsap from "gsap";
-
-import anime from "animejs";
 import { RootStore } from "./RootStore";
 // eslint-disable-next-line react-hooks/rules-of-hooks
 enableStaticRendering(typeof window === "undefined");
@@ -37,8 +27,8 @@ export class UIStore {
   @observable offsetX = 0;
   @observable offsetY = 0;
 
-  @observable mouseX: number = 0;
-  @observable mouseY: number = 0;
+  mouseX: number = 0;
+  mouseY: number = 0;
 
   //selection
   @observable selectedCell: string = undefined;
@@ -110,6 +100,7 @@ export class UIStore {
   @action panMap(x: number, y: number) {
     this.offsetX += x - this.mouseX;
     this.offsetY += y - this.mouseY;
+    console.log("pan to:", this.offsetX, this.offsetY);
   }
 
   @action zoom(out: boolean) {
@@ -133,6 +124,7 @@ export class UIStore {
         duration: 0.01,
       });
     }
+    console.log("zooming", this.width, this.offsetX, this.offsetY);
   }
 
   @action saveMouse(x: number, y: number) {
@@ -152,5 +144,6 @@ export class UIStore {
       offsetY: -y * yFactor,
       duration: 0.4,
     });
+    console.log("pan to:", this.offsetX, this.offsetY);
   }
 }

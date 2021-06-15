@@ -1,10 +1,13 @@
 import {
   Box,
   Button,
-  makeStyles,
   TextField,
   Typography,
   Grid,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { v4 as uuidv4 } from "uuid";
@@ -12,46 +15,90 @@ import { observer } from "mobx-react-lite";
 import React, { useState } from "react";
 import { useStores } from "../../hooks";
 import Image from "next/image";
-import { mapDimensions } from "../../constants";
+import { imageUrls, mapDimensions } from "../../constants";
 
 const AddingTodoView = observer(function AddingTodoView() {
   const { cells, ui, todos } = useStores();
   const [name, setName] = useState("");
+  const [imageName, setImageName] = useState("towerRed");
 
+  const onChangeImage = (e) => {
+    setImageName(e.target.value);
+  };
   return (
     <Box component="span" display="block">
       <Grid container justify="flex-start">
-        <TextField
-          id="outlined-textarea"
-          label="Todo Name"
-          variant="outlined"
-          value={name}
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-        ></TextField>
+        <Grid item container justify="flex-start" xs={12}>
+          <TextField
+            id="outlined-textarea"
+            label="Title"
+            variant="outlined"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          ></TextField>
+        </Grid>
+        {/* <Typography variant="caption">Image</Typography> */}
+        <Grid item container justify="flex-start" xs={12}>
+          <FormControl>
+            <InputLabel>Image</InputLabel>
+            <Select value={imageName} onChange={onChangeImage}>
+              {/* <MenuItem value="">
+                <em>None</em>
+              </MenuItem> */}
+              <MenuItem value={"towerRed"}>
+                <Image
+                  src={imageUrls.towerRed}
+                  width={120}
+                  height={120 * 2 * mapDimensions.sqrt1over3}
+                  priority
+                />
+              </MenuItem>
+              <MenuItem value={"towerBlue"}>
+                <Image
+                  src={imageUrls.towerBlue}
+                  width={120}
+                  height={120 * 2 * mapDimensions.sqrt1over3}
+                  priority
+                />
+              </MenuItem>
+              <MenuItem value={"towerDarkRed"}>
+                <Image
+                  src={imageUrls.towerDarkRed}
+                  width={120}
+                  height={120 * 2 * mapDimensions.sqrt1over3}
+                  priority
+                />
+              </MenuItem>
+              <MenuItem value={"towerDarkBlue"}>
+                <Image
+                  src={imageUrls.towerDarkBlue}
+                  width={120}
+                  height={120 * 2 * mapDimensions.sqrt1over3}
+                  priority
+                />
+              </MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
       </Grid>
-      <Grid container>
-        <Typography variant="caption">Image</Typography>
+      {/* <Grid container>
         <Image
-          src="/tower-red.png"
+          src={imageUrls[imageName]}
           width={120}
           height={120 * 2 * mapDimensions.sqrt1over3}
           priority
-          // objectPosition="center bottom"
         />
-      </Grid>
+      </Grid> */}
       <Grid container justify="flex-end">
         <Button
           startIcon={<AddIcon />}
           onClick={() => {
-            // ui.setMode(Mode.AddingTodo);
-            // let name = "item" + todos.count;
             let cellId = ui.selectedCell;
-            // console.log(`found id: ${cellId}`);
             let todoId = uuidv4();
             cells.addTodo(cellId, todoId);
-            todos.addTodo(name, todoId, cellId);
+            todos.addTodo(name, todoId, imageName, cellId);
           }}
         >
           Add Todo
