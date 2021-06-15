@@ -1,4 +1,6 @@
-import { Box, makeStyles, Typography } from "@material-ui/core";
+import { Box, makeStyles, Typography, Grid, Button } from "@material-ui/core";
+import { red } from "@material-ui/core/colors";
+import { Add, Cancel, Stop } from "@material-ui/icons";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { useStores } from "../../hooks";
@@ -37,6 +39,17 @@ const FocusView = observer(function FocusView() {
       >
         {seconds}
       </Typography>
+      <Grid container justify="flex-end">
+        <Button
+          startIcon={<Cancel />}
+          onClick={() => {
+            ui.stopTimer();
+          }}
+          color={red[100]}
+        >
+          Cancel Timer
+        </Button>
+      </Grid>
     </Box>
   );
 });

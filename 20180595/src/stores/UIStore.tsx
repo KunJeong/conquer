@@ -27,6 +27,9 @@ export class UIStore {
   @observable offsetX = 0;
   @observable offsetY = 0;
 
+  timer: NodeJS.Timeout;
+  timerOnCell: string;
+
   mouseX: number = 0;
   mouseY: number = 0;
 
@@ -75,16 +78,35 @@ export class UIStore {
   }
 
   //timer
-  @action startTimer(minutes: number) {
+  @action startTimer(minutes: number, cellId: string) {
     this.secondsRemaining = minutes * 60;
     this.secondsTotal = minutes * 60;
+    this.timerOnCell = cellId;
     this.mode = Mode.Focus;
+  }
+  @action runTimer(cellId: string) {
+    this.timer = setInterval(() => {
+      this.decreaseTimer(cellId);
+    }, 1000);
+  }
+
+  @action stopTimer() {
+    clearInterval(this.timer);
+
+    this.select(this.timerOnCell);
+    this.rootStore.cellStore.stopTimer(this.timerOnCell);
+    this.mode = Mode.Selected;
   }
 
   @action decreaseTimer(cellId: string) {
+    const cell = this.rootStore.cellStore.cellById(cellId);
+
     this.secondsRemaining -= 1;
     if (this.secondsRemaining === 0) {
+      clearInterval(this.timer);
       this.select(cellId);
+      this.panToCell(cellId);
+      this.rootStore.cellStore.addCell(cell.i, cell.j);
       this.mode = Mode.Selected;
     }
   }

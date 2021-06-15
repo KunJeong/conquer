@@ -239,6 +239,10 @@ export class CellStore {
     this.modifyCellById(id, { type: CellType.Timer });
   }
 
+  @action stopTimer(id: string) {
+    this.modifyCellById(id, { type: CellType.Add });
+  }
+
   @action _addCellAndSave(i: number, j: number, type: CellType) {
     const cell = new Cell(this, i, j, type);
 

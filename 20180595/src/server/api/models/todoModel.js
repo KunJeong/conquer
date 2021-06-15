@@ -16,7 +16,8 @@ const TodoSchema = Schema({
   name: String,
   imageName: {
     type: String,
-    enum: ["Tower"],
+    default: "towerRed",
+    enum: ["towerRed", "towerBlue", "towerDarkRed", "towerDarkBlue"],
   },
 });
 

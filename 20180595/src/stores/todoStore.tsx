@@ -37,7 +37,7 @@ export class Todo {
     console.log(`id:${id}`);
     if (save)
       axios
-        .post("http://localhost:3000/todos", { id, name, onCell })
+        .post("http://localhost:3000/todos", { id, name, onCell, imageName })
         .then((response) => {
           console.log(response.data.todo);
         })
