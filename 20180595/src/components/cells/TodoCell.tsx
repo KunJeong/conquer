@@ -40,6 +40,10 @@ const useStyles = makeStyles({
     display: "block",
     color: "#ffffff",
   }),
+  image: {
+    position: "absolute",
+    bottom: "0%",
+  },
   rhombus: ({
     selected,
     editing,
@@ -99,32 +103,32 @@ const TodoCell = observer(function TodoCell({
           <Box></Box>
         )}
       </Rhombus>
-
       {/* <img
         style={{ zIndex: 10000 }}
         src="/tower-red.png"
         width={props.width}
         height={props.width * 2 * mapDimensions.sqrt1over3}
       /> */}
-      {/* <div style={{ backgroundColor: "#ffffff" }}> */}
-      {todo.completed ? (
-        <Image
-          src="/tower-red-complete.png"
-          width={props.width}
-          height={props.width * 2 * mapDimensions.sqrt1over3}
-          priority
-          // objectPosition="center bottom"
-        ></Image>
-      ) : (
-        <Image
-          src="/tower-red.png"
-          width={props.width}
-          height={props.width * 2 * mapDimensions.sqrt1over3}
-          priority
-          // objectPosition="center bottom"
-        ></Image>
-      )}
-      {/* </div> */}
+      <div style={{ position: "absolute", bottom: 0 }}>
+        {todo.completed ? (
+          <Image
+            className={classes.image}
+            src="/tower-red-complete.png"
+            width={props.width}
+            height={props.width * 2 * mapDimensions.sqrt1over3}
+            priority
+            // objectPosition="center bottom"
+          />
+        ) : (
+          <Image
+            src="/tower-red.png"
+            width={props.width}
+            height={props.width * 2 * mapDimensions.sqrt1over3}
+            priority
+            // objectPosition="center bottom"
+          />
+        )}
+      </div>
     </div>
   );
 });

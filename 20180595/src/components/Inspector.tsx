@@ -1,9 +1,9 @@
 //@ts-check
-import { Box, Paper, Typography, TextField, Button } from "@material-ui/core";
+import { Box, Paper, Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import { Mode } from "../stores";
 import {
   FocusView,
@@ -32,20 +32,15 @@ const useStyles = makeStyles({
   },
 });
 
-const Inspector = observer(function Inspector() {
+interface InspectorProps {
+  [rest: string]: any;
+}
+
+const Inspector = observer(function Inspector(props: InspectorProps) {
   const classes = useStyles();
   const { todos, cells, ui } = useStores();
-  const seconds = new Date(ui.secondsRemaining * 1000)
-    .toISOString()
-    .substr(11, 8);
 
-  // useEffect(() => {
-  //   todos.getTodos();
-  // }, []);
   const view = (mode: Mode) => {
-    // console.log(`@inspector - selected: ${ui.selectedCell}`);
-    // console.log(cells.cells);
-    // console.log(`@inspector - cell: ${cells.cellById(ui.selectedCell)}`);
     switch (mode) {
       case Mode.Focus:
         return <FocusView />;
@@ -62,11 +57,10 @@ const Inspector = observer(function Inspector() {
     }
   };
   return (
-    <Box>
-      <Paper className={classes.paper} elevation={3}>
+    <Box {...props}>
+      <Paper className={classes.paper} elevation={2}>
         {view(ui.mode)}
       </Paper>
-
       <Button
         onClick={() => {
           cells.initStore();

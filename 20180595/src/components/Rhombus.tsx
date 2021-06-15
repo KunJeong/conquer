@@ -6,7 +6,7 @@ import { mapDimensions } from "../constants";
 const useStyles = makeStyles({
   rhombus: ({ width, ...props }: { width: number; [rest: string]: any }) => ({
     ...props.style,
-    // backgroundColor: props.backgroundColor,
+    // backgroundColor: "#ffffff",
     // boxSizing: "border-box",
     position: "absolute",
     pointerEvents: "visibleFill",

@@ -11,7 +11,8 @@ import { v4 as uuidv4 } from "uuid";
 import { observer } from "mobx-react-lite";
 import React, { useState } from "react";
 import { useStores } from "../../hooks";
-import { Mode } from "../../stores/UIStore";
+import Image from "next/image";
+import { mapDimensions } from "../../constants";
 
 const AddingTodoView = observer(function AddingTodoView() {
   const { cells, ui, todos } = useStores();
@@ -29,6 +30,16 @@ const AddingTodoView = observer(function AddingTodoView() {
             setName(e.target.value);
           }}
         ></TextField>
+      </Grid>
+      <Grid container>
+        <Typography variant="caption">Image</Typography>
+        <Image
+          src="/tower-red.png"
+          width={120}
+          height={120 * 2 * mapDimensions.sqrt1over3}
+          priority
+          // objectPosition="center bottom"
+        />
       </Grid>
       <Grid container justify="flex-end">
         <Button

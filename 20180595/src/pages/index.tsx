@@ -1,11 +1,14 @@
 //@ts-check
-import { Box, Grid } from "@material-ui/core";
+import { Box, Grid, Paper, IconButton } from "@material-ui/core";
+import { Add, Remove, Edit, Done } from "@material-ui/icons";
 import { observer } from "mobx-react-lite";
 import { autorun, toJS } from "mobx";
 import { useStores } from "../hooks";
 import { useEffect } from "react";
 import { Inspector, Map } from "../components";
 import { mapColors } from "../constants";
+import { Mode } from "../stores";
+import MapControls from "../components/MapControls";
 
 const Index = observer(function Index() {
   const { todos, cells, ui } = useStores();
@@ -20,20 +23,18 @@ const Index = observer(function Index() {
 
   return (
     <Box p={2} height="100vh" overflow="hidden" bgcolor={mapColors.BACKGROUND}>
-      <Grid
-        container
-        spacing={2}
-        // alignItems="center"
-        justify="center"
-      >
-        <Grid item xs={4}>
-          {/* <Box m={2}></Box> */}
-          <Inspector />
-        </Grid>
-        <Grid item xs={8} style={{ height: "100vh" }}>
-          <Map />
-        </Grid>
-      </Grid>
+      <Inspector
+        style={{
+          zIndex: 400,
+          position: "absolute",
+          width: "25vw",
+          left: "16px",
+        }}
+      />
+      <MapControls
+        style={{ zIndex: 400, position: "absolute", right: "16px" }}
+      />
+      <Map />
     </Box>
   );
 });
