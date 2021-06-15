@@ -61,6 +61,14 @@ export class Todo {
     this.modifyToServer({ completed: this.completed });
   }
 
+  @action modify(args) {
+    console.log("modify todo", this.id, args);
+    const { completed, name, imageName } = args;
+    if (completed !== undefined) this.completed = completed;
+    if (name) this.name = name;
+    if (imageName) this.imageName = imageName;
+  }
+
   @action async modifyToServer(args) {
     return await axios
       .patch(`http://localhost:3000/todos/${this.id}`, { ...args })

@@ -27,70 +27,62 @@ const AddingTodoView = observer(function AddingTodoView() {
   };
   return (
     <Box component="span" display="block">
-      <Grid container justify="flex-start">
+      <Box mb={2}>
         <Grid item container justify="flex-start" xs={12}>
           <TextField
             id="outlined-textarea"
             label="Title"
-            variant="outlined"
+            // variant="outlined"
             value={name}
             onChange={(e) => {
               setName(e.target.value);
             }}
           ></TextField>
         </Grid>
-        {/* <Typography variant="caption">Image</Typography> */}
-        <Grid item container justify="flex-start" xs={12}>
-          <FormControl>
-            <InputLabel>Image</InputLabel>
-            <Select value={imageName} onChange={onChangeImage}>
-              {/* <MenuItem value="">
-                <em>None</em>
-              </MenuItem> */}
-              <MenuItem value={"towerRed"}>
-                <Image
-                  src={imageUrls.towerRed}
-                  width={120}
-                  height={120 * 2 * mapDimensions.sqrt1over3}
-                  priority
-                />
-              </MenuItem>
-              <MenuItem value={"towerBlue"}>
-                <Image
-                  src={imageUrls.towerBlue}
-                  width={120}
-                  height={120 * 2 * mapDimensions.sqrt1over3}
-                  priority
-                />
-              </MenuItem>
-              <MenuItem value={"towerDarkRed"}>
-                <Image
-                  src={imageUrls.towerDarkRed}
-                  width={120}
-                  height={120 * 2 * mapDimensions.sqrt1over3}
-                  priority
-                />
-              </MenuItem>
-              <MenuItem value={"towerDarkBlue"}>
-                <Image
-                  src={imageUrls.towerDarkBlue}
-                  width={120}
-                  height={120 * 2 * mapDimensions.sqrt1over3}
-                  priority
-                />
-              </MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
+      </Box>
+      <Grid item container justify="flex-start" xs={12}>
+        <FormControl>
+          <InputLabel id="imageSelect">Image</InputLabel>
+          <Select
+            labelId="imageSelect"
+            value={imageName}
+            onChange={onChangeImage}
+          >
+            <MenuItem value={"towerRed"}>
+              <Image
+                src={imageUrls.towerRed}
+                width={120}
+                height={120 * 2 * mapDimensions.sqrt1over3}
+                priority
+              />
+            </MenuItem>
+            <MenuItem value={"towerBlue"}>
+              <Image
+                src={imageUrls.towerBlue}
+                width={120}
+                height={120 * 2 * mapDimensions.sqrt1over3}
+                priority
+              />
+            </MenuItem>
+            <MenuItem value={"towerDarkRed"}>
+              <Image
+                src={imageUrls.towerDarkRed}
+                width={120}
+                height={120 * 2 * mapDimensions.sqrt1over3}
+                priority
+              />
+            </MenuItem>
+            <MenuItem value={"towerDarkBlue"}>
+              <Image
+                src={imageUrls.towerDarkBlue}
+                width={120}
+                height={120 * 2 * mapDimensions.sqrt1over3}
+                priority
+              />
+            </MenuItem>
+          </Select>
+        </FormControl>
       </Grid>
-      {/* <Grid container>
-        <Image
-          src={imageUrls[imageName]}
-          width={120}
-          height={120 * 2 * mapDimensions.sqrt1over3}
-          priority
-        />
-      </Grid> */}
       <Grid container justify="flex-end">
         <Button
           startIcon={<AddIcon />}

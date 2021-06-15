@@ -25,8 +25,8 @@ const AddingTimerView = observer(function AddingTimerView() {
     <Box component="span" display="block">
       <Grid container justify="flex-start">
         <FormControl>
-          <InputLabel>Focus Length</InputLabel>
-          <Select value={time} onChange={onChange}>
+          <InputLabel id="timerSelect">Focus Length</InputLabel>
+          <Select labelId="timerSelect" value={time} onChange={onChange}>
             <MenuItem value={0.1}>Six Seconds</MenuItem>
             <MenuItem value={15}>Fifteen Minutes</MenuItem>
             <MenuItem value={30}>Thirty Minutes</MenuItem>

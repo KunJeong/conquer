@@ -36,6 +36,11 @@ const TodoRow = observer(function TodoRow({ todo, ...props }: TodoRowProps) {
     ui.panToCell(todo.onCell);
     // ui.panToCell(cells.cellById(todo.onCell).i, cells.cellById(todo.onCell).j);
   };
+
+  const onEdit = () => {
+    ui.select(todo.onCell);
+    ui.setEditing(true);
+  };
   return (
     <ListItem dense button onClick={onClick}>
       <ListItemIcon>
@@ -49,7 +54,7 @@ const TodoRow = observer(function TodoRow({ todo, ...props }: TodoRowProps) {
       </ListItemIcon>
       <ListItemText primary={todo.name} />
       <ListItemSecondaryAction>
-        <IconButton edge="end" aria-label="edit">
+        <IconButton edge="end" aria-label="edit" onClick={onEdit}>
           <Edit />
         </IconButton>
       </ListItemSecondaryAction>

@@ -26,6 +26,7 @@ export class UIStore {
 
   @observable offsetX = 0;
   @observable offsetY = 0;
+  @observable editing = false;
 
   timer: NodeJS.Timeout;
   timerOnCell: string;
@@ -55,6 +56,11 @@ export class UIStore {
     if (this.mode != Mode.Focus && this.mode != Mode.Edit)
       this.mode = Mode.List;
     this.selectedCell = undefined;
+    this.editing = false;
+  }
+
+  @action setEditing(editing: boolean) {
+    this.editing = editing;
   }
 
   @action startPan() {

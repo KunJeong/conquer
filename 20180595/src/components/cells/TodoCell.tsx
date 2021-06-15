@@ -102,12 +102,6 @@ const TodoCell = observer(function TodoCell({
           <Box></Box>
         )}
       </Rhombus>
-      {/* <img
-        style={{ zIndex: 10000 }}
-        src="/tower-red.png"
-        width={props.width}
-        height={props.width * 2 * mapDimensions.sqrt1over3}
-      /> */}
       <div style={{ position: "absolute", bottom: 0 }}>
         {todo?.completed ? (
           <Image
@@ -120,8 +114,6 @@ const TodoCell = observer(function TodoCell({
             width={props.width}
             height={props.width * 2 * mapDimensions.sqrt1over3}
             priority
-            // quality={100}
-            // objectPosition="center bottom"
           />
         ) : (
           <Image
@@ -129,8 +121,6 @@ const TodoCell = observer(function TodoCell({
             width={props.width}
             height={props.width * 2 * mapDimensions.sqrt1over3}
             priority
-            // quality={100}
-            // objectPosition="center bottom"
           />
         )}
       </div>

@@ -12,7 +12,7 @@ const SelectedView = observer(function SelectedView({
   cell,
   ...props
 }: SelectedViewProps) {
-  const { todos } = useStores();
+  const { ui, todos } = useStores();
 
   const selectedView = (cell: Cell) => {
     switch (cell.type) {
@@ -20,7 +20,11 @@ const SelectedView = observer(function SelectedView({
         return <GrassSelectedView {...props} />;
       case CellType.Todo:
         return (
-          <TodoSelectedView {...props} todo={todos.todoById(cell.hasElement)} />
+          <TodoSelectedView
+            {...props}
+            editing={ui.editing}
+            todo={todos.todoById(cell.hasElement)}
+          />
         );
     }
   };

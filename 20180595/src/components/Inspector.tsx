@@ -63,6 +63,7 @@ const Inspector = observer(function Inspector(props: InspectorProps) {
       </Paper>
       <Button
         onClick={() => {
+          ui.deselect();
           cells.initStore();
           todos.initStore();
         }}
@@ -71,6 +72,7 @@ const Inspector = observer(function Inspector(props: InspectorProps) {
       </Button>
       <Button
         onClick={() => {
+          ui.deselect();
           cells.getCells();
           todos.getTodos();
         }}

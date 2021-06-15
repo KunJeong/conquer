@@ -28,7 +28,7 @@ exports.editTodo = function (req, res) {
     if (req.body.name !== undefined) todo.name = req.body.name;
     if (req.body.completed !== undefined) todo.completed = req.body.completed;
     if (req.body.onCell) todo.onCell = req.body.onCell;
-    if (req.body.imageName) todo.onCell = req.body.onCell;
+    if (req.body.imageName) todo.imageName = req.body.imageName;
     todo.save(function (err) {
       if (err) {
         console.error(err);
