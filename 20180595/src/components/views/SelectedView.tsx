@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import React from "react";
 import { useStores } from "../../hooks";
 import { GrassSelectedView, TodoSelectedView } from "./selectedViews";
-import { Cell, CellType, Mode } from "../../stores";
+import { Cell, CellType } from "../../stores";
 
 interface SelectedViewProps {
   cell: Cell;

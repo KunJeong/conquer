@@ -1,19 +1,12 @@
 //@ts-check
-import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Box, duration } from "@material-ui/core";
+import { Typography, Box } from "@material-ui/core";
 import Rhombus from "./Rhombus";
-import { Observer, observer } from "mobx-react-lite";
-import { useStores } from "../../../hooks";
-import { Cell, Todo } from "../../../stores";
+import { observer } from "mobx-react-lite";
+import { Todo } from "../../../stores";
 import { imageUrls, mapColors, mapDimensions } from "../../../constants";
 import { useState } from "react";
 import Image from "next/image";
-import gsap from "gsap";
-import { useEffect } from "react";
-import { observable } from "mobx";
-
-const sqrt1over3 = 0.57735;
 
 const useStyles = makeStyles({
   text: ({
@@ -68,7 +61,6 @@ const useStyles = makeStyles({
 
 interface TodoCellProps {
   width: number;
-  // cell: Cell;
   todo: Todo;
   selected: boolean;
   editing: boolean;

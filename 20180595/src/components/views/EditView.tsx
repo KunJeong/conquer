@@ -1,7 +1,6 @@
 import { Box, makeStyles, Typography, Grid, Button } from "@material-ui/core";
 import { observer } from "mobx-react-lite";
 import React from "react";
-import { useStores } from "../../hooks";
 
 const useStyles = makeStyles({
   title: {

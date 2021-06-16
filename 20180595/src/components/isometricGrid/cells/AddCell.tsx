@@ -1,5 +1,5 @@
 //@ts-check
-import { makeStyles, Box } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import Rhombus from "./Rhombus";
 import { observer } from "mobx-react-lite";
@@ -24,7 +24,6 @@ const useStyles = makeStyles({
   rhombus: ({
     selected,
     editing,
-    ...props
   }: {
     selected: boolean;
     editing: boolean;

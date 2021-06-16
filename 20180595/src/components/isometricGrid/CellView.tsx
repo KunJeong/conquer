@@ -1,12 +1,10 @@
 //@ts-check
-import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { AddCell, TodoCell, GrassCell, TimerCell } from "./cells";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../hooks";
 import { Mode, Cell, CellType } from "../../stores";
 import { mapDimensions } from "../../constants";
-import Image from "next/image";
 
 const useStyles = makeStyles({
   cell: ({
@@ -21,11 +19,8 @@ const useStyles = makeStyles({
     y: number;
     [rest: string]: any;
   }) => ({
-    // backgroundColor: "#dddddd",
-    // borderStyle: 'solid',
     pointerEvents: "none",
     position: "absolute",
-    // willChange: "transform",
     padding: 0,
     left: `calc(50% + ${width * (x + 1) * -0.5 - x * marginX}px)`,
     bottom: `calc(50% + ${

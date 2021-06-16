@@ -1,12 +1,5 @@
 //@ts-check
-import {
-  action,
-  observable,
-  computed,
-  makeObservable,
-  configure,
-  autorun,
-} from "mobx";
+import { action, observable, computed, makeObservable, autorun } from "mobx";
 import { enableStaticRendering } from "mobx-react-lite";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";

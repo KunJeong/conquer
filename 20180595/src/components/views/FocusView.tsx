@@ -1,19 +1,16 @@
 import { Box, makeStyles, Typography, Grid, Button } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
-import { Add, Cancel, Stop } from "@material-ui/icons";
+import { Cancel } from "@material-ui/icons";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { useStores } from "../../hooks";
 
 const useStyles = makeStyles({
-  title: (props) => ({
-    // ...props.style,
+  title: {
     fontSize: 18,
-  }),
-  seconds: (props) => ({
-    // ...props.style,
+  },
+  seconds: {
     fontSize: 30,
-  }),
+  },
 });
 
 const FocusView = observer(function FocusView() {

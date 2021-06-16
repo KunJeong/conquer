@@ -42,9 +42,6 @@ const Map = observer(function _Map() {
           }}
         >
           <Box
-            // onDrag={(e) => {
-            //   e.stopPropagation();
-            // }}
             onClick={(e) => {
               e.stopPropagation();
             }}

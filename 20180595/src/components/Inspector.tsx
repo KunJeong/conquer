@@ -1,9 +1,9 @@
 //@ts-check
-import { Box, Paper, Button, Grid } from "@material-ui/core";
+import { Box, Paper, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../hooks";
-import React, { Fragment } from "react";
+import React from "react";
 import { Mode } from "../stores";
 import {
   FocusView,
@@ -15,18 +15,15 @@ import {
 } from "./views";
 
 const useStyles = makeStyles({
-  title: (props) => ({
-    // ...props.style,
+  title: {
     fontSize: 18,
-  }),
-  body: (props) => ({
-    // ...props.style,
+  },
+  body: {
     fontSize: 20,
-  }),
-  seconds: (props) => ({
-    // ...props.style,
+  },
+  seconds: {
     fontSize: 30,
-  }),
+  },
   paper: {
     padding: "20px",
     textAlign: "center",
@@ -62,6 +59,7 @@ const Inspector = observer(function Inspector(props: InspectorProps) {
       <Paper className={classes.paper} elevation={2}>
         {view(ui.mode)}
       </Paper>
+      {/* DEBUG */}
       <Button
         color="secondary"
         onClick={() => {

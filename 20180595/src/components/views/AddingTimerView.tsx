@@ -8,14 +8,12 @@ import {
   InputLabel,
 } from "@material-ui/core";
 import { PlayArrow } from "@material-ui/icons";
-import AddIcon from "@material-ui/icons/Add";
 import { observer } from "mobx-react-lite";
 import React, { useState } from "react";
 import { useStores } from "../../hooks";
-import { Mode } from "../../stores/UIStore";
 
 const AddingTimerView = observer(function AddingTimerView() {
-  const { cells, ui, todos } = useStores();
+  const { cells, ui } = useStores();
   const [time, setTime] = useState(0.1);
 
   const onChange = (e) => {

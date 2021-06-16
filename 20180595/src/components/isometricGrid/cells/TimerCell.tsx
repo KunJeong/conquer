@@ -1,10 +1,8 @@
 //@ts-check
-import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import { Icon } from "@material-ui/core";
 import HourglassIcon from "@material-ui/icons/HourglassEmptyRounded";
 import Rhombus from "./Rhombus";
-import Anime, { anime } from "react-animejs-wrapper";
+import Anime from "react-animejs-wrapper";
 import { observer } from "mobx-react-lite";
 import { useStores } from "../../../hooks";
 import { mapColors } from "../../../constants";

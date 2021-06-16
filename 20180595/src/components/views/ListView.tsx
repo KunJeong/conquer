@@ -10,7 +10,7 @@ import {
   IconButton,
   List,
 } from "@material-ui/core";
-import { Edit, More } from "@material-ui/icons";
+import { Edit } from "@material-ui/icons";
 // import { CommentIcon } from "@material-ui/icons";
 import { observer } from "mobx-react-lite";
 import React from "react";
@@ -18,10 +18,9 @@ import { useStores } from "../../hooks";
 import { Todo } from "../../stores";
 
 const useStyles = makeStyles({
-  title: (props) => ({
-    // ...props.style,
+  title: {
     fontSize: 18,
-  }),
+  },
 });
 
 interface TodoRowProps {

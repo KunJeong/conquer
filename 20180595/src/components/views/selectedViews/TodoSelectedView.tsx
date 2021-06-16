@@ -3,7 +3,6 @@ import {
   Checkbox,
   Grid,
   Button,
-  IconButton,
   TextField,
   FormControl,
   InputLabel,
@@ -13,16 +12,13 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  ListItemSecondaryAction,
 } from "@material-ui/core";
 import { Edit, Save } from "@material-ui/icons";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { Todo } from "../../../stores";
-import { TodoRow } from "../ListView";
 import Image from "next/image";
 import { imageUrls, mapDimensions } from "../../../constants";
-import { useStores } from "../../../hooks";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -35,7 +31,6 @@ interface TodoSelectedViewProps {
 const TodoSelectedView = observer(function TodoSelectedView({
   todo,
   editing = false,
-  ...props
 }: TodoSelectedViewProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("");

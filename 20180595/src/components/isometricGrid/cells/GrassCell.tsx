@@ -1,13 +1,11 @@
 //@ts-check
 import Rhombus from "./Rhombus";
 import { mapColors } from "../../../constants";
-import { useStores } from "../../../hooks";
-import { Mode } from "../../../stores";
 import { observer } from "mobx-react-lite";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
-  rhombus: ({ selected, editing, ...props }: GrassCellProps) => ({
+  rhombus: ({ selected, editing }: GrassCellProps) => ({
     borderStyle: "dashed",
     borderColor: mapColors.BORDER_EDITING,
     borderWidth: editing && selected ? "4px" : "0px",
