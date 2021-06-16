@@ -1,8 +1,8 @@
 //@ts-check
-import Rhombus from "../Rhombus";
-import { mapColors } from "../../constants";
-import { useStores } from "../../hooks";
-import { Mode } from "../../stores";
+import Rhombus from "./Rhombus";
+import { mapColors } from "../../../constants";
+import { useStores } from "../../../hooks";
+import { Mode } from "../../../stores";
 import { observer } from "mobx-react-lite";
 import { makeStyles } from "@material-ui/core";
 

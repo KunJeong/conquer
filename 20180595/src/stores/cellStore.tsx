@@ -10,7 +10,6 @@ import {
 import { enableStaticRendering } from "mobx-react-lite";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
-import { Todo } from "./TodoStore";
 import { RootStore } from "./RootStore";
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -30,7 +29,6 @@ export class Cell {
   id: string = null;
   hasElement: string = null;
   @observable type: CellType;
-  // @observable name: string = "";
   @observable i: number;
   @observable j: number;
 

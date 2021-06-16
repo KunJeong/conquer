@@ -2,9 +2,9 @@
 import CellView from "./CellView";
 import { observer } from "mobx-react-lite";
 import { Box } from "@material-ui/core";
-import { useStores } from "../hooks";
+import { useStores } from "../../hooks";
 import React, { Fragment } from "react";
-import { Cell, Mode } from "../stores";
+import { Cell, Mode } from "../../stores";
 
 interface IsometricGridProps {
   cells: Cell[];
@@ -19,7 +19,7 @@ const IsometricGrid = observer(function _IsometricGrid({
   const { ui } = useStores();
 
   return (
-    <Box {...props}>
+    <Box>
       {cells.map((cell, index) => {
         return (
           <CellView

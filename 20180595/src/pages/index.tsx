@@ -1,13 +1,11 @@
 //@ts-check
-import { Box, Grid, Paper, IconButton } from "@material-ui/core";
-import { Add, Remove, Edit, Done } from "@material-ui/icons";
+import { Box } from "@material-ui/core";
 import { observer } from "mobx-react-lite";
 import { autorun, toJS } from "mobx";
 import { useStores } from "../hooks";
 import { useEffect } from "react";
 import { Inspector, Map, MapControls } from "../components";
 import { mapColors } from "../constants";
-import { Mode } from "../stores";
 
 const Index = observer(function Index() {
   const { todos, cells, ui } = useStores();

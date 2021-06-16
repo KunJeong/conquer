@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import { AddCell, TodoCell, GrassCell, TimerCell } from "./cells";
 import { observer } from "mobx-react-lite";
-import { useStores, useLongPress } from "../hooks";
-import { Mode, Cell, CellType } from "../stores";
-import { mapDimensions } from "../constants";
+import { useStores } from "../../hooks";
+import { Mode, Cell, CellType } from "../../stores";
+import { mapDimensions } from "../../constants";
 import Image from "next/image";
 
 const useStyles = makeStyles({

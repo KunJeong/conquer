@@ -4,7 +4,7 @@ import { useStores } from "../hooks";
 import { Box } from "@material-ui/core";
 import Draggable from "react-draggable";
 import React from "react";
-import IsometricGrid from "./IsometricGrid";
+import IsometricGrid from "./isometricGrid/IsometricGrid";
 
 const Map = observer(function _Map() {
   const { cells, ui } = useStores();

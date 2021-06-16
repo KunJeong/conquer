@@ -1,11 +1,11 @@
 //@ts-check
 import { makeStyles, Box } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import Rhombus from "../Rhombus";
+import Rhombus from "./Rhombus";
 import { observer } from "mobx-react-lite";
-import { useStores } from "../../hooks";
-import { Mode } from "../../stores";
-import { mapColors } from "../../constants";
+import { useStores } from "../../../hooks";
+import { Mode } from "../../../stores";
+import { mapColors } from "../../../constants";
 
 const useStyles = makeStyles({
   plus: (props: { selected: boolean; [rest: string]: any }) => ({
