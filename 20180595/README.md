@@ -133,7 +133,79 @@ Here is the total structure of files that I created/modified for the project. I 
 Folder structure was generated using the `tree` command.
 
 ```shell
-
+.
+├── components
+│   ├── Inspector.tsx
+│   ├── Map.tsx
+│   ├── MapControls.tsx
+│   ├── StoreProvider.tsx
+│   ├── index.tsx
+│   ├── isometricGrid
+│   │   ├── CellView.tsx
+│   │   ├── IsometricGrid.tsx
+│   │   ├── cells
+│   │   │   ├── AddCell.tsx
+│   │   │   ├── GrassCell.tsx
+│   │   │   ├── Rhombus.tsx
+│   │   │   ├── TimerCell.tsx
+│   │   │   ├── TodoCell.tsx
+│   │   │   └── index.tsx
+│   │   └── index.tsx
+│   └── views
+│       ├── AddingTimerView.tsx
+│       ├── AddingTodoView.tsx
+│       ├── EditView.tsx
+│       ├── FocusView.tsx
+│       ├── ListView.tsx
+│       ├── SelectedView.tsx
+│       ├── index.tsx
+│       └── selectedViews
+│           ├── GrassSelectedView.tsx
+│           ├── TodoSelectedView.tsx
+│           └── index.tsx
+├── constants.js
+├── contexts
+│   └── index.tsx
+├── hooks
+│   ├── index.tsx
+│   └── useStores.tsx
+├── next.config.js
+├── pages
+│   ├── _app.tsx
+│   ├── _document.tsx
+│   └── index.tsx
+├── public
+│   ├── tower-blue-completed.png
+│   ├── tower-blue-dark.png
+│   ├── tower-blue.png
+│   ├── tower-dark-blue-completed.png
+│   ├── tower-dark-blue.png
+│   ├── tower-dark-red-completed.png
+│   ├── tower-dark-red.png
+│   ├── tower-red-completed.png
+│   └── tower-red.png
+├── server
+│   ├── api
+│   │   ├── controllers
+│   │   │   ├── cellController.js
+│   │   │   └── todoController.js
+│   │   ├── models
+│   │   │   ├── cellModel.js
+│   │   │   └── todoModel.js
+│   │   └── routers
+│   │       ├── cellRouter.js
+│   │       └── todoRouter.js
+│   ├── package.json
+│   ├── server.js
+│   └── yarn.lock
+├── stores
+│   ├── CellStore.tsx
+│   ├── RootStore.tsx
+│   ├── TodoStore.tsx
+│   ├── UIStore.tsx
+│   └── index.tsx
+├── theme.js
+├── tsconfig.json
 ```
 
 #### **0. General Structure**
@@ -283,7 +355,14 @@ Here the images are stored, which are used as the root directory in `Image` comp
 
 ## Resources
 
-[Demo Video]()
+[Demo Video](https://drive.google.com/file/d/1LNi7k3kr6R17zag4rWgy-LLnjCgV6ki-/view?usp=sharing)
+In the demo video, I walk through all the major features in this order:
+
+1. my page loads all data instantly from server
+2. adding timer: I can hover to reveal addable cells. I can select time. I can also cancel the timer, which doesn't add the cell. When a timer is running, I am not allowed to do anything else. I can pan around, and when the timer finishes it pans to th center.
+3. creating, completing, editing todos: I can select a grass cell to add a todo. I can set name and image. I can complete todos by selecting them, which is animated. I can edit a todo - I can change the selected cell while editing as well.
+4. I can pan the map, I can zoom in/out, and I can also enter edit mode. Here, I can rearrange the cells on the map, and click done when I'm satisfied.
+5. I can interact with the map via the list view in the inspector. Here I can quickly complete multiple todos with animations, and select a cell to pan to it. I can also enter edit mode directly.
 
 ## Credits
 
@@ -316,11 +395,4 @@ I originally started with some boilerplate code from [create-next-app with mobx-
 
 ## License
 
-- Specify your license
-
-## Before the final submission
-
-- [o] I changed the name of the folder YOUR_ID to my numerical ID
-- [o] My code is included inside the src folder
-- [x] The video of my project is included in this file as a link to an external visible resource (e.g., a public video)
-- [o] I indicated in this file whether and from where I got help
+[The GPLv3 License](https://choosealicense.com/licenses/gpl-3.0/)
