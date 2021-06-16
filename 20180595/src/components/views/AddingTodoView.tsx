@@ -85,6 +85,7 @@ const AddingTodoView = observer(function AddingTodoView() {
       </Grid>
       <Grid container justify="flex-end">
         <Button
+          color="primary"
           startIcon={<AddIcon />}
           onClick={() => {
             let cellId = ui.selectedCell;

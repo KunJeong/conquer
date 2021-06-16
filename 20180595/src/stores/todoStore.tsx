@@ -68,7 +68,7 @@ export class Todo {
       completedOpacity: target,
       snap: { completedOpacity: 0.05 },
       duration: 0.3,
-      ease: completed ? "power2" : "power2.in",
+      ease: completed ? "power1" : "power1.in",
     });
     gsap.to(this, {
       incompleteOpacity: 1 - target,

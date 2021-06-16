@@ -11,6 +11,7 @@ const GrassSelectedView = observer(function GrassSelectedView() {
   return (
     <Box>
       <Button
+        color="primary"
         startIcon={<AddIcon />}
         onClick={() => {
           ui.setMode(Mode.AddingTodo);

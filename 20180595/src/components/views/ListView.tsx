@@ -46,6 +46,7 @@ const TodoRow = observer(function TodoRow({ todo, ...props }: TodoRowProps) {
       <ListItemIcon>
         <Checkbox
           edge="start"
+          color="primary"
           checked={todo.completed}
           tabIndex={-1}
           disableRipple

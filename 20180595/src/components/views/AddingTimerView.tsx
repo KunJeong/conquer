@@ -7,6 +7,7 @@ import {
   FormControl,
   InputLabel,
 } from "@material-ui/core";
+import { PlayArrow } from "@material-ui/icons";
 import AddIcon from "@material-ui/icons/Add";
 import { observer } from "mobx-react-lite";
 import React, { useState } from "react";
@@ -37,7 +38,8 @@ const AddingTimerView = observer(function AddingTimerView() {
       </Grid>
       <Grid container justify="flex-end">
         <Button
-          startIcon={<AddIcon />}
+          color="primary"
+          startIcon={<PlayArrow />}
           onClick={() => {
             let cell = cells.cellById(ui.selectedCell);
             cells.startTimer(ui.selectedCell);
@@ -45,7 +47,7 @@ const AddingTimerView = observer(function AddingTimerView() {
             ui.runTimer(cell.id);
           }}
         >
-          Add Timer
+          Start Timer
         </Button>
       </Grid>
     </Box>

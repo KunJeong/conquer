@@ -120,7 +120,7 @@ const TodoSelectedView = observer(function TodoSelectedView({
           </Grid>
         </Grid>
         <Grid container justify="flex-end">
-          <Button startIcon={<Save />} onClick={onSave}>
+          <Button color="primary" startIcon={<Save />} onClick={onSave}>
             Save
           </Button>
         </Grid>
@@ -134,6 +134,7 @@ const TodoSelectedView = observer(function TodoSelectedView({
             <ListItemIcon>
               <Checkbox
                 edge="start"
+                color="primary"
                 checked={todo.completed}
                 tabIndex={-1}
                 disableRipple
