@@ -2246,11 +2246,6 @@ react-is@16.13.1, react-is@^16.7.0, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-map-interaction@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-map-interaction/-/react-map-interaction-2.0.0.tgz#093b3843741669b1b306e8cc5ce6725eada24bbc"
-  integrity sha512-9KeyPHd95INODNUsx77/345vxOfN1WOtcjWXdxT92Sw+Y1GldVfmb4HnzNVtWoJg3T0Q1Yt3Sthq9IPN9OYy5w==
-
 react-refresh@0.8.3:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.8.3.tgz#721d4657672d400c5e3c75d063c4a85fb2d5d68f"
@@ -2670,11 +2665,6 @@ url@^0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
-
-use-long-press@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/use-long-press/-/use-long-press-1.0.5.tgz#b5e3ac557342421ff60313d41b0c3c1c2ae55ca0"
-  integrity sha512-8KxGqU0m0BeTbmk3LLNUUA3okO0v59D6mwAlxByViT94vIvW3/CASOM8ZFQLfHvizF2Zr94LEg7kzo8Coi6Qjw==
 
 use-subscription@1.5.1:
   version "1.5.1"

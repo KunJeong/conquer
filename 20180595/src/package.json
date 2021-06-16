@@ -21,8 +21,6 @@
     "react-animejs-wrapper": "^1.0.35",
     "react-dom": "^16.13.1",
     "react-draggable": "^4.4.3",
-    "react-map-interaction": "^2.0.0",
-    "use-long-press": "^1.0.5",
     "uuid": "^8.3.2"
   },
   "license": "MIT",
