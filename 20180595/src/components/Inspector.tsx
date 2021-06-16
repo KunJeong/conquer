@@ -71,6 +71,7 @@ const Inspector = observer(function Inspector(props: InspectorProps) {
       >
         Reset
       </Button>
+      {/* DEBUG */}
       <Button
         onClick={() => {
           ui.deselect();
